@@ -11,7 +11,7 @@
 
 <body>
 
-    <p>salut salut salut je test encore une fois</p>
+    <p>salut salut</p>
     
     <script src="script.js"></script>
 </body>
