@@ -4,7 +4,7 @@ import HomeView from './HomeVue.vue'
 import AboutView from './AboutVue.vue'
 
 const router = createRouter({
-	history: createWebHistory(),
+	history: createWebHistory(window.__BASE_PATH__ || "/"),
 	routes: [{
             path: '/',
             name: 'home',
