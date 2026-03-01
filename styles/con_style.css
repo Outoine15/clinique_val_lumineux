@@ -1,0 +1,53 @@
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-bg-color);
+}
+.conn {
+    width: 50vw;
+    height: 80vh;
+    background-color: var(--tertiary-bg-color);
+    padding: 15px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.inline {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+    font-size: 20px;
+    text-align: center;
+}
+
+input {
+    font-size: 24px;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+button {
+    border-radius: 10px;
+    width: 200px;
+    height: 50px;
+    background-color: var(--secondary-bg-color);
+    color: var(--secondary-text-color);
+    font-size: 24px;
+}
+
+#password {
+    position: relative;
+    left: 10px;
+}
+
+#togglePassword {
+    position: relative;
+    left: -30px;
+}
