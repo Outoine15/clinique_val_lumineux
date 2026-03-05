@@ -21,7 +21,7 @@ icon.addEventListener('click', (event) => {
 
 //confirmation (connexion)
 conn_bt.addEventListener("click", (event) => {
-    let id = 0;
+    let token = "";
     //recuperation mail/password
 
     axios.post("/api/user", {
@@ -34,15 +34,15 @@ conn_bt.addEventListener("click", (event) => {
         console.log(res);
         //gestion cas de reponse
         try {
-            id=1;
-            if(res.admin=true){
-                sessionStorage.setItem("admin_id",id);
-            } else if (res.secretary=true) {
-                sessionStorage.setItem("secretary_id",id);
-            } else if (res.doctor=true) {
-                sessionStorage.setItem("doctor_id",id);
+            token= res.token;
+            if(res.admin==true){
+                sessionStorage.setItem("admin_token",token);
+            } else if (res.secretary==true) {
+                sessionStorage.setItem("secretary_token",token);
+            } else if (res.doctor==true) {
+                sessionStorage.setItem("doctor_token",token);
             } else {
-                sessionStorage.setItem("user_id",id);
+                sessionStorage.setItem("user_token",token);
             }
         } catch (error) {
             console.log("erreur de connexion:");
@@ -52,11 +52,7 @@ conn_bt.addEventListener("click", (event) => {
       .catch(err => {
         console.log("request failed");
         console.log(err);
-        // temporaire (pour test tant que l'api n'est pas disponible) (TODO: remove this)
-        sessionStorage.setItem("user_id",id);
-        check_conn_connexion();
       });
-    
     check_conn_connexion();
 }
 );
@@ -64,10 +60,10 @@ conn_bt.addEventListener("click", (event) => {
 
 function check_conn_connexion(){
     //redirection plus precise possible (en fonction du role)
-    if(!sessionStorage.getItem("user_id") && !sessionStorage.getItem("admin_id" && !sessionStorage.getItem("secretary_id") && !sessionStorage.getItem("doctor_id"))){
-        console.log("non connecté");
+    if(!sessionStorage.getItem("user_token") && !sessionStorage.getItem("admin_token" && !sessionStorage.getItem("secretary_token") && !sessionStorage.getItem("doctor_token"))){
+        console.log("non connecté (conn)");
     } else {
+        console.log("connecté, redirection (conn)");
         window.location.replace("index.html");
-        console.log("connecté, redirection");
     }
 }
