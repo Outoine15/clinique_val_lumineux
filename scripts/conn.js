@@ -34,7 +34,7 @@ conn_bt.addEventListener("click", (event) => {
         console.log(res);
         //gestion cas de reponse
         try {
-            token= res.token;
+            token = res.token;
             if(res.admin==true){
                 sessionStorage.setItem("admin_token",token);
             } else if (res.secretary==true) {
@@ -53,17 +53,23 @@ conn_bt.addEventListener("click", (event) => {
         console.log("request failed");
         console.log(err);
       });
+    // console.log("bypass");
+    // sessionStorage.setItem("user_token","test");
     check_conn_connexion();
 }
 );
 
 
 function check_conn_connexion(){
+    console.log("user: "+sessionStorage.getItem("user_token"));
+    console.log("admin: "+sessionStorage.getItem("admin_token"));
+    console.log("secretary: "+sessionStorage.getItem("secretary_token"));
+    console.log("doctor: "+sessionStorage.getItem("doctor_token"));
+
     //redirection plus precise possible (en fonction du role)
-    if(!sessionStorage.getItem("user_token") && !sessionStorage.getItem("admin_token" && !sessionStorage.getItem("secretary_token") && !sessionStorage.getItem("doctor_token"))){
+    if(!sessionStorage.getItem("user_token") && !sessionStorage.getItem("admin_token") && !sessionStorage.getItem("secretary_token") && !sessionStorage.getItem("doctor_token")){
         console.log("non connecté (conn)");
     } else {
-        console.log("connecté, redirection (conn)");
         window.location.replace("index.html");
     }
 }
