@@ -4,13 +4,33 @@ cssLink.setAttribute("href", import.meta.url.replace(".js", ".css"));
 document.head.appendChild(cssLink);
 
 class AppointmentTime extends HTMLElement {
-    constructor(startHours, startMinutes, endHours, endMinutes) {
+    constructor(data) {
         super();
+        this.data = data||{};
+    }
+
+    show() {
+        var startTime = new Date(data["start"]||"1");
+        var endTime = new Date(data["end"]||"2");
+
+        var startHours = startTime.getHours();
+        var startMinutes = startTime.getMinutes();
+        var endHours = endTime.getHours();
+        var endMinutes = endTime.getMinutes();
+
         this.innerHTML = `
-        <div class="appointmentTime">
+        <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""}">
             <p>${startHours}:${startMinutes} - ${endHours}:${endMinutes}</p>
-        </div>
-        `;
+        </div>`;
+    }
+    
+    connectCallback() {
+        this.show();
+    }
+
+    setData(data) {
+        this.data = data;
+        this.show();
     }
 }
 
@@ -73,7 +93,7 @@ export class DoctorCalendar extends HTMLElement {
             }
 
             dayContainer.addAppointment(
-                new AppointmentTime(startDate.getHours(), startDate.getMinutes(), endDate.getHours(), endDate.getMinutes())
+                new AppointmentTime(appointment)
             );
         });
 
