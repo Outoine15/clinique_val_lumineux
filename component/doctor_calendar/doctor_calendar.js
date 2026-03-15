@@ -7,11 +7,12 @@ class AppointmentTime extends HTMLElement {
     constructor(data) {
         super();
         this.data = data||{};
+        this.show();
     }
 
     show() {
-        var startTime = new Date(data["start"]||"1");
-        var endTime = new Date(data["end"]||"2");
+        var startTime = new Date(this.data["start"]||"1");
+        var endTime = new Date(this.data["end"]||"2");
 
         var startHours = startTime.getHours();
         var startMinutes = startTime.getMinutes();
