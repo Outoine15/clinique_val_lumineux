@@ -70,6 +70,25 @@ function check_conn_connexion(){
     if(!sessionStorage.getItem("user_token") && !sessionStorage.getItem("admin_token") && !sessionStorage.getItem("secretary_token") && !sessionStorage.getItem("doctor_token")){
         console.log("non connecté (conn)");
     } else {
+        if(sessionStorage.getItem("user_token")){
+            console.log("user connexion (conn)");
+            window.location.replace("index.html");
+        }
+        if (sessionStorage.getItem("admin_token")){
+            console.log("admin connexion (conn)");
+            window.location.replace("index_admin.html");
+        }
+        if (sessionStorage.getItem("secretary_token")){
+            console.log("secretary connexion (conn)");
+            window.location.replace("index_secretary.html");
+        }
+        if (sessionStorage.getItem("doctor_token")){
+            console.log("doctor connexion (conn)");
+            window.location.replace("index_doctor.html");
+        }
+        //redirection par defaut (ne devrait jamais se produire)
+        console.log("connecté, redirection (attention, redirection par defaut)");
+
         window.location.replace("index.html");
     }
 }
