@@ -24,48 +24,52 @@ conn_bt.addEventListener("click", (event) => {
     let token = "";
     //recuperation mail/password
 
-    axios.post("/api/user", {
-        params: {
-            mail: mail.value,
-            password: password.value
-      }
-    })
+    console.log(mail.value, password.value);
+    axios.post("/api/users",
+    new URLSearchParams({
+      mail: mail.value,
+      password: password.value
+    }))
       .then(res => {
-        console.log(res);
         //gestion cas de reponse
+        if (res.data.success == false){
+            console.log("mauvais identifiants")
+        } else {
         try {
-            token = res.token;
-            if(res.admin==true){
-                sessionStorage.setItem("admin_token",token);
-            } else if (res.secretary==true) {
-                sessionStorage.setItem("secretary_token",token);
-            } else if (res.doctor==true) {
-                sessionStorage.setItem("doctor_token",token);
+            if(res.data.token){
+                token = res.data.token;
+                if(res.data.admin===true)
+                {
+                    sessionStorage.setItem("admin_token",token);
+                } else if (res.data.secretary===true)
+                {
+                    sessionStorage.setItem("secretary_token",token);
+                } else if (res.data.doctor===true)
+                {
+                    sessionStorage.setItem("doctor_token",token);
+                } else
+                {
+                    sessionStorage.setItem("user_token",token);
+                }
+                check_conn_connexion();
             } else {
-                sessionStorage.setItem("user_token",token);
+                console.log("reponse mal formée");
+                console.log(res);
             }
         } catch (error) {
             console.log("erreur de connexion:");
-            console.log(res);        
+            console.log(res);
         }
-      })
+    }})
       .catch(err => {
         console.log("request failed");
         console.log(err);
       });
-    // console.log("bypass");
-    // sessionStorage.setItem("user_token","test");
-    check_conn_connexion();
 }
 );
 
 
 function check_conn_connexion(){
-    console.log("user: "+sessionStorage.getItem("user_token"));
-    console.log("admin: "+sessionStorage.getItem("admin_token"));
-    console.log("secretary: "+sessionStorage.getItem("secretary_token"));
-    console.log("doctor: "+sessionStorage.getItem("doctor_token"));
-
     //redirection plus precise possible (en fonction du role)
     if(!sessionStorage.getItem("user_token") && !sessionStorage.getItem("admin_token") && !sessionStorage.getItem("secretary_token") && !sessionStorage.getItem("doctor_token")){
         console.log("non connecté (conn)");
@@ -86,9 +90,5 @@ function check_conn_connexion(){
             console.log("doctor connexion (conn)");
             window.location.replace("index_doctor.html");
         }
-        //redirection par defaut (ne devrait jamais se produire)
-        console.log("connecté, redirection (attention, redirection par defaut)");
-
-        window.location.replace("index.html");
     }
 }
