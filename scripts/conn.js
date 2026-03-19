@@ -1,3 +1,6 @@
+import { setCookie } from "./cookiesUtils.js";
+import { check_conn_connexion } from "../scripts/connUtils.js";
+
 check_conn_connexion();
 
 const conn_bt = document.getElementById("connexion_bt");
@@ -25,7 +28,7 @@ conn_bt.addEventListener("click", (event) => {
     //recuperation mail/password
 
     axios.post(
-        "../api/user", 
+        "../api/users", 
         new URLSearchParams({
             "mail": mail.value,
             "password": password.value
@@ -34,26 +37,34 @@ conn_bt.addEventListener("click", (event) => {
         var res = response.data;
         //gestion cas de reponse
         try {
-            var token= res.token;
-            sessionStorage.setItem("token", token);
+            if(res.success==false){
+                // identifiant/mdp invalid
+            } else {
+                var token = res.token;
+
+                setCookie("token",token);
+                // document.cookie = "token="+token+"; max-age=3600; path=/; Secure; SameSite=Strict";
+                // sessionStorage.setItem("token", token);
+
+                var role = "USER";
+                if (res.admin){
+                    role = "ADMIN";
+                } else if (res.secretary){
+                    role = "SECRETARY";
+                } else if (res.doctor){
+                    role = "DOCTOR";
+                }
+                setCookie("role",role);
+                // document.cookie = "role="+role+"; max-age=3600; Secure; SameSite=Strict";
+                // sessionStorage.setItem("role",role);
+            }
         } catch (error) {
             // success = false
         }
+        check_conn_connexion();
       })
       .catch(err => {
         // 404 ou 500
       });
-    check_conn_connexion();
 }
 );
-
-
-function check_conn_connexion(){
-    //redirection plus precise possible (en fonction du role)
-    if(!sessionStorage.getItem("user_token") && !sessionStorage.getItem("admin_token" && !sessionStorage.getItem("secretary_token") && !sessionStorage.getItem("doctor_token"))){
-        console.log("non connecté (conn)");
-    } else {
-        console.log("connecté, redirection (conn)");
-        window.location.replace("index.html");
-    }
-}
