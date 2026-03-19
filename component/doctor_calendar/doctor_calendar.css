@@ -1,0 +1,22 @@
+.doctorCalendar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 12px;
+}
+
+.dayAppointmentsContainer {
+    padding: 10px;
+    border-radius: 8px;
+    border-color: black;
+    border-style: solid;
+}
+
+.dayAppointmentsContainerInfo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.reserved {
+    background-color: red;
+}

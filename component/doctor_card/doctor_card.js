@@ -29,7 +29,7 @@ export class DoctorCard extends HTMLElement {
                     ${data["sector"] ? data["sector"]["job_name"] : "Job"}
                 </a>
             </section>
-            <section class="doctorCardAppointments">
+            <section class="doctorCardAppointments fade">
                 <doctor-calendar></doctor-calendar>
             </section>
         </div>
