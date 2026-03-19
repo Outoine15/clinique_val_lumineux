@@ -1,5 +1,7 @@
+import { DoctorCard } from "../component/doctor_card/doctor_card.js";
+
 //verifie si l'utilisateur est connecte, (doit être executer avec tout autre code quand l'utilisateur arrive sur une page)
-check_conn_general();
+// check_conn_general();
 
 
 function check_conn_general(){
@@ -10,3 +12,16 @@ function check_conn_general(){
         console.log("connecté (main)");
     }
 }
+
+axios.get("/api/doctors", {
+// parametres
+}).then(res => {
+    console.log(res);
+    res.data.forEach(doctor => {
+        let card = new DoctorCard(doctor);
+        document.body.appendChild(card);
+    });
+}).catch(err => {
+    console.log("request failed");
+    console.log(err);
+})
