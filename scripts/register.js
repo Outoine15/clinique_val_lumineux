@@ -14,17 +14,25 @@ registerButton.addEventListener('click', () => {
 
     if(firstname && name && birthdate && mail && password) { // s'ils sont tous définie
         axios.put(
-            "/api/users",
-            `mail=${mail}&name=${name}&firstname=${firstname}&password=${password}&birthdate=${birthdate}`
+            "../api/users",
+            new URLSearchParams({
+                "mail": mail,
+                "name": name,
+                "firstname": firstname,
+                "password": password,
+                "birthdate": birthdate
+            }).toString()
         ).then(response => {
             var res = response.data;
 
-            if(res[success] != false) {
+            try {
                 sessionStorage.setItem("user_token", res["token"]);
-                window.location.href = "../account";
-            } else {
-                // une erreur est survenue
+                window.location.href = "../dashboard";
+            } catch (error) {
+                // success = false -> une erreur est survenue   
             }
+        }).catch(err => {
+            // 404 ou 500 -> "une erreur est survenue"
         });
     }
 });
