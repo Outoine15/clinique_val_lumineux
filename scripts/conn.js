@@ -24,34 +24,24 @@ conn_bt.addEventListener("click", (event) => {
     let token = "";
     //recuperation mail/password
 
-    axios.post("/api/user", {
-        params: {
-            mail: mail.value,
-            password: password.value
-      }
-    })
-      .then(res => {
-        console.log(res);
+    axios.post(
+        "../api/user", 
+        new URLSearchParams({
+            "mail": mail.value,
+            "password": password.value
+        }).toString()
+    ).then(response => {
+        var res = response.data;
         //gestion cas de reponse
         try {
-            token= res.token;
-            if(res.admin==true){
-                sessionStorage.setItem("admin_token",token);
-            } else if (res.secretary==true) {
-                sessionStorage.setItem("secretary_token",token);
-            } else if (res.doctor==true) {
-                sessionStorage.setItem("doctor_token",token);
-            } else {
-                sessionStorage.setItem("user_token",token);
-            }
+            var token= res.token;
+            sessionStorage.setItem("token", token);
         } catch (error) {
-            console.log("erreur de connexion:");
-            console.log(res);        
+            // success = false
         }
       })
       .catch(err => {
-        console.log("request failed");
-        console.log(err);
+        // 404 ou 500
       });
     check_conn_connexion();
 }
