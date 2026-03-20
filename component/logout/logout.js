@@ -1,5 +1,5 @@
-import { deleteCookie } from "../scripts/cookiesUtils.js";
-import { check_conn_general } from "../scripts/connUtils.js";
+import { deleteCookie } from "/scripts/cookiesUtils.js";
+import { check_conn_general } from "/scripts/connUtils.js";
 
 export class LogoutButton extends HTMLElement{
     constructor(data) {
@@ -16,10 +16,6 @@ export class LogoutButton extends HTMLElement{
             check_conn_general();
         }
     }
-
-    // connectCallback() {
-    //     this.show();
-    // }
 }
 
 customElements.define("logout-button",LogoutButton);
