@@ -1,19 +1,22 @@
-import { getCookie } from "./cookiesUtils.js";
+import { getCookie } from "/scripts/cookiesUtils.js";
 
 export function check_conn_connexion(){
     //redirection plus precise possible (en fonction du role)
-    if(!getCookie("token")){
+    const token = getCookie("token");
+    if (!token || token === "undefined" || token === "null"){
         // non connecté
     } else {
         // connecté
-        window.location.replace("index.html");
+        window.location.replace("/home");
     }
 }
 
 export function check_conn_general(){
-    if(!getCookie("token")){
+    const token = getCookie("token");
+
+    if (!token || token === "undefined" || token === "null"){
         // non connecté
-        window.location.replace("conn.html");
+        window.location.replace("/login");
     } else {
         // connecté
     }
