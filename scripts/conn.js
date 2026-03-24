@@ -3,8 +3,9 @@ import { check_conn_connexion } from "/scripts/connUtils.js";
 
 check_conn_connexion();
 
-const conn_bt = document.getElementById("connexion_bt");
+const conn_bt = document.getElementById("connexion-bt");
 const icon = document.getElementById("togglePassword");
+const pwd = document.getElementById("password");
 let mail = document.getElementById("mail");
 let password = document.getElementById("password");
 
@@ -20,6 +21,30 @@ icon.addEventListener('click', (event) => {
     icon.classList.add("fa-eye-slash");
     icon.classList.remove("fa-eye");
   }
+});
+
+pwd.addEventListener('input',(event)=>{
+    const val = event.target.value;
+    let score = 0;
+    if (val.length >= 8){
+        score = score +1;
+    }if(/[A-Z]/.test(val)){
+        score = score +1;
+    }if (/[0-9]/.test(val)){
+        score = score +1;
+    }if (/[^A-Za-z0-9]/.test(val)){
+        score = score +1;
+    }
+    const Sbar = document.getElementById("strengthFill");
+    const couleurs = ['red','orange','lightgreen','green'];
+    if(val.length == 0){
+        Sbar.style.width = '0%';
+    } else{
+        Sbar.style.width = (score*25)+'%';
+    }
+    Sbar.style.backgroundColor = couleurs[score-1];
+    
+
 });
 
 //confirmation (connexion)

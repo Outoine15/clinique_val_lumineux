@@ -16,7 +16,7 @@ export function check_conn_general(){
 
     if (!token || token === "undefined" || token === "null"){
         // non connecté
-        window.location.replace("/login");
+        window.location.replace("../pages/conn.html");
     } else {
         // connecté
     }
