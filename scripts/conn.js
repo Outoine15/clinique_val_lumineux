@@ -1,5 +1,5 @@
 import { setCookie } from "/scripts/cookiesUtils.js";
-import { check_conn_connexion } from "/scripts/connUtils.js";
+
 
 check_conn_connexion();
 
