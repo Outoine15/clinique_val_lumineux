@@ -6,6 +6,7 @@ check_conn_connexion();
 const conn_bt = document.getElementById("connexion-bt");
 const icon = document.getElementById("togglePassword");
 const pwd = document.getElementById("password");
+const errorMessage = document.querySelector(".error-message");
 let mail = document.getElementById("mail");
 let password = document.getElementById("password");
 
@@ -62,6 +63,7 @@ conn_bt.addEventListener("click", (event) => {
         //gestion cas de reponse
         if (res.data.success == false){
             console.log("mauvais identifiants")
+            errorMessage.textContent="test";
         } else {
         try {
             if(res.data.token){
