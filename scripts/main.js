@@ -6,16 +6,28 @@ import { DoctorCard } from "/component/doctor_card/doctor_card.js";
 check_conn_general();
 
 
+//creation du div qui va regrouper toute les carte de medecin
+const doctorContainer = document.createElement("div");
+
+doctorContainer.id = "doctor-container";
+
+doctorContainer.classList.add("doctor-grid");
+
+document.body.appendChild(doctorContainer);
+
+
+
 let loggout_bt = new LogoutButton();
 document.body.appendChild(loggout_bt);
 
 axios.get("/api/doctors", {
+
 // parametres
 }).then(res => {
     console.log(res);
     res.data.forEach(doctor => {
         let card = new DoctorCard(doctor);
-        document.body.appendChild(card);
+        doctorContainer.appendChild(card);
     });
 }).catch(err => {
     console.log("request failed");

@@ -1,8 +1,27 @@
-:root{
-    --primary-bg-color: #fbfbfb; /* white */
-    --secondary-bg-color: #276fbf; /* saphire sky */
-    --tertiary-bg-color: #dfd9e2; /* lavender */
+:root {
+    --primary-bg-color: #f4f7f9;
+    --secondary-bg-color: #276fbf;
+    --primary-text-color: #0f0f0f;
+}
 
-    --primary-text-color: #0f0f0f; /* onyx */
-    --secondary-text-color: #2d2e2e; /* graphite */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--primary-bg-color);
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    text-align: center;
+    width: 100%;
+}
+
+.doctor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
 }
