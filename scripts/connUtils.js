@@ -7,7 +7,7 @@ export function check_conn_connexion(){
         // non connecté
     } else {
         // connecté
-        window.location.replace("/home");
+        window.location.replace("../home"); //vers le dashboard a terme
     }
 }
 
@@ -16,8 +16,26 @@ export function check_conn_general(){
 
     if (!token || token === "undefined" || token === "null"){
         // non connecté
-        window.location.replace("/login");
+        window.location.replace("../login");
     } else {
         // connecté
     }
+}
+
+export function get_linked_clients(){
+    axios.get(
+        "../api/clients", 
+        new URLSearchParams({
+            "token": getCookie("token")
+        }).toString()
+    ).then(response => {
+        if(response.data.success==false){
+            // mauvait token
+        } else {
+            return response.data;
+        }
+    }).catch(err => {
+        // 404 ou 500
+    });
+    return null;
 }
