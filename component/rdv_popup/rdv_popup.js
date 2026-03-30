@@ -1,5 +1,6 @@
-import { getCookie } from "../scripts/cookiesUtils.js";
-import { isEmptyObject } from "../scripts/codeUtils.js";
+import { getCookie } from "../../scripts/cookiesUtils.js";
+import { isEmptyObject } from "../../scripts/codeUtils.js";
+
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");
 cssLink.setAttribute("href", import.meta.url.replace(".js", ".css"));

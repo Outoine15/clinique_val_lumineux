@@ -1,4 +1,4 @@
-import { RdvPopup } from "../component/rdv_popup/rdv_popup.js";
+await import(import.meta.url.replaceAll("doctor_calendar","rdv_popup"));
 
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");
