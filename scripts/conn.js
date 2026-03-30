@@ -1,5 +1,5 @@
-import { setCookie } from "/scripts/cookiesUtils.js";
-import { check_conn_connexion } from "/scripts/connUtils.js";
+import { setCookie } from "../scripts/cookiesUtils.js";
+import { check_conn_connexion } from "../scripts/connUtils.js";
 
 check_conn_connexion();
 
@@ -67,22 +67,10 @@ conn_bt.addEventListener("click", (event) => {
                 // identifiant/mdp invalid
             } else {
                 var token = res.token;
+                var role = res.role;
 
                 setCookie("token",token);
-                // document.cookie = "token="+token+"; max-age=3600; path=/; Secure; SameSite=Strict";
-                // sessionStorage.setItem("token", token);
-
-                var role = "USER";
-                if (res.admin){
-                    role = "ADMIN";
-                } else if (res.secretary){
-                    role = "SECRETARY";
-                } else if (res.doctor){
-                    role = "DOCTOR";
-                }
                 setCookie("role",role);
-                // document.cookie = "role="+role+"; max-age=3600; Secure; SameSite=Strict";
-                // sessionStorage.setItem("role",role);
             }
         } catch (error) {
             // success = false
@@ -95,28 +83,3 @@ conn_bt.addEventListener("click", (event) => {
       });
 }
 );
-
-
-// function check_conn_connexion(){
-//     //redirection plus precise possible (en fonction du role)
-//     if(!sessionStorage.getItem("user_token") && !sessionStorage.getItem("admin_token") && !sessionStorage.getItem("secretary_token") && !sessionStorage.getItem("doctor_token")){
-//         console.log("non connecté (conn)");
-//     } else {
-//         if(sessionStorage.getItem("user_token")){
-//             console.log("user connexion (conn)");
-//             window.location.replace("index.html");
-//         }
-//         if (sessionStorage.getItem("admin_token")){
-//             console.log("admin connexion (conn)");
-//             window.location.replace("index_admin.html");
-//         }
-//         if (sessionStorage.getItem("secretary_token")){
-//             console.log("secretary connexion (conn)");
-//             window.location.replace("index_secretary.html");
-//         }
-//         if (sessionStorage.getItem("doctor_token")){
-//             console.log("doctor connexion (conn)");
-//             window.location.replace("index_doctor.html");
-//         }
-//     }
-// }

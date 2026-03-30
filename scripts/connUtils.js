@@ -1,4 +1,4 @@
-import { getCookie } from "/scripts/cookiesUtils.js";
+import { getCookie } from "../scripts/cookiesUtils.js";
 
 export function check_conn_connexion(){
     //redirection plus precise possible (en fonction du role)
@@ -9,13 +9,13 @@ export function check_conn_connexion(){
     } else {
         switch (role) {
             case "USER":
-                window.location.replace("/home");
+                window.location.replace("../home");
                 break;
             case "SECRETARY":
-                window.location.replace("/home");
+                window.location.replace("../home");
                 
             default:
-                window.location.replace("/home");
+                window.location.replace("../home");
                 break;
         }
         // connecté

@@ -1,5 +1,5 @@
-import { getCookie } from "/scripts/cookiesUtils.js";
-import { isEmptyObject } from "/scripts/codeUtils.js";
+import { getCookie } from "../scripts/cookiesUtils.js";
+import { isEmptyObject } from "../scripts/codeUtils.js";
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");
 cssLink.setAttribute("href", import.meta.url.replace(".js", ".css"));
@@ -77,8 +77,3 @@ export class RdvPopup extends HTMLElement {
 
 
 customElements.define("rdv-popup", RdvPopup);
-
-// TODO:
-// - selection client associer
-// - button confirmer/annuler
-// - &

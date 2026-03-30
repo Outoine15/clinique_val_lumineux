@@ -1,5 +1,4 @@
-import { RdvPopup } from "/component/rdv_popup/rdv_popup.js";
-import { get_linked_clients } from "/scripts/connUtils.js";
+import { RdvPopup } from "../component/rdv_popup/rdv_popup.js";
 
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");
@@ -28,9 +27,6 @@ class AppointmentTime extends HTMLElement {
         </div>`;
         let reserve_appointment = this.querySelector(".appointmentTime");
         reserve_appointment.addEventListener("click", (event) => {
-            console.log(this.innerHTML);
-            // let linked_clients = get_linked_clients(); //liste des clients pour qui on peut prendre le rdv
-            // selection du client à faire
             let rdv_selection = new RdvPopup(this.data["id"]);
             document.body.appendChild(rdv_selection);
             });
