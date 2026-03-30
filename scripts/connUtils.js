@@ -9,17 +9,15 @@ export function check_conn_connexion(){
     } else {
         switch (role) {
             case "USER":
-                window.location.replace("/home");
+                window.location.replace("../home");
                 break;
             case "SECRETARY":
-                window.location.replace("/home");
-                
+                window.location.replace("../secretary");
+                break;
             default:
-                window.location.replace("/home");
+                window.location.replace("../home");
                 break;
         }
-        // connecté
-        window.location.replace("../home"); //vers le dashboard a terme
     }
 }
 

@@ -72,14 +72,8 @@ conn_bt.addEventListener("click", (event) => {
                 // document.cookie = "token="+token+"; max-age=3600; path=/; Secure; SameSite=Strict";
                 // sessionStorage.setItem("token", token);
 
-                var role = "USER";
-                if (res.admin){
-                    role = "ADMIN";
-                } else if (res.secretary){
-                    role = "SECRETARY";
-                } else if (res.doctor){
-                    role = "DOCTOR";
-                }
+                var role = res.role;
+                
                 setCookie("role",role);
                 // document.cookie = "role="+role+"; max-age=3600; Secure; SameSite=Strict";
                 // sessionStorage.setItem("role",role);
