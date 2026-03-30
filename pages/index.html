@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../styles/theme.css">
     <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <title>Clinique du Val Lumineux</title>
     <script src="../scripts/index.js" type="module"></script>
 </head>
@@ -12,34 +13,45 @@
     <header-component>
     </header-component>
 
-    <div>
-        <h4>Clinique du Val Lumineux</h4>
-        <p>Adresse ....</p>
-        <p>06 66 33 66 33</p>
-        <p>Votre santé, Notre priorité</p>
-        <button>Prendre un RDV</button>
+    <div class="enTete">
+        <h4 class="titre">Clinique du Val Lumineux</h4>
+        <p class="adresse">Adresse ....</p>
+        <p class="tel">06 66 33 66 33</p>
+        <p class="slogan">Votre santé, Notre priorité</p>
+        <button class="btn-rdv">Prendre un RDV</button>
     </div>
 
     <hr/>
     
-    <div>
-        <section>
-            <img src="" alt="">
-            <p>X spécialistes de la santé </p>
-        </section>
-        <section>
-            <img src="" alt="">
-            <p>X domaines de santé</p>
-        </section>
-        <section>
-            <img src="" alt="">
-            <p>100% de taux de survie</p>
-        </section>
+    <div class="stats">
+        <div class="grille-stats">
+            <section>
+                <div class="cercle">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <p>X spécialistes de la santé </p>
+            </section>
 
-        <button>Prendre un RDV</button>
+            <section>
+                <div class="cercle">
+                    <i class="fa-solid fa-prescription-bottle-medical"></i>
+                </div>
+                <p>X domaines de santé</p>
+            </section>
+
+            <section>
+                <div class="cercle">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <p>100% de taux de survie</p>
+            </section>
+        </div>
+
+        <button class="btn-rdv">Prendre un RDV</button>
     </div>
 
     <footer-component>
     </footer-component>
+
 </body>
 </html>
