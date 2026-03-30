@@ -15,7 +15,6 @@ export function check_conn_connexion(){
 export function check_conn_general(){
     
     const token = getCookie("token");
-    console.log(token);
     if (!token || token === "undefined" || token === "null"){
         // non connecté
         window.location.replace("../pages/conn.html");
