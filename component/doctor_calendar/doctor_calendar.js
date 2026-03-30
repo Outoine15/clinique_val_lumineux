@@ -1,4 +1,4 @@
-await import(import.meta.url.replaceAll("doctor_calendar","rdv_popup"));
+const { RdvPopup } = await import(import.meta.url.replaceAll("doctor_calendar","rdv_popup"));
 
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");
