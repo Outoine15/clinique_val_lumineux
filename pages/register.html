@@ -4,16 +4,88 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinique du Val Lumineux - Inscription</title>
-
+    <link rel="stylesheet" href="../styles/register.css">
+    <link rel="stylesheet" href="../styles/theme.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    <input type="text" name="firstname" id="firstnameInput" placeholder="Martin">
-    <input type="text" name="name" id="nameInput" placeholder="Dupont">
-    <input type="date" name="birthdate" id="birthdateInput">
-    <input type="text" name="mail" id="mailInput" placeholder="monmail@domaine.com">
-    <input type="password" name="password" id="passwordInput" placeholder="Mot de passe">
-    <button id="registerButton">S'inscrire</button>
+
+    <header-compononent>
+    </header-compononent>
+
+    <div class="conn">
+
+        <div class="left-panel">
+            <h1>Inscription</h1>
+            <p class="subtitle">Veuillez renseigner vos informations ci-dessous</p>
+
+            <div class="error-message">
+            </div>
+
+            <div class="field-group">
+                <label for="firstname">Nom de famille</label>
+                <input type="text" name="firstname" id="firstnameInput" placeholder="Martin">
+            </div>
+
+            <div class="field-group">
+                <label for="name">Prénom</label>
+                <input type="text" name="name" id="nameInput" placeholder="Dupont">
+            </div>
+
+            <div class="field-group">
+                <label for="birthdate">Date de naissance</label>
+                <input type="date" name="birthdate" id="birthdateInput">
+            </div>
+
+            <div class="field-group">
+                <label for="mail">Adresse e-mail</label>
+                <input type="text" name="mail" id="mailInput" placeholder="monmail@domaine.com">
+            </div>
+            
+            <div class="field-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" id="passwordInput" placeholder="Mot de passe">
+            </div>
+
+            <button id="register-bt">S'inscrire</button>
+            <div class="strength-bar">
+                <div class="strength-fill" id="strengthFill"></div>
+            </div>
+
+            <p class="security-note">
+                <i class="fa-solid fa-shield-halved"></i>
+                Inscription sécurisée - données chiffrées
+            </p>
+
+        </div>
+
+
+
+
+
+        <div class="right-panel">
+            <div class="logo">
+                <i class="fa-solid fa-house-medical"></i>
+                <div>
+                    <strong>Clinique du Val Lumineux</strong>
+                    <p>Espace professionel</p>
+                </div>
+            </div>
+            <h2>Bienvenue dans votre espace de soin</h2>
+            <p>Accedez a vos rendez-vous en ligne en toute sécurité.</p>
+        </div>
+
+        
+    </div>
+
+
+
+    
+
+
+    <footer-compononent>
+    </footer-compononent>
 
     <script defer src="../scripts/register.js"></script>
 </body>

@@ -3,7 +3,7 @@ var nameInput = document.getElementById("nameInput");
 var birthdateInput = document.getElementById("birthdateInput");
 var mailInput = document.getElementById("mailInput");
 var passwordInput = document.getElementById("passwordInput");
-var registerButton = document.getElementById("registerButton");
+var registerButton = document.getElementById("register-bt");
 
 registerButton.addEventListener('click', () => {
     var firstname = firstnameInput.value;

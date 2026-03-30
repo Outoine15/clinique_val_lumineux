@@ -27,7 +27,7 @@ body {
     gap: 20px;
 }
 
-.left-panel h2{
+.left-panel h1{
     font-size: 26px;
     line-height: 1.4;
     font-weight: 700;
@@ -52,22 +52,21 @@ body {
     font-size: 28px;
 }
 
-
-.logo span{
-    font-size: 12px;
-    opacity: 0.75;
+.logo strong{
+    display: block;
+    font-weight: 600;
 }
 
-.right-pannel{
+.right-panel{
     background-color : var(--primary-bg-color);
     padding : 48px 40px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 18px;
 }
 
-.right-pannel h1{
+.right-panel h2{
     font-size: 24px;
     color: var(--primary-text-color);
     margin: 0;
@@ -95,7 +94,8 @@ body {
 
 input[type="email"]:focus,
 input[type="password"]:focus,
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="date"]:focus {
     font-size: 15px;
     border: 1.5px solid var(--tertiary-bg-color);
     border-radius: 10px;
@@ -122,17 +122,7 @@ input[type="text"]:focus {
     transition: width 0.3s, background-color 0.3s;
 }
 
-.forgot-link{
-    font-size: 13px;
-    color: var(--secondary-bg-color);
-    text-decoration: none;
-}
-
-.forgot-link:hover{
-    text-decoration: underline;
-}
-
-button#connexion-bt{
+button#register-bt{
     width: 100%;
     padding: 13px;
     background-color: var(--secondary-bg-color);
@@ -145,15 +135,15 @@ button#connexion-bt{
     transition: opacity 0.2s, transform 0.1s;
 }
 
-button#connexion-bt:hover{
+button#register-bt:hover{
     opacity: 0.8;
 }
 
-button#connexion-bt:active{
+button#register-bt:active{
     transform: scale(0.98);
 }
 
-.security-note{
+p.security-note{
     font-size: 11px;
     color: #bbb;
     display: flex;
