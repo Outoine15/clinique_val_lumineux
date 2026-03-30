@@ -1,0 +1,36 @@
+footer {
+    background-color: #276fbf;
+    padding: 28px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    font-family: 'Open Sans', sans-serif;
+    gap: 40px;
+}
+ 
+footer section {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+ 
+footer a {
+    color: #fbfbfb;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+}
+ 
+footer a:hover {
+    text-decoration: underline;
+}
+ 
+footer hr {
+    display: none; 
+}
+ 
+footer p {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    margin: 0;
+}

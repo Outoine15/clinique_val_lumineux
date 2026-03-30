@@ -1,15 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
-  <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clinique du Val Lumineux</title>
     <link rel="stylesheet" href="../styles/theme.css">
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  </head>
-  <body>
-    <h1>Bonjour et bienvenue</h1>
+    <link rel="stylesheet" href="../styles/index.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Clinique du Val Lumineux</title>
+    <script src="../scripts/index.js" type="module"></script>
+</head>
+<body>
+    <header-component>
+    </header-component>
+
+    <div class="enTete">
+        <h4 class="titre">Clinique du Val Lumineux</h4>
+        <p class="adresse">Adresse ....</p>
+        <p class="tel">06 66 33 66 33</p>
+        <p class="slogan">Votre santé, Notre priorité</p>
+        <button class="btn-rdv">Prendre un RDV</button>
+    </div>
+
+    <hr/>
     
-    <script src="../scripts/main.js" type="module"></script>
+    <div class="stats">
+        <div class="grille-stats">
+            <section>
+                <div class="cercle">
+                    <i class="fa-solid fa-user-doctor"></i>
+                </div>
+                <p>X spécialistes de la santé </p>
+            </section>
+
+            <section>
+                <div class="cercle">
+                    <i class="fa-solid fa-prescription-bottle-medical"></i>
+                </div>
+                <p>X domaines de santé</p>
+            </section>
+
+            <section>
+                <div class="cercle">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <p>100% de taux de survie</p>
+            </section>
+        </div>
+
+        <button class="btn-rdv">Prendre un RDV</button>
+    </div>
+
+    <footer-component>
+    </footer-component>
+
 </body>
 </html>
