@@ -1,4 +1,5 @@
 import "/component/header/header.js";
+import "/component/planning/planning.js"
 import "/component/footer/footer.js";
 
 const rdvButtons = document.querySelectorAll(".btn-rdv");
