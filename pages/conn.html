@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="../styles/theme.css">
     <link rel="stylesheet" href="../styles/con_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -11,23 +13,60 @@
     <title>Clinique du Val Lumineux - Connexion</title>
 </head>
 <body>
-    <div class="conn" id="loginDiv">
-        <div class="inline">
-            <h1>Connexion</h1>
-        </div>
-        <div class="inline">
-            <input type="text" name="mail" id="mail" placeholder="monmail@domaine.com">
-        </div>
-        <div class="inline">
-            <input type="password" name="password" id="password" placeholder="Mot de passe">
-            <i class="fa-regular fa-eye-slash" id="togglePassword"></i>
+        <div class="conn">
+        <div class="left-panel">
+            <div class="logo">
+                <i class="fa-solid fa-house-medical"></i>
+                <div>
+                    <strong>Clinique du Val Lumineux</strong>
+                    <p>Espace professionel</p>
+                </div>
+            </div>
+            <h2>Bienvenue dans votre espace de soin</h2>
+            <p>Accedez a vos rendez-vous en ligne en toute sécurité.</p>
         </div>
 
-        <div class="inline">
-            <button id="connexion_bt">Se connecter</button>
+        <div class="right-pannel" id="loginDiv">
+
+            <h1>Connexion</h1>
+            <p class="subtitle">Entrez vos identifiants ci-dessous</p>
+
+            <div class="error-message">
+
+            </div>
+
+            <div class="field-group">
+                <label for="mail">Adresse e-mail</label>
+                <input type="text" name="mail" id="mail" placeholder="test@mail.com">
+            </div>
+
+            <div class="field-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" name="password" id="password" placeholder="•••••••">
+                <i class="fa-regular fa-eye-slash" id="togglePassword"></i>
+
+                <div class="strength-bar">
+                    <div class="strength-fill" id="strengthFill"></div>
+                </div>
+            </div>
+
+            
+        
+
+            <div class="forgot-password">
+                <a href="#" class="forgot-link">Mot de passe oublié ?</a>
+            </div>
+
+            <button id="connexion-bt">Se connecter</button>
+
+            <p class="secrutiy-note">
+                <i class="fa-solid fa-shield-halved"></i>
+                Connexion sécurisée - données chiffrées
+            </p>
         </div>
     </div>
 
-    <script src="/scripts/conn.js" type="module"></script>
+
+    <script src="../scripts/conn.js" type="module"></script>
 </body>
 </html>
