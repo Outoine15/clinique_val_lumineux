@@ -1,5 +1,5 @@
-import { deleteCookie } from "/scripts/cookiesUtils.js";
-import { check_conn_general } from "/scripts/connUtils.js";
+import { deleteCookie } from "../../scripts/cookiesUtils.js";
+import { check_conn_general } from "../../scripts/connUtils.js";
 
 export class LogoutButton extends HTMLElement{
     constructor(data) {

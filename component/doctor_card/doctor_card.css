@@ -1,56 +1,138 @@
-.doctorCard {
-    width: 40vw;
-    height: 75vh;
-    margin: 0;
-    padding-left: 1vw;
-    padding-right: 1vw;
 
-    display: flex;
-    flex-wrap: nowrap;
-    
-    border: 1px solid #2d2e2e;
-    border-radius: 8px;
-
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f9;
+    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-
+    align-items: center;
 }
+
+
+body > doctor-card {
+    display: inline-block;
+}
+
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    width: 100%;
+}
+
+
+.doctorCard {
+    background: white;
+    width: 100%; 
+    min-height: 450px;
+    
+    padding: 20px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box; 
+}
+
+
+.doctorCard:hover {
+    transform: translateY(-5px); 
+}
+
 
 .doctorCardInfo {
-    width: 25%;
-    margin-left: 1vw;
-    margin-top: 2vh;
-    margin-bottom: 1em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
-.doctorCardInfo>p {
-    margin: 0;
-
-    font-size: larger;
+.doctorCardName {
+    font-weight: bold;
+    color: #2c3e50;
+    font-size: 1.2rem !important;
+    margin-bottom: 5px;
 }
 
-.doctorCardInfo a {
-    margin-left: 10%;
-
-    text-decoration: none;
-    color: black;
-    font-size: large;
+.doctorCardJob {
+    display: inline-block;
+    color: #007bff !important; 
+    background: #e7f1ff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.9rem !important;
+    font-weight: 500;
 }
+
 
 .doctorCardAppointments {
-    width: 100%;
-    height: 100%;
-    
-    padding-bottom: 3vh;
-    display: flex;
-    flex-flow: column;
-    /* justify-content: center; */
-    overflow: hidden;
+    flex-grow: 1;
     overflow-y: auto;
-
+    max-height: 300px;
 }
 
-.fade {
-    mask-image: linear-gradient(180deg, #000 80%, transparent);
+
+.dayAppointmentsContainer {
+    margin-bottom: 15px;
+    background: #fafafa;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.dayAppointmentsContainerName {
+    font-weight: bold;
+    text-transform: capitalize;
+    color: #555;
+}
+
+
+.appointmentTime {
+
+    display: inline-flex;
+    align-items: center; 
+    justify-content: center;
+    padding: 8px 12px;
+    margin: 4px;
+    background-color: #fff;
+    border: 1px solid #007bff;
+    color: #007bff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    min-width: 100px;
+    min-height: 45px;
+    transition: all 0.2s;
+}
+
+.appointmentTime:not(.reserved):hover {
+    background-color: #007bff;
+    color: white;
+}
+
+.appointmentTime:not(.reserved):hover p { 
+    display: none; 
+}
+/* on cache l'heure et on affiche "Prendre RDV" au survol */
+.appointmentTime:not(.reserved):hover::after {
+    content: "Prendre RDV"; 
+    font-weight: bold;
+}
+
+
+.appointmentTime.reserved {
+    background-color: #e9ecef;
+    border-color: #dee2e6;
+    color: #adb5bd;
+}
+
+.appointmentTime.reserved:hover p {
+    display: none;
+}
+/*on fait pareil pour les creneaux reserves */
+.appointmentTime.reserved:hover::after {
+    content: "File d'attente";
+    color: #6c757d;
 }

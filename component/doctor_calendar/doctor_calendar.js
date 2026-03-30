@@ -1,3 +1,5 @@
+const { RdvPopup } = await import(import.meta.url.replaceAll("doctor_calendar","rdv_popup"));
+
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");
 cssLink.setAttribute("href", import.meta.url.replace(".js", ".css"));
@@ -23,6 +25,11 @@ class AppointmentTime extends HTMLElement {
         <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""}">
             <p>${startHours}:${startMinutes} - ${endHours}:${endMinutes}</p>
         </div>`;
+        let reserve_appointment = this.querySelector(".appointmentTime");
+        reserve_appointment.addEventListener("click", (event) => {
+            let rdv_selection = new RdvPopup(this.data["id"]);
+            document.body.appendChild(rdv_selection);
+            });
     }
     
     connectCallback() {
