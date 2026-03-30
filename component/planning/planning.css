@@ -29,3 +29,41 @@
     font-size: 0.8em;
     font-style: italic;
 }
+
+.planning-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.bt-nav {
+    background-color: #007bff; /* Bleu médical */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bt-nav:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.bt-nav:active {
+    transform: translateY(0);
+}
+
+#selectDoc {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    outline: none;
+}

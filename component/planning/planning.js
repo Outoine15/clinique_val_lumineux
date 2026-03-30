@@ -67,9 +67,14 @@ class Planning extends HTMLElement {
 
         //on initialise nos options + notre tableau vide
         let html = `
-            <select id="selectDoc">${options}</select>
-            <div id="semainePrec"><=</div>
-            <div id="semaineSuiv">=></div>
+            <div class="planning-control">
+                <select id="selectDoc">${options}</select>
+                <div class="navigation">
+                    <button class="bt-nav" id="semainePrec">◀</button>
+                    <button class="bt-nav" id="semaineActuelle">Naviguation</button>
+                    <button class="bt-nav" id="semaineSuiv">▶</button>
+                </div>
+            </div>
             <div class="planning-grid">
                 <div class="case-vide"></div>
         `;
@@ -122,7 +127,12 @@ class Planning extends HTMLElement {
                 return nouvelleDate;
             });
             this.render();
-        })
+        });
+        //Retrait de 7jours dans notre semaine actuelle + repaint.
+        this.querySelector("#semaineActuelle").addEventListener("click",(e)=>{
+            this.semaineActuelle = this.getSemaineActuelle();
+            this.render();
+        });
     }
 
     estOccupe(date, h) {
