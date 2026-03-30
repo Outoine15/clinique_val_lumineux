@@ -7,6 +7,7 @@ const conn_bt = document.getElementById("connexion-bt");
 const icon = document.getElementById("togglePassword");
 const pwd = document.getElementById("password");
 const errorMessage = document.querySelector(".error-message");
+const forgotPassword = document.querySelector(".forgot-password");
 let mail = document.getElementById("mail");
 let password = document.getElementById("password");
 
@@ -27,7 +28,7 @@ icon.addEventListener('click', (event) => {
 pwd.addEventListener('input',(event)=>{
     const val = event.target.value;
     let score = 0;
-    if (val.length >= 8){
+    if (val.length >= 1){
         score = score +1;
     }if(/[A-Z]/.test(val)){
         score = score +1;
@@ -53,7 +54,6 @@ conn_bt.addEventListener("click", (event) => {
     let token = "";
     //recuperation mail/password
 
-    console.log(mail.value, password.value);
     axios.post("../api/users",
     new URLSearchParams({
       mail: mail.value,
@@ -65,6 +65,10 @@ conn_bt.addEventListener("click", (event) => {
         try {
             if(res.success==false){
                 // identifiant/mdp invalid
+                errorMessage.innerHTML = "Identifiants incorrects.";
+                forgotPassword.style.backgroundColor = "#ffebeb";
+                forgotPassword.style.borderRadius = "6px";
+                forgotPassword.style.fontSize = "15px";
             } else {
                 var token = res.token;
                 var role = res.role;

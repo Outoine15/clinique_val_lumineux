@@ -130,6 +130,8 @@ input[type="text"]:focus {
     font-size: 13px;
     color: var(--secondary-bg-color);
     text-decoration: none;
+    transition: all 0.2s ease;
+
 }
 
 .forgot-link:hover{
@@ -168,3 +170,6 @@ button#connexion-bt:active{
     border-top: 1px solid var(--tertiary-bg-color);
 }
 
+.error-message{
+    color: red;
+}
