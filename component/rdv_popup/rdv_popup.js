@@ -23,7 +23,7 @@ export class RdvPopup extends HTMLElement {
 
     connectedCallback() {
         let popup_info_section = this.querySelector(".rdvPopupInfo");
-        axios.get("/api/clients", {
+        axios.get("../api/clients", {
             headers: {
                 Authorization: "Bearer "+getCookie("token")
             }

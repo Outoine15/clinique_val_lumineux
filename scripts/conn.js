@@ -54,7 +54,7 @@ conn_bt.addEventListener("click", (event) => {
     //recuperation mail/password
 
     console.log(mail.value, password.value);
-    axios.post("/api/users",
+    axios.post("../api/users",
     new URLSearchParams({
       mail: mail.value,
       password: password.value
