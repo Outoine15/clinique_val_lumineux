@@ -59,7 +59,7 @@ class Planning extends HTMLElement {
     //fonction qui "dessine" notre tab (appeller a chaque changement)
     render() {
         //options => menu peremet de choisir quel docteur on veux voir
-        let options = `<option value="Tous">Tous les médecins</option>`;
+        let options = `<option value="Tous">Tous les médecins</option> `;
         for (let doc of this.allDoctors) {
             //pour chaque doc on ajoute une nv option
             options += `<option value="${doc.id}">Dr ${doc.name}</option>`;
@@ -68,6 +68,8 @@ class Planning extends HTMLElement {
         //on initialise nos options + notre tableau vide
         let html = `
             <select id="selectDoc">${options}</select>
+            <div id="semainePrec"><=</div>
+            <div id="semaineSuiv">=></div>
             <div class="planning-grid">
                 <div class="case-vide"></div>
         `;
@@ -103,10 +105,27 @@ class Planning extends HTMLElement {
             this.selectedDoctorId = e.target.value;
             this.render();
         });
+        //Ajout de 7j dans notre semaine actuelle + repaint.
+        this.querySelector("#semaineSuiv").addEventListener("click",(e)=>{
+            this.semaineActuelle = this.semaineActuelle.map(jour=>{
+                let nouvelleDate = new Date(jour);
+                nouvelleDate.setDate(nouvelleDate.getDate() + 7);
+                return nouvelleDate;
+            });
+            this.render();
+        });
+        //Retrait de 7jours dans notre semaine actuelle + repaint.
+        this.querySelector("#semainePrec").addEventListener("click",(e)=>{
+            this.semaineActuelle = this.semaineActuelle.map(jour=>{
+                let nouvelleDate = new Date(jour);
+                nouvelleDate.setDate(nouvelleDate.getDate() - 7);
+                return nouvelleDate;
+            });
+            this.render();
+        })
     }
 
     estOccupe(date, h) {
-        
         let res = false;
         //on parcours tous les docs
         for (let doc of this.allDoctors) {
@@ -121,12 +140,10 @@ class Planning extends HTMLElement {
                         let mmDate = (
                         dateRdv.getFullYear() === date.getFullYear() &&
                         dateRdv.getMonth() === date.getMonth() &&
-                        dateRdv.getDay() === date.getDay()
+                        dateRdv.getDate() === date.getDate()
                     );                        //si notre rdv corresponds a la case actuelle on renvoie vrai.
-                        console.log(mmDate);
                         if (mmDate && dateRdv.getHours() == h && app.reserved == true) {
                             res = true;
-                            console.log("OUIII");
                         }
                     }
                 }
