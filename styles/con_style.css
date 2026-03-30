@@ -9,7 +9,7 @@ body {
 .conn {
     width: 50vw;
     height: 80vh;
-    background-color: var(--tertiary-bg-color);
+    background-color: white;
     padding: 15px;
     border-radius: 25px;
     display: flex;
