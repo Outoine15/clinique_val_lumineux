@@ -5,49 +5,166 @@ body {
     justify-content: center;
     align-items: center;
     background-color: var(--secondary-bg-color);
+    font-family: 'Open Sans',sans-serif;
 }
+
 .conn {
-    width: 50vw;
-    height: 80vh;
-    background-color: var(--tertiary-bg-color);
-    padding: 15px;
-    border-radius: 25px;
+    width: 80vw;
+    height: 520px;
+    border-radius: 20px;
+    overflow: hidden; 
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+}
+
+.left-panel{
+    background-color : #1e5a9e;
+    padding: 48px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    color : var(--primary-bg-color);
+    gap: 20px;
 }
 
-.inline {
+.left-panel h2{
+    font-size: 26px;
+    line-height: 1.4;
+    font-weight: 700;
+    margin: 0;
+}
+
+.left-panel p{
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.logo{
     display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
-    margin: 20px;
-    font-size: 20px;
-    text-align: center;
+    gap:12px;
+    font-size: 14px;
 }
 
-input {
+.logo i{
+    font-size: 28px;
+}
+
+.logo strong{
+    display: block;
+    font-weight: 600;
+}
+
+.logo span{
+    font-size: 12px;
+    opacity: 0.75;
+}
+
+.right-pannel{
+    background-color : var(--primary-bg-color);
+    padding : 48px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+}
+
+.right-pannel h1{
     font-size: 24px;
-    border-radius: 10px;
-    padding-left: 10px;
+    color: var(--primary-text-color);
+    margin: 0;
 }
 
-button {
-    border-radius: 10px;
-    width: 200px;
-    height: 50px;
-    background-color: var(--secondary-bg-color);
+.subtitle{
+    font-size: 13px;
+    color: lightgrey;
+    margin: -10px 0 0 0;
+}
+
+.field-group{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.field-group label{
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--secondary-text-color);
-    font-size: 24px;
 }
 
-#password {
-    position: relative;
-    left: 10px;
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+    font-size: 15px;
+    border: 1.5px solid var(--tertiary-bg-color);
+    border-radius: 10px;
+    padding: 1px 14px;
+    background: white;
+    border-color: var(--secondary-bg-color);
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+    box-sizing: border-box; /* Padding 'déborde' pas */
 }
 
-#togglePassword {
-    position: relative;
-    left: -30px;
+.strength-bar{
+    height: 4px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    overflow: hidden;
 }
+
+.strength-fill{
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    transition: width 0.3s, background-color 0.3s;
+}
+
+.forgot-link{
+    font-size: 13px;
+    color: var(--secondary-bg-color);
+    text-decoration: none;
+}
+
+.forgot-link:hover{
+    text-decoration: underline;
+}
+
+button#connexion-bt{
+    width: 100%;
+    padding: 13px;
+    background-color: var(--secondary-bg-color);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+button#connexion-bt:hover{
+    opacity: 0.8;
+}
+
+button#connexion-bt:active{
+    transform: scale(0.98);
+}
+
+.security-note{
+    font-size: 11px;
+    color: #bbb;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0;
+    padding-top: 8px;
+    border-top: 1px solid var(--tertiary-bg-color);
+}
+

@@ -12,13 +12,13 @@ export function check_conn_connexion(){
 }
 
 export function check_conn_general(){
+    
     const token = getCookie("token");
-
     if (!token || token === "undefined" || token === "null"){
         // non connecté
         window.location.replace("../login");
     } else {
-        // connecté
+        console.log("connecté bravo");
     }
 }
 

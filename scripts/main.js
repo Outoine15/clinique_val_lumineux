@@ -1,4 +1,4 @@
-import { check_conn_general } from "/scripts/connUtils.js";
+import { check_conn_general } from "./connUtils.js";
 import { LogoutButton } from "/component/logout/logout.js";
 import { DoctorCard } from "/component/doctor_card/doctor_card.js";
 
