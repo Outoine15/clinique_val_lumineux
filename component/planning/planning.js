@@ -63,8 +63,7 @@ class Planning extends HTMLElement {
 
         try{
             //on charge api sectors
-            const resSect = [];
-            // const resSect = await axios.get("../api/sectors");
+            const resSect = await axios.get("../api/sectors");
             //on initialise allSectors en vérifiant que c'est bien un Array.
             this.allSectors = Array.isArray(resSect.data) ? resSect.data : [];
             console.log("sectors chargés : ",this.allSectors);
@@ -87,7 +86,7 @@ class Planning extends HTMLElement {
         let sectors = `<option value="Tous">Toutes les secteurs</option>`;
         for(let sect of this.allSectors){
             //pour chaque secteur on crée une option avec son nom
-            options += `<option value=${sect.id}">${sect.name}</options>`;
+            sectors += `<option value="${sect.id}">${sect.name}</options>`;
         }
         
 
@@ -165,7 +164,7 @@ class Planning extends HTMLElement {
             });
             this.render();
         });
-        
+
         //Retrait de 7jours dans notre semaine actuelle + repaint.
         this.querySelector("#semaineActuelle").addEventListener("click",(e)=>{
             this.semaineActuelle = this.getSemaineActuelle();
@@ -174,7 +173,7 @@ class Planning extends HTMLElement {
     }
 
     rightSector(doc){
-        return this.selectedSectorId = "Tous" || doc.sector_id == this.selectedSectorId;
+        return this.selectedSectorId == "Tous" || doc.sector.id == this.selectedSectorId;
     }
 
     estOccupe(date, h) {
