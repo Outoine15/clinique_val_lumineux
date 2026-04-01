@@ -60,7 +60,7 @@
     transform: translateY(0);
 }
 
-#selectDoc {
+#selectDoc, #selectSect {
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #ccc;
