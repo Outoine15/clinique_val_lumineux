@@ -23,6 +23,24 @@
     color: #2c3e50;
 }
 
+.cellule:not(.occupe):hover {
+    background-color: #f0f7ff ; 
+    color: #276fbf; 
+    outline: 2px solid #276fbf;
+    outline-offset: -2px; 
+    font-weight: 600;
+    z-index: 2;
+}
+
+.cellule {
+    transition: background-color 0.15s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; 
+}
+
+
+
 .cellule.occupe {
     background-color: #ecf0f1;
     color: #95a5a6;
@@ -39,7 +57,7 @@
 }
 
 .bt-nav {
-    background-color: #007bff; /* Bleu médical */
+    background-color: #007bff; 
     color: white;
     border: none;
     border-radius: 5px;

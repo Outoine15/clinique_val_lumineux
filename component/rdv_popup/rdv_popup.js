@@ -1,6 +1,7 @@
 import { getCookie } from "../../scripts/cookiesUtils.js";
 import { isEmptyObject } from "../../scripts/codeUtils.js";
 
+import "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js";
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");
 cssLink.setAttribute("href", import.meta.url.replace(".js", ".css"));
@@ -31,7 +32,7 @@ export class RdvPopup extends HTMLElement {
         ).then(res => {
             if(!isEmptyObject(res.data)){
                 this.data = res.data;
-
+                console.log(this.data);
                 this.data.forEach(client => {
                     let client_info= document.createElement("p");
                     client_info.innerHTML=`

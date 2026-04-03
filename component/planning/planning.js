@@ -1,4 +1,5 @@
 import "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js";
+import "../rdv_popup/rdv_popup.js";
 const cssLink = document.createElement("link");
 const policeLink = document.createElement("link");
 cssLink.setAttribute("rel","stylesheet");
@@ -121,7 +122,14 @@ class Planning extends HTMLElement {
             //On rempli la case en gris si elle est occupée.
             this.semaineActuelle.forEach(dateCol=>{
                 let occupe = this.estOccupe(dateCol,parseInt(h));
-                html += `<div class="cellule ${occupe ? 'occupe' : ''}">${occupe ? 'Pris' : ''}</div>`;
+                
+
+                let annee = dateCol.getFullYear();
+                let mois = (dateCol.getMonth() + 1) < 10 ? "0" + (dateCol.getMonth() +1) : (dateCol.getMonth() +1);
+                let jour = dateCol.getDate() < 10 ? "0" + dateCol.getDate() : dateCol.getDate();
+                let heure = `${h}:00:00.000000`;
+                let fullDate = `${annee}-${mois}-${jour} ${heure}`;
+                html += `<div class="cellule ${occupe ? 'occupe' : ''}" data-creneauStart="${fullDate}">${occupe ? 'Pris' : ''}</div>`;
             });
         }
 
@@ -170,6 +178,15 @@ class Planning extends HTMLElement {
             this.semaineActuelle = this.getSemaineActuelle();
             this.render();
         });
+
+        //ajout un queryselectorAll + une boucle qui premet de crée un rdv selon semaine/heure/medecin/user
+        //verifier que user bien connecté.
+
+        this.querySelectorAll(".cellule:not(.occupe)").forEach(cellule=>{
+
+
+        })
+        
     }
 
     rightSector(doc){
