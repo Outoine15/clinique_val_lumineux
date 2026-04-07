@@ -40,6 +40,7 @@ body > doctor-card {
 
 .doctorCard:hover {
     transform: translateY(-5px); 
+    z-index: 1;
 }
 
 

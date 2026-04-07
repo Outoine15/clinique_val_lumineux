@@ -5,6 +5,8 @@ cssLink.setAttribute("rel", "stylesheet");
 cssLink.setAttribute("href", import.meta.url.replace(".js", ".css"));
 document.head.appendChild(cssLink);
 
+const popup_div = document.querySelector(".rdv-popup-window");
+
 class AppointmentTime extends HTMLElement {
     constructor(data) {
         super();
@@ -28,7 +30,7 @@ class AppointmentTime extends HTMLElement {
         let reserve_appointment = this.querySelector(".appointmentTime");
         reserve_appointment.addEventListener("click", (event) => {
             let rdv_selection = new RdvPopup(this.data["id"]);
-            document.body.appendChild(rdv_selection);
+            popup_div.appendChild(rdv_selection);
             });
     }
     

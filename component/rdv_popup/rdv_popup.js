@@ -23,6 +23,9 @@ export class RdvPopup extends HTMLElement {
 
     connectedCallback() {
         let popup_info_section = this.querySelector(".rdvPopupInfo");
+        let popup_background_div = document.querySelector(".popup-background-window");
+        popup_background_div.classList.add("popup-background-window-active")
+
         axios.get("../api/clients", {
             headers: {
                 Authorization: "Bearer "+getCookie("token")
@@ -39,8 +42,10 @@ export class RdvPopup extends HTMLElement {
                             ${client["firstname"] || "Prénom"} ${client["name"] || "Nom"}
                         </p>
                         `
+                    
                     popup_info_section.appendChild(client_info);
                     client_info.addEventListener("click", (event) => {
+                    popup_background_div.classList.remove("popup-background-window-active")
                     axios.put(
                         "../api/appointments/"+this.rdv_id+"/subscribe", 
                         new URLSearchParams({

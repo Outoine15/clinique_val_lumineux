@@ -5,7 +5,7 @@ const rdvButtons = document.querySelectorAll(".btn-rdv");
 
 rdvButtons.forEach(rdvButton => {
     rdvButton.addEventListener("click",()=>{
-        window.location.replace("../account");
+        window.location.replace("../rdv");
     })
 });
 
