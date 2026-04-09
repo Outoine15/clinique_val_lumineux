@@ -30,7 +30,7 @@ export function check_conn_general(){
         // non connecté
         window.location.replace("../login");
     } else {
-        console.log("connecté bravo");
+        // connecté (ne rien faire)
     }
 }
 
