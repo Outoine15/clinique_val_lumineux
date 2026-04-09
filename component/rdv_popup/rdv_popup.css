@@ -1,8 +1,33 @@
-.rdv-popup-window {
-    background-color: blue;
+.rdv-popup-window-active {
+    background-color: white;
     position: fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
-    width:150px;
+    width:20em;
+    border-radius: 12px;
+}
+
+.rdvPopup {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.rdvPopupClientName {
+    background-color: var(--secondary-bg-color);
+    border-radius: 12px;
+    padding: 5px;
+    text-align: center;
+}
+
+.rdvPopupClientName:hover {
+    transform: translateY(-3px);
+    box-shadow: 2px 5px 2px #adb5bd;
+}
+
+.rdvPopupWarnings {
+    margin:5px;
+    margin-bottom: 20px;
 }

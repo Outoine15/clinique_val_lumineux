@@ -29,7 +29,7 @@ class AppointmentTime extends HTMLElement {
         </div>`;
         let reserve_appointment = this.querySelector(".appointmentTime");
         reserve_appointment.addEventListener("click", (event) => {
-            let rdv_selection = new RdvPopup(this.data["id"]);
+            let rdv_selection = new RdvPopup(this.data["id"],reserve_appointment);
             popup_div.appendChild(rdv_selection);
             });
     }

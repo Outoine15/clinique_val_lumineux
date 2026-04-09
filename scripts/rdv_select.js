@@ -1,5 +1,4 @@
 import { check_conn_general } from "./connUtils.js";
-import { LogoutButton } from "../component/logout/logout.js";
 import { DoctorCard } from "../component/doctor_card/doctor_card.js";
 
 //verifie si l'utilisateur est connecte, (doit être executer avec tout autre code quand l'utilisateur arrive sur une page qui nécessite une connexion)
@@ -15,10 +14,6 @@ doctorContainer.classList.add("doctor-grid");
 
 document.body.appendChild(doctorContainer);
 
-
-
-let loggout_bt = new LogoutButton();
-document.body.appendChild(loggout_bt);
 
 axios.get("../api/doctors", {
 

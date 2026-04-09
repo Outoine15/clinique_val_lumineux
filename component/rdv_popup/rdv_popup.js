@@ -10,12 +10,16 @@ export class RdvPopup extends HTMLElement {
     data;
     rdv_id;
 
-    constructor(rdv_id) {
+    constructor(rdv_id,rdv_div) {
         super();
         this.rdv_id=rdv_id;
+        this.rdv_div=rdv_div;
         this.innerHTML=`
         <div class="rdvPopup">
+            <p>Pour qui prendre le rendez-vous ?</p>
             <section class="rdvPopupInfo">
+            </section>
+            <section class="rdvPopupWarnings">
             </section>
         </div>
         `
@@ -23,8 +27,11 @@ export class RdvPopup extends HTMLElement {
 
     connectedCallback() {
         let popup_info_section = this.querySelector(".rdvPopupInfo");
+        let popup_warning_section = this.querySelector(".rdvPopupWarnings");
         let popup_background_div = document.querySelector(".popup-background-window");
         popup_background_div.classList.add("popup-background-window-active")
+        let popup_div = document.querySelector(".rdv-popup-window");
+        popup_div.classList.add("rdv-popup-window-active");
 
         axios.get("../api/clients", {
             headers: {
@@ -45,29 +52,37 @@ export class RdvPopup extends HTMLElement {
                     
                     popup_info_section.appendChild(client_info);
                     client_info.addEventListener("click", (event) => {
-                    popup_background_div.classList.remove("popup-background-window-active")
-                    axios.put(
-                        "../api/appointments/"+this.rdv_id+"/subscribe", 
-                        new URLSearchParams({
-                            "client_id": client["id"]
-                        }),
-                        {
-                            headers: {
-                                authorization: "Bearer "+getCookie("token")
-                            }
-                        }    
-                    ).then(response => {
-                            console.log(response);
-                            if(response.data.success==true){
-                                // creneau reserve
-                                console.log("rdv reservé, id:"+this.rdv_id);
-                                this.remove();
-                            } else {
-                                this.remove();
-                                // impossible de reserver le creneau
-                            }
-                        }).catch(err => {
-                            // 404 ou 500
+                        axios.put(
+                            "../api/appointments/"+this.rdv_id+"/subscribe", 
+                            new URLSearchParams({
+                                "client_id": client["id"]
+                            }),
+                            {
+                                headers: {
+                                    authorization: "Bearer "+getCookie("token")
+                                }
+                            }    
+                        ).then(response => {
+                                if(response.data.success==true){
+                                    popup_warning_section.innerHTML="rendez-vous réservé avec succès";
+                                    setTimeout(()=> {
+                                        this.rdv_div.classList.add("reserved"); //marque le creneau comme réservé
+                                        popup_background_div.classList.remove("popup-background-window-active")
+                                        popup_div.classList.remove("rdv-popup-window-active");
+                                        this.remove();
+                                    },2500);
+                                    // creneau reserve
+                                } else {
+                                    popup_warning_section.innerHTML="imposible de réserver le rendez vous";
+                                    setTimeout(()=> {
+                                        popup_background_div.classList.remove("popup-background-window-active")
+                                        popup_div.classList.remove("rdv-popup-window-active");
+                                        this.remove();
+                                    },2500);
+                                    // impossible de reserver le creneau
+                                }
+                            }).catch(err => {
+                                // 404 ou 500
                         });
                     })
                 });
