@@ -6,7 +6,8 @@
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--primary-bg-color);
+    background-image: url("/../images/background1.jpg");
+    background-size: cover;
     margin: 0;
     padding: 0;
 }
