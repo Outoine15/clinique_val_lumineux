@@ -1,0 +1,49 @@
+.client-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+}
+
+.client-info > div {
+    margin: 10px;
+}
+
+.client-info > div:nth-child(odd) {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.client-info > div:nth-child(even) {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.gestion-client {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#user-client-info-input + #user-client-info-input {
+  margin-top: 15px;
+}
+
+#user-client-info-input {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  column-gap: 15px;
+  align-items: center;
+  text-align: center;
+}
+
+#user-client-info-input input {
+  height: 36px;
+  width: 10em;
+  margin: auto;
+}
+
+button {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
