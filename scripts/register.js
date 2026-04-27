@@ -13,24 +13,17 @@ registerButton.addEventListener('click', () => {
     var password = passwordInput.value;
 
     if(firstname && name && birthdate && mail && password) { // s'ils sont tous définie
-        axios.put(
-            "../api/users",
+        axios.put("../api/users",
             new URLSearchParams({
-                "mail": mail,
-                "name": name,
-                "firstname": firstname,
-                "password": password,
-                "birthdate": birthdate
+                mail: mail,
+                name: name,
+                firstname: firstname,
+                password: password,
+                birthdate: birthdate
             }).toString()
         ).then(response => {
             var res = response.data;
-
-            try {
-                sessionStorage.setItem("user_token", res["token"]);
-                window.location.href = "../dashboard";
-            } catch (error) {
-                // success = false -> une erreur est survenue   
-            }
+            window.location.href("../login");
         }).catch(err => {
             // 404 ou 500 -> "une erreur est survenue"
         });
