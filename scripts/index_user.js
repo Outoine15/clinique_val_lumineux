@@ -24,7 +24,7 @@ axios.get("../api/clients", {
             client_info.classList.add("client-info");
             let client_name = document.createElement("div");
             let client_code = document.createElement("div");
-            client_name.innerHTML=`${client["name"]} ${client["firstname"]}`
+            client_name.innerHTML=`${client["name"]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${client["firstname"]}`
             client_code.innerHTML=`${generateClientCode(client["id"],client["name"],client["firstname"])}`;
             client_info.appendChild(client_name);
             client_info.appendChild(client_code);
@@ -61,18 +61,18 @@ client_code_confirm.addEventListener("click", () => {
 
 let new_client_firstname = document.getElementById("new-client-firstname");
 let new_client_lastname = document.getElementById("new-client-lastname");
-let new_client_birthday = document.getElementById("new-client-birthday");
+let new_client_birthdate = document.getElementById("new-client-birthdate");
 
 let new_client_confirm = document.getElementById("new-client-confirm");
 
 new_client_confirm.addEventListener("click", () => {
     console.log("création d'un nouveau client...");
-    console.log(new_client_birthday.value);
+    console.log(new_client_birthdate.value);
     axios.post("../api/clients",
         new URLSearchParams({
             name:new_client_lastname.value,
             firstname:new_client_firstname.value,
-            birthday:new_client_birthday.value
+            birthdate:new_client_birthdate.value
         }),
         {
             headers: {
