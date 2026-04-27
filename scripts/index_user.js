@@ -51,6 +51,20 @@ client_code_confirm.addEventListener("click", () => {
         }
     }).then(response => {
         console.log(response.data);
+        if(!isEmptyObject(response.data)){
+            if(response.data.success==true){
+                let client=response.data.client;
+                let client_info = document.createElement("div");
+                client_info.classList.add("client-info");
+                let client_name = document.createElement("div");
+                let client_code = document.createElement("div");
+                client_name.innerHTML=`${client["name"]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${client["firstname"]}`
+                client_code.innerHTML=`${generateClientCode(client["id"],client["name"],client["firstname"])}`;
+                client_info.appendChild(client_name);
+                client_info.appendChild(client_code);
+                user_manage_client_info_section.appendChild(client_info);
+            }
+        }
     }).catch(err => {
         console.log("request failed");
         console.log(err);
@@ -77,6 +91,18 @@ new_client_confirm.addEventListener("click", () => {
             }
         }).then(response => {
             console.log(response.data);
+            if(!isEmptyObject(response.data.id)){
+                let client=response.data;
+                let client_info = document.createElement("div");
+                client_info.classList.add("client-info");
+                let client_name = document.createElement("div");
+                let client_code = document.createElement("div");
+                client_name.innerHTML=`${client["name"]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${client["firstname"]}`
+                client_code.innerHTML=`${generateClientCode(client["id"],client["name"],client["firstname"])}`;
+                client_info.appendChild(client_name);
+                client_info.appendChild(client_code);
+                user_manage_client_info_section.appendChild(client_info);
+            }
         }).catch(err => {
             console.log("request failed");
             console.log(err);
