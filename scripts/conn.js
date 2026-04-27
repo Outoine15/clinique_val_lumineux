@@ -8,6 +8,7 @@ const icon = document.getElementById("togglePassword");
 const pwd = document.getElementById("password");
 const errorMessage = document.querySelector(".error-message");
 const forgotPassword = document.querySelector(".forgot-password");
+const logo = document.querySelector(".logo i");
 let mail = document.getElementById("mail");
 let password = document.getElementById("password");
 
@@ -23,6 +24,10 @@ icon.addEventListener('click', (event) => {
     icon.classList.add("fa-eye-slash");
     icon.classList.remove("fa-eye");
   }
+});
+
+logo.addEventListener("click",()=>{
+    window.location.replace("../home");
 });
 
 pwd.addEventListener('input',(event)=>{
