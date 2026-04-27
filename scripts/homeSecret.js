@@ -1,3 +1,8 @@
+import { check_conn_general } from "./connUtils.js";
+import { LogoutButton } from "/component/logout/logout.js";
+
+check_conn_general();
+
 async function chargerMedecins() {
     try {
         const response = await fetch('/api/doctors');
@@ -22,6 +27,50 @@ async function chargerMedecins() {
     }
 }
 
+
+async function decalerRDV(event)
+{
+    event.preventDefault;
+const form = event.target;
+    const formData = new FormData(form);
+    const rdvId = formData.get('rdv_id');
+    const nouvelleDate = formData.get('nouvelle_date');
+
+    if (!nouvelleDate) return;
+
+    const startDate = new Date(nouvelleDate);
+    //on met 30 on part du principe qu'un rdv est 30 min
+    const endDate = new Date(startDate.getTime() + 30 * 60000);
+
+    const formatSQL = (date) => date.toISOString().slice(0, 19).replace('T', ' ');
+    
+    const data = new URLSearchParams();
+    data.append('time_start', formatSQL(startDate));
+    data.append('time_end', formatSQL(endDate));
+
+    try {
+        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+
+        const response = await fetch(`/api/appointments/${rdvId}/update`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: data.toString()
+        });
+
+        if (response.ok) {
+            alert("Rendez-vous déplacé !");
+            chargerTableauRDV(); // Rafraîchir l'affichage
+        } else {
+            const error = await response.json();
+            alert("Erreur : " + (error.message || "Impossible de modifier"));
+        }
+    } catch (error) {
+        console.error("Erreur modification :", error);
+    }
+}
 
 
 async function chargerTableauRDV() {
@@ -49,11 +98,11 @@ async function chargerTableauRDV() {
 
                 const tdAction = document.createElement('td');
                 tdAction.innerHTML = `
-                    <form class="form-decaler">
-                        <input type="hidden" name="rdv_id" value="${rdv.id}">
-                        <input type="datetime-local" name="nouvelle_date" required>
-                        <button type="submit">OK</button>
-                    </form>
+                <form class="form-modifier-rdv">
+                    <input type="hidden" name="rdv_id" value="${rdv.id}">
+                    <input type="datetime-local" name="nouvelle_date" required>
+                    <button type="submit">OK</button>
+                </form>
                 `;
 
                 tr.append(tdMed, tdPat, tdDate, tdAction);
@@ -66,6 +115,9 @@ async function chargerTableauRDV() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    const loggout_bt = new LogoutButton();
+    document.body.appendChild(loggout_bt);
+
     chargerMedecins();
     chargerTableauRDV();
     
@@ -73,6 +125,12 @@ window.addEventListener('DOMContentLoaded', () => {
     if (form) {
         form.addEventListener('submit', ajouterCreneau); 
     }
+
+    document.querySelector('table tbody').addEventListener('submit', (e) => {
+        if (e.target.classList.contains('form-modifier-rdv')) {
+            decalerRDV(e);
+        }
+    });
 });
 
 async function ajouterCreneau(event) {
@@ -83,8 +141,6 @@ async function ajouterCreneau(event) {
     
     const doctorId = formData.get('medecin_id');
     const startValue = formData.get('date_heure'); 
-    
-
 
     const startDate = new Date(startValue);
     const endDate = new Date(startDate.getTime() + 30 * 60000); 
@@ -94,14 +150,12 @@ async function ajouterCreneau(event) {
     const timeEnd = formatSQL(endDate);
 
     const data = new URLSearchParams();
-
     data.append('doctor_id', doctorId);
     data.append('time_start', timeStart);
     data.append('time_end', timeEnd);
 
     try {
         const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
-
         
         const response = await fetch('/api/appointments', {
             method: 'PUT',
@@ -119,7 +173,7 @@ async function ajouterCreneau(event) {
             form.reset();
             chargerTableauRDV(); 
         } else {
-            alert("Erreur : " + (result.message || result || "Requête refusée"));
+            alert("Erreur : " + (typeof result === 'string' ? result : JSON.stringify(result) || "Requête refusée"));
         }
     } catch (error) {
         console.error("Erreur lors de l'ajout :", error);
