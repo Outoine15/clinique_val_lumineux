@@ -41,7 +41,6 @@ let client_code_input = document.getElementById("client-code");
 let client_code_confirm = document.getElementById("client-code-confirm");
 
 client_code_confirm.addEventListener("click", () => {
-    console.log(client_code_input.value);
     axios.put("../api/clients",
         new URLSearchParams({
             client_code:client_code_input.value
@@ -66,8 +65,6 @@ let new_client_birthdate = document.getElementById("new-client-birthdate");
 let new_client_confirm = document.getElementById("new-client-confirm");
 
 new_client_confirm.addEventListener("click", () => {
-    console.log("création d'un nouveau client...");
-    console.log(new_client_birthdate.value);
     axios.post("../api/clients",
         new URLSearchParams({
             name:new_client_lastname.value,
