@@ -1,4 +1,4 @@
-import { getCookie } from "../scripts/cookiesUtils.js";
+import { deleteCookie, getCookie } from "../scripts/cookiesUtils.js";
 
 export function check_conn_connexion(){
     //redirection plus precise possible (en fonction du role)
@@ -28,6 +28,8 @@ export function check_conn_general(){
     const token = getCookie("token");
     if (!token || token === "undefined" || token === "null"){
         // non connecté
+        deleteCookie("token");
+        deleteCookie("role");
         window.location.replace("../login");
     } else {
         // connecté (ne rien faire)
