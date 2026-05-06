@@ -1,5 +1,6 @@
 import { isEmptyObject } from "../scripts/codeUtils.js";
 import { check_conn_connexion } from "./connUtils.js";
+import { setCookie } from "./cookiesUtils.js";
 
 var firstnameInput = document.getElementById("firstnameInput");
 var nameInput = document.getElementById("nameInput");
@@ -26,36 +27,16 @@ registerButton.addEventListener('click', () => {
             }).toString()
         ).then(response => {
             console.log(response.data);
-            if(!isEmptyObject(response.data)){
-                try{
-                    axios.get("../api/users", {
-                        headers: {
-                           Authorization: "Bearer "+response.data.token
-                        }
-                    }).then(response => {
-                        console.log(response);
                         var res = response.data;
                         //gestion cas de reponse
                         if(!isEmptyObject(response.data)){
-                            if(res.success==true){
-                                var token = res.token;
-                                var role = res.role;
-                            
-                                setCookie("token",token);
-                                setCookie("role",role);
-                            }
+                            var token = res.token;
+                            var role = res.role;
+                        
+                            setCookie("token",token);
+                            setCookie("role",role);
                         }
                         check_conn_connexion();
-                    })
-                      .catch(err => {
-                        console.log("request failed");
-                        console.log(err);
-                    });
-                } catch {
-                    // erreur connexion automatique, redirection sur connexion manuel (si le server n'a pas crash)
-                    window.location.replace("../login");
-                }
-            }
         }).catch(err => {
             console.log(err);
             // 404 ou 500 -> "une erreur est survenue"
