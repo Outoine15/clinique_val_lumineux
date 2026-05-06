@@ -32,7 +32,7 @@ export function check_conn_connexion(){
                 }
             }
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
         })
         // connecté
         // window.location.replace("../home"); //vers le dashboard a terme
@@ -53,7 +53,6 @@ export function check_conn_general(){
                 Authorization: "Bearer "+token
             }
         }).then(res => {
-            console.log(res);
             if(!isEmptyObject(res.data))
             {
                 // connecté 
@@ -64,7 +63,7 @@ export function check_conn_general(){
                 deleteCookie("role");
             }
         }).catch(err => {
-            console.log(err);
+            // console.log(err);
         })
         // connecté (ne rien faire)
     }
