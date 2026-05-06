@@ -22,12 +22,33 @@ axios.get("../api/clients", {
         res.data.forEach(client => {
             let client_info = document.createElement("div");
             client_info.classList.add("client-info");
+            client_info.classList.add("client-id-"+client["id"]);
             let client_name = document.createElement("div");
             let client_code = document.createElement("div");
+            let client_delete = document.createElement("button");
             client_name.innerHTML=`${client["name"]}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${client["firstname"]}`
             client_code.innerHTML=`${generateClientCode(client["id"],client["name"],client["firstname"])}`;
+            client_delete.innerHTML=`supprimer`;
+            client_delete.addEventListener("click", () => {
+                axios.delete("../api/clients/"+client["id"], {
+                    headers: {
+                        Authorization: "Bearer "+getCookie("token")
+                    }
+                }).then(res => {
+                    if(!isEmptyObject(res.data)){
+                        console.log("debug:\n"+res.data);
+                        if(res.data.success=true){
+                            let this_client = document.getElementsByClassName("client-id-"+client["id"]);
+                            this_client.remove();
+                        }
+                    }
+                }).catch(err => {
+
+            });
+            });
             client_info.appendChild(client_name);
             client_info.appendChild(client_code);
+            client_info.appendChild(client_delete);
             user_manage_client_info_section.appendChild(client_info);
         });
     }
