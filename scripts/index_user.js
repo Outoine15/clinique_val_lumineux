@@ -36,7 +36,7 @@ axios.get("../api/clients", {
                     }
                 }).then(res => {
                     if(!isEmptyObject(res.data)){
-                        console.log("debug:\n"+res.data);
+                        console.log(res.data);
                         if(res.data.success=true){
                             let this_client = document.getElementsByClassName("client-id-"+client["id"]);
                             this_client.remove();
