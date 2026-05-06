@@ -1,5 +1,8 @@
 import "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js";
-import "../rdv_popup/rdv_popup.js";
+import { check_conn_general } from "../../scripts/connUtils.js";
+import { isEmptyObject } from "../../scripts/codeUtils.js";
+import { getCookie } from "../../scripts/cookiesUtils.js";
+import { RdvPopup } from "../rdv_popup/rdv_popup.js";
 const cssLink = document.createElement("link");
 const policeLink = document.createElement("link");
 cssLink.setAttribute("rel","stylesheet");
@@ -58,6 +61,7 @@ class Planning extends HTMLElement {
             //on charge api doctors
             const resDoc = await axios.get("../api/doctors");
             this.allDoctors = Array.isArray(resDoc.data) ? resDoc.data : [];
+            console.log(this.allDoctors);
         } catch (error) {
             console.error("Erreur chargement :", error);
         }
@@ -114,22 +118,20 @@ class Planning extends HTMLElement {
 
             html += `<div class="header-jour">${jour} ${jj}/${mm}</div>`;
         });
-
         for (let h of HEURES) {
             //on ajt chaque heure en début de ligne.
             html += `<div class="colonne-heure">${h}h00</div>`;
-
             //On rempli la case en gris si elle est occupée.
             this.semaineActuelle.forEach(dateCol=>{
-                let occupe = this.estOccupe(dateCol,parseInt(h));
-                
+                let rdv_id = this.getRdvId(dateCol,parseInt(h));
+                let etatCreneau = this.estOccupe(dateCol,parseInt(h));
 
                 let annee = dateCol.getFullYear();
                 let mois = (dateCol.getMonth() + 1) < 10 ? "0" + (dateCol.getMonth() +1) : (dateCol.getMonth() +1);
                 let jour = dateCol.getDate() < 10 ? "0" + dateCol.getDate() : dateCol.getDate();
                 let heure = `${h}:00:00.000000`;
                 let fullDate = `${annee}-${mois}-${jour} ${heure}`;
-                html += `<div class="cellule ${occupe ? 'occupe' : ''}" data-creneauStart="${fullDate}">${occupe ? 'Pris' : ''}</div>`;
+                html += `<div class="cellule ${etatCreneau==1 ? 'occupe' : etatCreneau==2 ? 'disponible' : ''}" data-creneauStart="${fullDate}" data-rdvId="${rdv_id || ''}">${etatCreneau==1 ? 'Pris' : etatCreneau==2 ? 'Reserver' : ''}</div>`;
             });
         }
 
@@ -179,22 +181,29 @@ class Planning extends HTMLElement {
             this.render();
         });
 
-        //ajout un queryselectorAll + une boucle qui premet de crée un rdv selon semaine/heure/medecin/user
-        //verifier que user bien connecté.
-
-        this.querySelectorAll(".cellule:not(.occupe)").forEach(cellule=>{
-
-
+        this.querySelectorAll(".cellule.disponible").forEach(cellule=>{
+            cellule.addEventListener("click",(e)=>{
+                //verifier que l'utilisateur est co, si non on redirige vers connexion 
+                check_conn_general();
+                const rdv_id = e.currentTarget.getAttribute("data-rdvId");
+                const popup = new RdvPopup(rdv_id);
+                document.body.appendChild(popup);
+            
+            })
         })
-        
     }
+                
 
     rightSector(doc){
         return this.selectedSectorId == "Tous" || doc.sector.id == this.selectedSectorId;
     }
 
+    //fonction renvoie 0 => créneau vide
+                     //1 => créneau occupé
+                     //2 => créneau dispo
+    // + met a jour le rdv_id.
     estOccupe(date, h) {
-        let res = false;
+        let res = 0; //par défaut créneau vide
         //on parcours tous les docs
         for (let doc of this.allDoctors) {
             //si doc choisi == "Tous" ou du doc actuel on continue
@@ -212,7 +221,9 @@ class Planning extends HTMLElement {
                     );                        
                         //si notre rdv corresponds a la case actuelle on renvoie vrai.
                         if (mmDate && dateRdv.getHours() == h && app.reserved == true && this.rightSector(doc)) {
-                            res = true;
+                            res = 1;
+                        } else if (mmDate && dateRdv.getHours() == h && app.reserved == false && this.rightSector(doc)){
+                            res = 2;
                         }
                     }
                 }
@@ -221,6 +232,35 @@ class Planning extends HTMLElement {
 
         return res;
     }
+
+    getRdvId(date,h){
+        for (let doc of this.allDoctors) {
+            //si doc choisi == "Tous" ou du doc actuel on continue
+            if (this.selectedDoctorId == "Tous" || doc.id == this.selectedDoctorId) {
+                //si ce doc a des rdv
+                if (doc.appointments) {
+                    //on parcours tous ses rdv
+                    for (let app of doc.appointments) {
+                        //a chaque rdv on crée un objet Date avec les mm propriétes.
+                        let dateRdv = new Date(app.start);
+                        let mmDate = (
+                        dateRdv.getFullYear() === date.getFullYear() &&
+                        dateRdv.getMonth() === date.getMonth() &&
+                        dateRdv.getDate() === date.getDate()
+                    );
+
+                    if (mmDate && dateRdv.getHours() == h && this.rightSector(doc)) {
+                        return app.id;
+                    }
+                    }   
+                }
+            }
+        }
+    }
+
+
+
+
 }
 
 customElements.define("planning-component", Planning);

@@ -1,6 +1,5 @@
 import { getCookie } from "../../scripts/cookiesUtils.js";
 import { isEmptyObject } from "../../scripts/codeUtils.js";
-
 import "https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js";
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");

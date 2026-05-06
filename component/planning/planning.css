@@ -85,3 +85,37 @@
     font-family: inherit;
     outline: none;
 }
+/* --- Style pour les créneaux DISPONIBLES (Bleu Professionnel) --- */
+
+.cellule.disponible {
+    background-color: #e3f2fd; /* Bleu très clair */
+    color: #1976d2;            /* Texte bleu soutenu */
+    border: 1px solid #bbdefb;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.cellule.disponible:hover {
+    background-color: #276fbf !important; /* Ton bleu primaire */
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    /* On cache le texte d'origine pour ne pas qu'il s'empile avec d'éventuels ajouts */
+    font-size: 0.9em; 
+}
+
+/* Option : si tu veux changer le texte proprement au survol */
+.cellule.disponible:hover {
+    /* On rend le texte invisible mais on garde la zone */
+    color: transparent !important; 
+}
+
+.cellule.disponible:hover::after {
+    content: "PRENDRE RDV";
+    position: absolute;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
