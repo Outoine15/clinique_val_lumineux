@@ -1,3 +1,4 @@
+import { getCookie } from "../../scripts/cookiesUtils.js";
 const cssLink = document.createElement("link");
 const policeLink = document.createElement("link");
 cssLink.setAttribute("rel","stylesheet");
@@ -16,7 +17,7 @@ class Header extends HTMLElement {
                 <a href="../home">Clinique du Val Lumineux</a> 
                 <div class="pages">
                     <a href="#">RDV</a>
-                    <a href="../account" class="account">Compte</a>
+                    <a href="../account" class="account">${getCookie("token") ? 'Compte' : 'Se connecter'}</a>
                 </div>
             </header>
         `;

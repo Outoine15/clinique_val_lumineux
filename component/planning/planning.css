@@ -1,0 +1,121 @@
+.planning-grid {
+    display: grid;
+    grid-template-columns: 100px repeat(5, 1fr); 
+    gap: 1px;
+    background-color: #bdc3c7; 
+    border: 1px solid #bdc3c7;
+    margin-top: 20px;
+}
+
+.case-vide, .header-jour, .colonne-heure, .cellule {
+    background-color: white;
+    padding: 15px 5px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50px;
+}
+
+.header-jour, .colonne-heure {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.cellule:not(.occupe):hover {
+    background-color: #f0f7ff ; 
+    color: #276fbf; 
+    outline: 2px solid #276fbf;
+    outline-offset: -2px; 
+    font-weight: 600;
+    z-index: 2;
+}
+
+.cellule {
+    transition: background-color 0.15s ease-in-out;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden; 
+}
+
+
+
+.cellule.occupe {
+    background-color: #ecf0f1;
+    color: #95a5a6;
+    font-size: 0.8em;
+    font-style: italic;
+}
+
+.planning-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.bt-nav {
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.bt-nav:hover {
+    background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+}
+
+.bt-nav:active {
+    transform: translateY(0);
+}
+
+#selectDoc, #selectSect {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-family: inherit;
+    outline: none;
+}
+/* --- Style pour les créneaux DISPONIBLES (Bleu Professionnel) --- */
+
+.cellule.disponible {
+    background-color: #e3f2fd; /* Bleu très clair */
+    color: #1976d2;            /* Texte bleu soutenu */
+    border: 1px solid #bbdefb;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.cellule.disponible:hover {
+    background-color: #276fbf !important; /* Ton bleu primaire */
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    /* On cache le texte d'origine pour ne pas qu'il s'empile avec d'éventuels ajouts */
+    font-size: 0.9em; 
+}
+
+/* Option : si tu veux changer le texte proprement au survol */
+.cellule.disponible:hover {
+    /* On rend le texte invisible mais on garde la zone */
+    color: transparent !important; 
+}
+
+.cellule.disponible:hover::after {
+    content: "PRENDRE RDV";
+    position: absolute;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
