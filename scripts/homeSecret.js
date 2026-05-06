@@ -30,7 +30,7 @@ async function chargerMedecins() {
 
 async function decalerRDV(event)
 {
-    event.preventDefault;
+    event.preventDefault();
 const form = event.target;
     const formData = new FormData(form);
     const rdvId = formData.get('rdv_id');
@@ -125,12 +125,13 @@ window.addEventListener('DOMContentLoaded', () => {
     if (form) {
         form.addEventListener('submit', ajouterCreneau); 
     }
-
+    
     document.querySelector('table tbody').addEventListener('submit', (e) => {
         if (e.target.classList.contains('form-modifier-rdv')) {
             decalerRDV(e);
         }
     });
+
 });
 
 async function ajouterCreneau(event) {
