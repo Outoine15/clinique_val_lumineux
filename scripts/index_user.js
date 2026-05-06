@@ -1,8 +1,8 @@
 import "../component/header/header.js";
 import "../component/footer/footer.js";
 
-import { getCookie } from "../../scripts/cookiesUtils.js";
-import { isEmptyObject } from "../../scripts/codeUtils.js";
+import { getCookie } from "../scripts/cookiesUtils.js";
+import { isEmptyObject } from "../scripts/codeUtils.js";
 import { LogoutButton } from "../component/logout/logout.js";
 import { generateClientCode } from "../scripts/codeUtils.js";
 
