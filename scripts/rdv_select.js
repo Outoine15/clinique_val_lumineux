@@ -1,4 +1,4 @@
-import { check_conn_general } from "./connUtils.js";
+import { check_conn_general } from "../connUtils.js";
 import { DoctorCard } from "../component/doctor_card/doctor_card.js";
 
 //verifie si l'utilisateur est connecte, (doit être executer avec tout autre code quand l'utilisateur arrive sur une page qui nécessite une connexion)
@@ -19,7 +19,6 @@ axios.get("../api/doctors", {
 
 // parametres
 }).then(res => {
-    console.log(res);
     res.data.forEach(doctor => {
         let card = new DoctorCard(doctor);
         doctorContainer.appendChild(card);

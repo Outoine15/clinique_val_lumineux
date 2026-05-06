@@ -5,10 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinique du Val Lumineux</title>
     <link rel="stylesheet" href="../styles/theme.css">
+    <link rel="stylesheet" href="../styles/index_user.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../scripts/conn_checker.js" type="module"></script>
   </head>
   <body>
+    <header-component>
+    </header-component>
+
     <h1>bonjour et bienvenu</h1>
-    <script src="../scripts/conn_checker.js" type="module"></script>
+
+    <section class="gestion-client">
+      <h2>Gestion de vos comptes clients</h2>
+
+      <section class="user-manage-client-info">
+        <div class="client-info">
+          <div>
+            <b>nom/prénom</b>
+            </div>
+            <div>
+              <b>code client</b>
+            </div>
+        </div>
+      </section>
+
+      <h2>Ajouter un compte client</h2>
+
+      <h3>avec un code client</h3>
+      <input type="text" name="client-code" id="client-code">
+      <button type="button" id="client-code-confirm">ajouter</button>
+      <h3>créer un nouveau client</h3>
+      <div id="user-client-info-input">
+        <label for="new-client-firstname">prénom</label>
+        <input type="text" name="new-client-firstname" id="new-client-firstname">
+      </div>
+      <div id="user-client-info-input">
+        <label for="new-client-lastname">nom de famille</label>
+        <input type="text" name="new-client-lastname" id="new-client-lastname">
+      </div>
+      <div id="user-client-info-input">
+        <label for="new-client-birthdate">date de naissance</label>
+        <input type="date" name="new-client-birthdate" id="new-client-birthdate">
+      </div>
+      <button type="button" id="new-client-confirm">créer</button>
+    <div id="logout-button"></div>
+
+    </section>
+
+    
     <script src="../scripts/index_user.js" type="module"></script>
+
+    <footer-component>
+    </footer-component>
   </body>
 </html>

@@ -1,6 +1,6 @@
 import { isEmptyObject } from "../scripts/codeUtils.js";
-import { check_conn_connexion } from "./connUtils.js";
-import { setCookie } from "./cookiesUtils.js";
+import { check_conn_connexion } from "../connUtils.js";
+import { setCookie } from "../cookiesUtils.js";
 
 var firstnameInput = document.getElementById("firstnameInput");
 var nameInput = document.getElementById("nameInput");

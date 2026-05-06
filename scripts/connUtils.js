@@ -1,4 +1,5 @@
 import { deleteCookie, getCookie } from "../scripts/cookiesUtils.js";
+import { isEmptyObject } from "../scripts/codeUtils.js";
 
 export function check_conn_connexion(){
     //redirection plus precise possible (en fonction du role)
@@ -7,19 +8,34 @@ export function check_conn_connexion(){
     if (!token || token === "undefined" || token === "null"){
         // non connecté
     } else {
-        switch (role) {
-            case "USER":
-                window.location.replace("../home");
-                break;
-            case "SECRETARY":
-                window.location.replace("../home");
-                
-            default:
-                window.location.replace("../home");
-                break;
-        }
+        axios.get("../api/users", {
+            headers: {
+                Authorization: "Bearer "+token
+            }
+        }).then(res => {
+            if(!isEmptyObject(res.data))
+            {
+                if(!isEmptyObject(res.data.id))
+                {
+                    // connecté 
+                    switch (role) {
+                        case "USER":
+                            window.location.replace("../home");
+                            break;
+                        case "SECRETARY":
+                            window.location.replace("../home");
+
+                        default:
+                            window.location.replace("../home");
+                            break;
+                    }
+                }
+            }
+        }).catch(err => {
+            // console.log(err);
+        })
         // connecté
-        window.location.replace("../home"); //vers le dashboard a terme
+        // window.location.replace("../home"); //vers le dashboard a terme
     }
 }
 
@@ -32,6 +48,23 @@ export function check_conn_general(){
         deleteCookie("role");
         window.location.replace("../login");
     } else {
+        axios.get("../api/users", {
+            headers: {
+                Authorization: "Bearer "+token
+            }
+        }).then(res => {
+            if(!isEmptyObject(res.data))
+            {
+                // connecté 
+            } else {
+                console.log("connecté");
+                // mauvais token
+                deleteCookie("token");
+                deleteCookie("role");
+            }
+        }).catch(err => {
+            // console.log(err);
+        })
         // connecté (ne rien faire)
     }
 }
