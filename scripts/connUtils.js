@@ -61,7 +61,7 @@ export function check_conn_general(){
                 console.log("connecté");
                 // mauvais token
                 deleteCookie("token");
-                deleteCookei("role");
+                deleteCookie("role");
             }
         }).catch(err => {
             console.log(err);
