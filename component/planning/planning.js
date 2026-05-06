@@ -137,6 +137,11 @@ class Planning extends HTMLElement {
 
 
         html += `</div>`;
+        html += `
+        <div class="popup-background-window">
+            <div class="rdv-popup-window"></div>
+        </div>
+        `;
         this.innerHTML = html;
 
         //evite de rester sur l'option "Tous"
@@ -186,8 +191,9 @@ class Planning extends HTMLElement {
                 //verifier que l'utilisateur est co, si non on redirige vers connexion 
                 check_conn_general();
                 const rdv_id = e.currentTarget.getAttribute("data-rdvId");
-                const popup = new RdvPopup(rdv_id);
-                document.body.appendChild(popup);
+                const rdv_div = this.querySelector(".rdv-popup-window");
+                const popup = new RdvPopup(rdv_id,cellule);
+                rdv_div.appendChild(popup);
             
             })
         })
@@ -257,9 +263,6 @@ class Planning extends HTMLElement {
             }
         }
     }
-
-
-
 
 }
 
