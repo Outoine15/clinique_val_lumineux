@@ -38,7 +38,8 @@ axios.get("../api/clients", {
                     if(!isEmptyObject(res.data)){
                         console.log(res.data);
                         if(res.data.success=true){
-                            let this_client = document.getElementsByClassName("client-id-"+client["id"]);
+                            let this_client = document.getElementsByClassName("client-id-"+client["id"])[0];
+                            console.log()
                             this_client.remove();
                         }
                     }
