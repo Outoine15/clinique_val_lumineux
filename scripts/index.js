@@ -1,5 +1,5 @@
-import "/component/header/header.js";
-import "/component/footer/footer.js";
+import "../component/header/header.js";
+import "../component/footer/footer.js";
 
 const rdvButtons = document.querySelectorAll(".btn-rdv");
 
@@ -8,4 +8,3 @@ rdvButtons.forEach(rdvButton => {
         window.location.replace("../rdv");
     })
 });
-
