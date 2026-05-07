@@ -19,6 +19,7 @@ axios.get("../api/doctors", {
 
 // parametres
 }).then(res => {
+    console.log(res.data);
     res.data.forEach(doctor => {
         let card = new DoctorCard(doctor);
         doctorContainer.appendChild(card);
