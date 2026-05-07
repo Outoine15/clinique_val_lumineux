@@ -17,7 +17,7 @@ class Header extends HTMLElement {
             <header>
                 <a href="../home">Clinique du Val Lumineux</a> 
                 <div class="pages">
-                    <a href="#">RDV</a>
+                    <a href="../rdv_ano">Liste RDV</a>
                     <a href="${getCookie("role") ? "../"+getCookie("role").toLowerCase() : "../login"}" class="account">${getCookie("token") ? 'Compte' : 'Se connecter'}</a>
                 </div>
             </header>
