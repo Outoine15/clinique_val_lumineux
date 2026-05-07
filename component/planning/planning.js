@@ -29,7 +29,7 @@ class Planning extends HTMLElement {
     getSemaineActuelle(){
         let dates = [];
         let aujd = new Date();
-        let jourSemaine =aujd.getDay();
+        let jourSemaine = aujd.getDay();
         //Calcul quel est le lundi le plus proche (si on est dimanche on veux le lundi de la semaine d'avant,)
         let ecartAvecLundi = aujd.getDate() - jourSemaine + (jourSemaine == 0 ? -6 : 1);
         //on crée une date en partant d'aujourd'hui et on ajoute l'écart pour avoir une date correspondant a notre lundi actuel.
@@ -116,7 +116,11 @@ class Planning extends HTMLElement {
             //(getMonth + 1) car janvier = 0
             let mm = (dateJour.getMonth() + 1) < 10 ? "0" + (dateJour.getMonth() +1) : (dateJour.getMonth() +1);
 
-            html += `<div class="header-jour">${jour} ${jj}/${mm}</div>`;
+            html += `
+            <div class="header-jour">
+                <span class="hj-jour">${jour}</span>
+                <span class="hj-date">${jj}/${mm}</span>
+            </div>`;
         });
         for (let h of HEURES) {
             //on ajt chaque heure en début de ligne.
@@ -125,13 +129,24 @@ class Planning extends HTMLElement {
             this.semaineActuelle.forEach(dateCol=>{
                 let rdv_id = this.getRdvId(dateCol,parseInt(h));
                 let etatCreneau = this.estOccupe(dateCol,parseInt(h));
-
                 let annee = dateCol.getFullYear();
                 let mois = (dateCol.getMonth() + 1) < 10 ? "0" + (dateCol.getMonth() +1) : (dateCol.getMonth() +1);
                 let jour = dateCol.getDate() < 10 ? "0" + dateCol.getDate() : dateCol.getDate();
                 let heure = `${h}:00:00.000000`;
                 let fullDate = `${annee}-${mois}-${jour} ${heure}`;
-                html += `<div class="cellule ${etatCreneau==1 ? 'occupe' : etatCreneau==2 ? 'disponible' : ''}" data-creneauStart="${fullDate}" data-rdvId="${rdv_id || ''}">${etatCreneau==1 ? 'Pris' : etatCreneau==2 ? 'Reserver' : ''}</div>`;
+
+                let finCreneau = new Date(
+                    dateCol.getFullYear(),
+                    dateCol.getMonth(),
+                    dateCol.getDate(),
+                    parseInt(h) + 0, 0, 0, 0
+                );
+
+                //Si la date est passée, on met etatCrénau a 3 qui corresponds a passé.
+                if(finCreneau < new Date()){
+                    etatCreneau = 3;
+                }
+                html += `<div class="cellule ${etatCreneau==1 ? 'occupe' : etatCreneau==2 ? 'disponible' : etatCreneau==3 ? 'passe' : ''}" data-creneauStart="${fullDate}" data-rdvId="${rdv_id || ''}">${etatCreneau==1 ? 'Pris' : etatCreneau==2 ? 'Reserver' : ''}</div>`;
             });
         }
 
@@ -192,6 +207,7 @@ class Planning extends HTMLElement {
                 check_conn_general();
                 const rdv_id = e.currentTarget.getAttribute("data-rdvId");
                 const rdv_div = this.querySelector(".rdv-popup-window");
+                rdv_div.querySelector("rdv-popup")?.remove();
                 const popup = new RdvPopup(rdv_id,cellule);
                 rdv_div.appendChild(popup);
             
@@ -224,8 +240,8 @@ class Planning extends HTMLElement {
                         dateRdv.getFullYear() === date.getFullYear() &&
                         dateRdv.getMonth() === date.getMonth() &&
                         dateRdv.getDate() === date.getDate()
-                    );                        
-                        //si notre rdv corresponds a la case actuelle on renvoie vrai.
+                    );                    
+
                         if (mmDate && dateRdv.getHours() == h && app.reserved == true && this.rightSector(doc)) {
                             res = 1;
                         } else if (mmDate && dateRdv.getHours() == h && app.reserved == false && this.rightSector(doc)){

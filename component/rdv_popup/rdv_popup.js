@@ -16,6 +16,7 @@ export class RdvPopup extends HTMLElement {
         this.rdv_div=rdv_div;
         this.innerHTML=`
         <div class="rdvPopup">
+            <button class="rdvPopupClose" aria-label="Fermer">×</button>
             <p>Pour qui prendre le rendez-vous ?</p>
             <section class="rdvPopupInfo">
             </section>
@@ -33,6 +34,13 @@ export class RdvPopup extends HTMLElement {
         let popup_div = document.querySelector(".rdv-popup-window");
         popup_div.classList.add("rdv-popup-window-active");
 
+        this.querySelector(".rdvPopupClose").addEventListener("click", () => {
+            popup_background_div.classList.remove("popup-background-window-active");
+            popup_div.classList.remove("rdv-popup-window-active");
+            this.remove();
+        });
+
+
         axios.get("../api/clients", {
             headers: {
                 Authorization: "Bearer "+getCookie("token")
@@ -41,7 +49,6 @@ export class RdvPopup extends HTMLElement {
         ).then(res => {
             if(!isEmptyObject(res.data)){
                 this.data = res.data;
-                console.log(this.data);
                 this.data.forEach(client => {
                     let client_info= document.createElement("p");
                     client_info.innerHTML=`

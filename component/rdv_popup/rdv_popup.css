@@ -1,20 +1,23 @@
 .rdv-popup-window-active {
-    background-color: white;
+    background: linear-gradient(145deg, #f4f7f9 0%, #e8eef5 100%);
     position: fixed;
     top:50%;
     left:50%;
     transform:translate(-50%,-50%);
     width:20em;
     border-radius: 12px;
+    z-index: 100;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(39, 111, 191, 0.15);
 }
+
+
 
 .rdvPopup {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 25em;
-    overflow: scroll;
 }
 
 .rdvPopupClientName {
