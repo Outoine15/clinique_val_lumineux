@@ -2,7 +2,7 @@ import { check_conn_general } from "../scripts/connUtils.js";
 import { DoctorCard } from "../component/doctor_card/doctor_card.js";
 
 //verifie si l'utilisateur est connecte, (doit être executer avec tout autre code quand l'utilisateur arrive sur une page qui nécessite une connexion)
-check_conn_general();
+check_conn_general("USER");
 
 
 //creation du div qui va regrouper toute les carte de medecin

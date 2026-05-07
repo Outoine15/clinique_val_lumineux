@@ -6,6 +6,10 @@ import { isEmptyObject } from "../scripts/codeUtils.js";
 import { LogoutButton } from "../component/logout/logout.js";
 import { generateClientCode } from "../scripts/codeUtils.js";
 
+import { check_conn_general } from "../scripts/connUtils.js";
+check_conn_general("USER");
+//verifie si l'utilisateur est connecte, (doit être executer avec tout autre code quand l'utilisateur arrive sur une page qui nécessite une connexion)
+
 let loggout_bt = new LogoutButton();
 let loggout_bt_placement = document.getElementById("logout-button");
 loggout_bt_placement.appendChild(loggout_bt)

@@ -42,8 +42,8 @@ export function check_conn_connexion(){
         // window.location.replace("../home"); //vers le dashboard a terme
     }
 }
-
-export function check_conn_general(){
+//expected_role est soit le string du role soit "" (si tous les roles sont autorisés)
+export function check_conn_general(expected_role){
     
     const token = getCookie("token");
     if (!token || token === "undefined" || token === "null"){
@@ -60,6 +60,13 @@ export function check_conn_general(){
             if(!isEmptyObject(res.data))
             {
                 // connecté 
+                if(expected_role!=""){ //tous les roles pas autorisé
+                    if(getCookie("role")==expected_role){
+                        //bon type de compte
+                    } else {
+                        window.location.replace("../home");
+                    }
+                }
             } else {
                 console.log("connecté");
                 // mauvais token
