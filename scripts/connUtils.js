@@ -17,14 +17,18 @@ export function check_conn_connexion(){
             {
                 if(!isEmptyObject(res.data.id))
                 {
+                    console.log(res.data);
                     // connecté 
                     switch (role) {
                         case "USER":
                             window.location.replace("../home");
                             break;
                         case "SECRETARY":
-                            window.location.replace("../home");
-
+                            window.location.replace("../SECRETARY");
+                            break;
+                        case "DOCTOR":
+                            window.location.replace("../DOCTOR");
+                            break;
                         default:
                             window.location.replace("../home");
                             break;
