@@ -24,10 +24,10 @@ export function check_conn_connexion(){
                             window.location.replace("../home");
                             break;
                         case "SECRETARY":
-                            window.location.replace("../SECRETARY");
+                            window.location.replace("../secretary");
                             break;
                         case "DOCTOR":
-                            window.location.replace("../DOCTOR");
+                            window.location.replace("../doctor");
                             break;
                         default:
                             window.location.replace("../home");
