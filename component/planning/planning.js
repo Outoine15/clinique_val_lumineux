@@ -157,7 +157,10 @@ class Planning extends HTMLElement {
             <div class="rdv-popup-window"></div>
         </div>
         `;
+        html += `<div class="slot-tooltip"></div>`;
         this.innerHTML = html;
+        //On récupère le tooltip "vide"
+        const toolTip = this.querySelector(".slot-tooltip");
 
         //evite de rester sur l'option "Tous"
         this.querySelector("#selectDoc").value = this.selectedDoctorId;
@@ -213,6 +216,49 @@ class Planning extends HTMLElement {
             
             })
         })
+
+        //Tooltip sur CHAQUE case si on passe la souris dessus
+        this.querySelectorAll(".cellule.occupe, .cellule.disponible").forEach(cellule=>{
+            //On remplace l'esapce par un T pour que ca puisse correspondre au format Date()
+            const date = new Date(cellule.getAttribute("data-creneauStart").replace(" ","T"));
+            console.log(date);
+            
+            //Quand la souris entre on injecte le html du tooltip avec TOUS les docs pour ce créneau précis.
+            cellule.addEventListener("mouseenter",()=>{
+                const docs = this.getDoctorsSlot(date,date.getHours());
+                // console.log(docs);
+                if(docs.length != 0){
+                    let htmlToolTip = "";
+                    for(let doc of docs){
+                        htmlToolTip += `
+                            <div class="tooltip-item ${doc.reserved ? 'pris' : 'libre'}">
+                                <span class="tooltip-dot"></span>
+                                    Dr ${doc.name} ${doc.firstname} : ${doc.sector}
+                                <span class="tooltip-state">${doc.reserved ? 'pris' : 'libre'}</span>
+                            </div>
+                        `;
+                    }
+                    toolTip.innerHTML = `
+                    <div class="tooltip-title">Médecins</div>
+                    ${htmlToolTip}
+                    `;
+                    toolTip.classList.add("visible");
+                }
+            });
+
+            //On affiche le tooltip a coté de la souris
+            cellule.addEventListener("mousemove",(e)=>{
+                toolTip.style.left = (e.clientX + 15) + "px";
+                toolTip.style.top = (e.clientY + 15) + "px";
+            });
+
+            //Quand on quitte la cellule on "cache" le tooltip
+            cellule.addEventListener("mouseleave",()=>{
+                toolTip.classList.remove("visible");
+            });
+        })
+
+
     }
                 
 
@@ -252,6 +298,33 @@ class Planning extends HTMLElement {
             }
         }
 
+        return res;
+    }
+
+    //TODO : ajouter class 'tool-tip' + ajouter eventlistener(mouseneter/mouseleave) sur CHAQUE cellule.dispo/.occupe 
+    //+ CSS
+    getDoctorsSlot(date,h){
+        //On initialse notre résultat en tant que tableau vide.
+        let res = [];
+        //On parcours tous les docteurs depuis l'API
+        for(let doc of this.allDoctors){
+            //si doc choisi == "Tous" ou du doc actuel on continue
+            if (this.selectedDoctorId == "Tous" || doc.id == this.selectedDoctorId) {
+                if (this.rightSector(doc) && doc.appointments) {
+                    //On boucle sur tous les rdv de CE docteur
+                    for(let app of doc.appointments){
+                        let dateRdv = new Date(app.start);
+                        let mmDate = dateRdv.getFullYear() === date.getFullYear()
+                        && dateRdv.getMonth() === date.getMonth()
+                        && dateRdv.getDate() === date.getDate();
+                        if(mmDate && dateRdv.getHours() == h ){
+                            //On ajoute a notre liste chaque docteur liée au rdv actuel.
+                            res.push({name : doc.name, firstname : doc.firstname, reserved : app.reserved, sector : doc.sector.name});
+                        }
+                    }                    
+                }
+            }
+        }
         return res;
     }
 

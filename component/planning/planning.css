@@ -205,3 +205,70 @@ planning-component {
 @media (max-width: 600px) {
     planning-component { padding: 0.8em; }
 }
+
+.slot-tooltip {
+    position: fixed;
+    z-index: 9999;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15);
+    padding: 10px;
+    min-width: 170px;
+    font-size: 0.85em;
+    
+    /* caché par défaut */
+    display: none;
+}
+
+.slot-tooltip.visible {
+    display: block;
+}
+
+.tooltip-title {
+    font-weight: bold;
+    color: #276fbf;
+    margin-bottom: 8px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #eee;
+}
+
+.tooltip-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 3px 0;
+    color: #333;
+}
+
+.tooltip-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.tooltip-item.libre .tooltip-dot {
+    background-color: #27ae60;
+}
+
+.tooltip-item.pris .tooltip-dot {
+    background-color: #e74c3c;
+}
+
+.tooltip-state {
+    margin-left: auto;
+    font-size: 0.75em;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+
+.tooltip-item.libre .tooltip-state {
+    background-color: #d4edda;
+    color: #27ae60;
+}
+
+.tooltip-item.pris .tooltip-state {
+    background-color: #f8d7da;
+    color: #e74c3c;
+}
