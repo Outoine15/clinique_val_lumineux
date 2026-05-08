@@ -26,7 +26,7 @@ axios.get("../api/doctors/appointments", {
     console.log(res.data);
     let doctor = { "name":null,"firstname":null, id:null, "appointments":res.data};
     console.log(doctor);
-    let card = new DoctorCard(doctor);
+    let card = new DoctorCard(doctor,getCookie("role"));
     doctorContainer.appendChild(card);
 }).catch(err => {
     console.log("request failed");

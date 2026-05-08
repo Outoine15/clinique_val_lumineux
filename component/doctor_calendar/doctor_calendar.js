@@ -1,3 +1,4 @@
+const { RdvEditPopup } = await import(import.meta.url.replaceAll("doctor_calendar","rdv_edit_popup"));
 const { RdvPopup } = await import(import.meta.url.replaceAll("doctor_calendar","rdv_popup"));
 
 const cssLink = document.createElement("link");
@@ -8,10 +9,10 @@ document.head.appendChild(cssLink);
 const popup_div = document.querySelector(".rdv-popup-window");
 
 class AppointmentTime extends HTMLElement {
-    constructor(data) {
+
+    constructor() {
         super();
-        this.data = data||{};
-        this.show();
+        this.data = {};
     }
 
     show() {
@@ -22,25 +23,38 @@ class AppointmentTime extends HTMLElement {
         var startMinutes = startTime.getMinutes();
         var endHours = endTime.getHours();
         var endMinutes = endTime.getMinutes();
-
-        this.innerHTML = `
-        <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""}">
-            <p>${startHours}:${startMinutes} - ${endHours}:${endMinutes}</p>
-        </div>`;
-        let reserve_appointment = this.querySelector(".appointmentTime");
-        reserve_appointment.addEventListener("click", (event) => {
-            let rdv_selection = new RdvPopup(this.data["id"],reserve_appointment);
-            popup_div.appendChild(rdv_selection);
+        const formatTime = (date) =>
+            date.toLocaleTimeString("fr-FR", {
+                hour: "2-digit",
+                minute: "2-digit"
             });
+
+        console.log(this.userType);
+        this.innerHTML = `
+        <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""} ${this.userType === "DOCTOR" ? "doctor" : ""}">
+            <p>${formatTime(startTime)} - ${formatTime(endTime)}</p>
+        </div>`;
+        if(this.userType=="DOCTOR"){
+            let edit_appointment = this.querySelector(".appointmentTime");
+            edit_appointment.addEventListener("click", (event) => {
+                let rdv_selection = new RdvEditPopup(this.data["id"],edit_appointment);
+                popup_div.appendChild(rdv_selection);
+                });
+
+        } else {
+            let reserve_appointment = this.querySelector(".appointmentTime");
+            reserve_appointment.addEventListener("click", (event) => {
+                let rdv_selection = new RdvPopup(this.data["id"],reserve_appointment);
+                popup_div.appendChild(rdv_selection);
+                });
+        }
     }
     
-    connectCallback() {
-        this.show();
-    }
-
-    setData(data) {
+    setData(data, userType) {
         this.data = data;
+        this.userType = userType;
         this.show();
+    
     }
 }
 
@@ -70,6 +84,7 @@ customElements.define("day-appointments-containers", DayAppointmentsContainer);
 
 export class DoctorCalendar extends HTMLElement {
     appointments;
+    roleType;
 
     constructor() {
         super();
@@ -102,16 +117,18 @@ export class DoctorCalendar extends HTMLElement {
                 );
             }
 
-            dayContainer.addAppointment(
-                new AppointmentTime(appointment)
-            );
+            const appElement = document.createElement("appointment-time");
+            appElement.setData(appointment,this.roleType);
+
+            dayContainer.addAppointment(appElement);
         });
 
         if(dayContainer) calendar.appendChild(dayContainer);
     }
 
-    setAppointments(appointments) {
+    setAppointments(appointments,role_type) {
         this.appointments = appointments;
+        this.roleType=role_type;
         this.loadAppointments();
     }
 }

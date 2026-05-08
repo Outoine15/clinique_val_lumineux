@@ -1,6 +1,6 @@
 import { check_conn_general } from "../scripts/connUtils.js";
 import { DoctorCard } from "../component/doctor_card/doctor_card.js";
-
+import { getCookie } from "../scripts/cookiesUtils.js";
 //verifie si l'utilisateur est connecte, (doit être executer avec tout autre code quand l'utilisateur arrive sur une page qui nécessite une connexion)
 check_conn_general("USER");
 
@@ -21,7 +21,7 @@ axios.get("../api/doctors", {
 }).then(res => {
     console.log(res.data);
     res.data.forEach(doctor => {
-        let card = new DoctorCard(doctor);
+        let card = new DoctorCard(doctor,getCookie("role"));
         doctorContainer.appendChild(card);
     });
 }).catch(err => {
