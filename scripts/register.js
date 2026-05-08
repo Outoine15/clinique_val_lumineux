@@ -8,6 +8,12 @@ var birthdateInput = document.getElementById("birthdateInput");
 var mailInput = document.getElementById("mailInput");
 var passwordInput = document.getElementById("passwordInput");
 var registerButton = document.getElementById("register-bt");
+const logo = document.querySelector(".logo i");
+
+logo.addEventListener("click",()=>{
+    window.location.replace("../home");
+});
+
 
 registerButton.addEventListener('click', () => {
     var firstname = firstnameInput.value;
