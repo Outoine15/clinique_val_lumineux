@@ -216,8 +216,6 @@ planning-component {
     padding: 10px;
     min-width: 170px;
     font-size: 0.85em;
-    
-    /* caché par défaut */
     display: none;
 }
 
