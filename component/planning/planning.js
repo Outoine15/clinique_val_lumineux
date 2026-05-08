@@ -207,10 +207,11 @@ class Planning extends HTMLElement {
         this.querySelectorAll(".cellule.disponible").forEach(cellule=>{
             cellule.addEventListener("click",(e)=>{
                 //verifier que l'utilisateur est co, si non on redirige vers connexion 
-                check_conn_general();
+                check_conn_general("USER");
                 const rdv_id = e.currentTarget.getAttribute("data-rdvId");
-                const rdv_div = this.querySelector(".rdv-popup-window");
-                rdv_div.querySelector("rdv-popup")?.remove();
+                // const rdv_div = this.querySelector(".rdv-popup-window");
+                let rdv_div=document.querySelector(".rdv-popup-window");
+                console.log(rdv_div);
                 const popup = new RdvPopup(rdv_id,cellule);
                 rdv_div.appendChild(popup);
             
