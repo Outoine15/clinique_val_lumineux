@@ -29,7 +29,6 @@ class AppointmentTime extends HTMLElement {
                 minute: "2-digit"
             });
 
-        console.log(this.userType);
         this.innerHTML = `
         <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""} ${this.userType === "DOCTOR" ? "doctor" : ""}">
             <p>${formatTime(startTime)} - ${formatTime(endTime)}</p>
