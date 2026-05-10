@@ -38,8 +38,8 @@ export class DoctorCard extends HTMLElement {
         <div class="doctorCard">
             <section class="doctorCardInfo">
                 <p class="doctorCardName">Dr ${data["name"]||"Nom"} ${data["firstname"]||"Prénom"}</p>
-                <a class="doctorCardJob" href="/sector/${data["sector"] ? data["sector"]["id"]||0 : 0}">
-                    ${data["sector"] ? data["sector"]["job_name"] : "Job"}
+                <a class="doctorCardJob">
+                    ${data["sector"] ? data["sector"]["name"] : "Job"}
                 </a>
             </section>
             <section class="doctorCardAppointments fade">

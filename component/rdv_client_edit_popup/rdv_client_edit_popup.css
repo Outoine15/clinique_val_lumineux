@@ -1,0 +1,51 @@
+.popup-background-window-active {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(39, 111, 191,0.2);
+    backdrop-filter: blur(10px);
+    z-index: 999;
+}
+
+.rdv-popup-window-active {
+    background: linear-gradient(145deg, #f4f7f9 0%, #e8eef5 100%);
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:20em;
+    border-radius: 12px;
+    z-index: 100;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(39, 111, 191, 0.15);
+}
+
+
+
+.rdvPopup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.rdvPopupClientName {
+    background-color: var(--secondary-bg-color);
+    border-radius: 12px;
+    padding: 5px;
+    text-align: center;
+}
+
+.rdvPopupClientName:hover {
+    transform: translateY(-3px);
+    box-shadow: 2px 5px 2px #adb5bd;
+}
+
+.rdvPopupWarnings {
+    margin:5px;
+    margin-bottom: 20px;
+}

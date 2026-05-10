@@ -72,20 +72,9 @@ export class RdvPopup extends HTMLElement {
                         ).then(response => {
                                 if(response.data.success==true){
                                     popup_warning_section.innerHTML="rendez-vous réservé avec succès";
-                                    setTimeout(()=> {
-                                        this.rdv_div.classList.add("reserved"); //marque le creneau comme réservé
-                                        popup_background_div.classList.remove("popup-background-window-active")
-                                        popup_div.classList.remove("rdv-popup-window-active");
-                                        this.remove();
-                                    },2500);
                                     // creneau reserve
                                 } else {
                                     popup_warning_section.innerHTML="imposible de réserver le rendez vous";
-                                    setTimeout(()=> {
-                                        popup_background_div.classList.remove("popup-background-window-active")
-                                        popup_div.classList.remove("rdv-popup-window-active");
-                                        this.remove();
-                                    },2500);
                                     // impossible de reserver le creneau
                                 }
                             }).catch(err => {

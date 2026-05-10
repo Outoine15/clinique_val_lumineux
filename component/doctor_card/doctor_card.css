@@ -96,7 +96,7 @@ body > doctor-card {
     transition: all 0.2s;
 }
 
-.appointmentTime:not(.reserved):not(.doctor):hover {
+.appointmentTime:not(.reserved):hover {
     background-color: #007bff;
     color: white;
 }
@@ -109,12 +109,22 @@ body > doctor-card {
     font-weight: bold;
 }
 
-.appointmentTime:not(.reserved):not(.doctor):hover p { 
+/* display "de base" quand on est connecté sous aucun type de compte */
+.appointmentTime:not(.reserved):not(.doctor):not(.user):hover p { 
     display: none; 
 }
 /* on cache l'heure et on affiche "Prendre RDV" au survol */
-.appointmentTime:not(.reserved):not(.doctor):hover::after {
+.appointmentTime:not(.reserved):not(.doctor):not(.user):hover::after {
     content: "Prendre RDV"; 
+    font-weight: bold;
+}
+
+.appointmentTime:where(.user):hover p { 
+    display: none; 
+}
+/* on cache l'heure et on affiche "Prendre RDV" au survol */
+.appointmentTime:where(.user):hover::after {
+    content: "modifier RDV";
     font-weight: bold;
 }
 

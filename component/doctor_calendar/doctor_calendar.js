@@ -1,5 +1,7 @@
+const { RdvClientEditPopup } = await import(import.meta.url.replaceAll("doctor_calendar","rdv_client_edit_popup"));
 const { RdvEditPopup } = await import(import.meta.url.replaceAll("doctor_calendar","rdv_edit_popup"));
 const { RdvPopup } = await import(import.meta.url.replaceAll("doctor_calendar","rdv_popup"));
+
 
 const cssLink = document.createElement("link");
 cssLink.setAttribute("rel", "stylesheet");
@@ -29,18 +31,33 @@ class AppointmentTime extends HTMLElement {
                 minute: "2-digit"
             });
 
-        this.innerHTML = `
-        <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""} ${this.userType === "DOCTOR" ? "doctor" : ""}">
-            <p>${formatTime(startTime)} - ${formatTime(endTime)}</p>
-        </div>`;
         if(this.userType=="DOCTOR"){
+            this.innerHTML = `
+            <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""} doctor">
+                <p>${formatTime(startTime)} - ${formatTime(endTime)}</p>
+            </div>`;
             let edit_appointment = this.querySelector(".appointmentTime");
             edit_appointment.addEventListener("click", (event) => {
                 let rdv_selection = new RdvEditPopup(this.data["id"],edit_appointment);
                 popup_div.appendChild(rdv_selection);
                 });
 
+        } else if(this.userType=="USER") {
+            this.innerHTML = `
+            <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""} user">
+                <p>${formatTime(startTime)} - ${formatTime(endTime)}</p>
+            </div>`;
+            console.log(this.data);
+            let edit_appointment = this.querySelector(".appointmentTime");
+            edit_appointment.addEventListener("click", (event) => {
+                let rdv_selection = new RdvClientEditPopup(this.data["id"],edit_appointment,this.data.client.name,this.data.client.firstname);
+                popup_div.appendChild(rdv_selection);
+                });            
         } else {
+            this.innerHTML = `
+            <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""}">
+                <p>${formatTime(startTime)} - ${formatTime(endTime)}</p>
+            </div>`;
             let reserve_appointment = this.querySelector(".appointmentTime");
             reserve_appointment.addEventListener("click", (event) => {
                 let rdv_selection = new RdvPopup(this.data["id"],reserve_appointment);
