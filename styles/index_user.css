@@ -1,0 +1,211 @@
+body {
+    font-family: 'Open Sans', sans-serif;
+    background-color: var(--primary-bg-color);
+    margin: 0;
+}
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    color: var(--primary-text-color);
+}
+
+.user-manage-client-info {
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+
+.client-info {
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 0.5fr;
+    width: 100%;
+    background-color: var(--primary-bg-color);
+    border-radius: 8px;
+    padding: 8px 0;
+}
+
+.client-info > div {
+    margin: 10px;
+}
+
+.client-info > div:nth-child(odd) {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.client-info > div:nth-child(even) {
+  text-align: left;
+  padding-left: 10px;
+}
+
+.gestion-client {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 60%;
+    max-width: 700px;
+    margin: auto;
+    padding: 30px 40px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.gestion-client h2 {
+    color: var(--primary-text-color);
+    margin: 25px 0 15px;
+    font-size: 20px;
+    border-bottom: 2px solid var(--secondary-bg-color);
+    padding-bottom: 6px;
+    width: 100%;
+    text-align: center;
+}
+
+.gestion-client h3 {
+    color: var(--secondary-text-color);
+    font-size: 15px;
+    font-weight: 600;
+    margin: 18px 0 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+#user-client-info-input + #user-client-info-input {
+  margin-top: 15px;
+}
+
+#user-client-info-input {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  column-gap: 15px;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  max-width: 400px;
+}
+
+#client-code {
+    height: 36px;
+    padding: 0 12px;
+    border: 1.5px solid var(--tertiary-bg-color);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 220px;
+}
+
+#client-code:focus {
+    border-color: var(--secondary-bg-color);
+}
+
+#user-client-info-input label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--secondary-text-color);
+}
+
+
+.client-info {
+    display: grid;
+    grid-template-columns: 1fr 0.5fr 0.5fr;
+    width: 100%;
+    background-color: var(--primary-bg-color);
+    border-radius: 8px;
+    padding: 8px 0;
+}
+
+.client-info > div {
+    margin: 10px;
+}
+
+.client-info > div:nth-child(odd) {
+  text-align: right;
+  padding-right: 10px;
+}
+
+.client-info > div:nth-child(even) {
+  text-align: left;
+  padding-left: 10px;
+}
+
+#client-code {
+    height: 36px;
+    padding: 0 12px;
+    border: 1.5px solid var(--tertiary-bg-color);
+    background-color: var(--primary-bg-color);
+    border-radius: 8px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 220px;
+}
+
+#client-code:focus {
+    border-color: var(--secondary-bg-color);
+}
+
+#user-client-info-input + #user-client-info-input {
+  margin-top: 15px;
+}
+
+#user-client-info-input {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  column-gap: 15px;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  max-width: 400px;
+}
+
+#user-client-info-input label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--secondary-text-color);
+}
+
+#user-client-info-input input {
+  height: 36px;
+  padding: 0 12px;
+  border: 1.5px solid var(--tertiary-bg-color);
+  background-color: var(--primary-bg-color);
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#user-client-info-input input:focus {
+    border-color: var(--secondary-bg-color);
+}
+
+button {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 10px 24px;
+    background-color: var(--secondary-bg-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+}
+button:hover {
+    opacity: 0.85;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+#logout-button{
+  display: flex;
+  justify-content: center;
+}

@@ -1,5 +1,5 @@
-import { setCookie } from "/scripts/cookiesUtils.js";
-import { check_conn_connexion } from "/scripts/connUtils.js";
+import { setCookie } from "../scripts/cookiesUtils.js";
+import { check_conn_connexion } from "../scripts/connUtils.js";
 
 check_conn_connexion();
 
@@ -7,6 +7,8 @@ const conn_bt = document.getElementById("connexion-bt");
 const icon = document.getElementById("togglePassword");
 const pwd = document.getElementById("password");
 const errorMessage = document.querySelector(".error-message");
+const forgotPassword = document.querySelector(".forgot-password");
+const logo = document.querySelector(".logo i");
 let mail = document.getElementById("mail");
 let password = document.getElementById("password");
 
@@ -24,10 +26,14 @@ icon.addEventListener('click', (event) => {
   }
 });
 
+logo.addEventListener("click",()=>{
+    window.location.replace("../home");
+});
+
 pwd.addEventListener('input',(event)=>{
     const val = event.target.value;
     let score = 0;
-    if (val.length >= 8){
+    if (val.length >= 1){
         score = score +1;
     }if(/[A-Z]/.test(val)){
         score = score +1;
@@ -53,8 +59,7 @@ conn_bt.addEventListener("click", (event) => {
     let token = "";
     //recuperation mail/password
 
-    console.log(mail.value, password.value);
-    axios.post("/api/users",
+    axios.post("../api/users",
     new URLSearchParams({
       mail: mail.value,
       password: password.value
@@ -65,8 +70,13 @@ conn_bt.addEventListener("click", (event) => {
         try {
             if(res.success==false){
                 // identifiant/mdp invalid
+                errorMessage.innerHTML = "Identifiants incorrects.";
+                forgotPassword.style.backgroundColor = "#ffebeb";
+                forgotPassword.style.borderRadius = "6px";
+                forgotPassword.style.fontSize = "15px";
             } else {
                 var token = res.token;
+                var role = res.role;
 
                 setCookie("token",token);
                 // document.cookie = "token="+token+"; max-age=3600; path=/; Secure; SameSite=Strict";
@@ -75,8 +85,6 @@ conn_bt.addEventListener("click", (event) => {
                 var role = res.role;
                 
                 setCookie("role",role);
-                // document.cookie = "role="+role+"; max-age=3600; Secure; SameSite=Strict";
-                // sessionStorage.setItem("role",role);
             }
         } catch (error) {
             // success = false
@@ -89,28 +97,3 @@ conn_bt.addEventListener("click", (event) => {
       });
 }
 );
-
-
-// function check_conn_connexion(){
-//     //redirection plus precise possible (en fonction du role)
-//     if(!sessionStorage.getItem("user_token") && !sessionStorage.getItem("admin_token") && !sessionStorage.getItem("secretary_token") && !sessionStorage.getItem("doctor_token")){
-//         console.log("non connecté (conn)");
-//     } else {
-//         if(sessionStorage.getItem("user_token")){
-//             console.log("user connexion (conn)");
-//             window.location.replace("index.html");
-//         }
-//         if (sessionStorage.getItem("admin_token")){
-//             console.log("admin connexion (conn)");
-//             window.location.replace("index_admin.html");
-//         }
-//         if (sessionStorage.getItem("secretary_token")){
-//             console.log("secretary connexion (conn)");
-//             window.location.replace("index_secretary.html");
-//         }
-//         if (sessionStorage.getItem("doctor_token")){
-//             console.log("doctor connexion (conn)");
-//             window.location.replace("index_doctor.html");
-//         }
-//     }
-// }

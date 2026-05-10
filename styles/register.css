@@ -10,64 +10,22 @@ body {
 
 .conn {
     width: 80vw;
-    height: 520px;
     border-radius: 20px;
-    overflow: hidden; 
+    overflow: hidden;
     display: grid;
-    grid-template-columns: 1fr 1fr; 
+    grid-template-columns: 1fr 1fr;
 }
 
 .left-panel{
-    background-color : #1e5a9e;
+    background-color: var(--primary-bg-color);
     padding: 48px 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    color : var(--primary-bg-color);
-    gap: 20px;
+    gap: 14px;
 }
 
-.left-panel h2{
-    font-size: 26px;
-    line-height: 1.4;
-    font-weight: 700;
-    margin: 0;
-}
-
-.left-panel p{
-    font-size: 14px;
-    opacity: 0.8;
-    line-height: 1.7;
-    margin: 0;
-}
-
-.logo{
-    display: flex;
-    align-items: center;
-    gap:12px;
-    font-size: 14px;
-}
-
-.logo i{
-    font-size: 28px;
-}
-
-
-.logo span{
-    font-size: 12px;
-    opacity: 0.75;
-}
-
-.right-pannel{
-    background-color : var(--primary-bg-color);
-    padding : 48px 40px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 18px;
-}
-
-.right-pannel h1{
+.left-panel h1{
     font-size: 24px;
     color: var(--primary-text-color);
     margin: 0;
@@ -75,8 +33,8 @@ body {
 
 .subtitle{
     font-size: 13px;
-    color: black;
-    margin: -10px 0 0 0;
+    color: var(--secondary-text-color);
+    margin: -8px 0 0 0;
 }
 
 .field-group{
@@ -93,19 +51,24 @@ body {
     color: var(--secondary-text-color);
 }
 
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="text"]:focus {
-    font-size: 15px;
+.field-group input{
+    font-size: 14px;
+    padding: 10px 14px;
     border: 1.5px solid var(--tertiary-bg-color);
     border-radius: 10px;
-    padding: 1px 14px;
     background: white;
-    border-color: var(--secondary-bg-color);
     outline: none;
     transition: border-color 0.2s;
     width: 100%;
-    box-sizing: border-box; 
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+input[type="date"]:focus {
+    border-color: var(--secondary-bg-color);
 }
 
 .strength-bar{
@@ -122,24 +85,7 @@ input[type="text"]:focus {
     transition: width 0.3s, background-color 0.3s;
 }
 
-.create-account-link{
-    font-size: 13px;
-    color: var(--secondary-bg-color);
-    text-decoration: none;
-    transition: all 0.2s ease;
-
-}
-
-.create-account-link{
-    display: flex;
-    justify-content: center;
-}
-
-.create-account-link:hover{
-    text-decoration: underline;
-}
-
-button#connexion-bt{
+button#register-bt{
     width: 100%;
     padding: 13px;
     background-color: var(--secondary-bg-color);
@@ -152,15 +98,15 @@ button#connexion-bt{
     transition: opacity 0.2s, transform 0.1s;
 }
 
-button#connexion-bt:hover{
+button#register-bt:hover{
     opacity: 0.8;
 }
 
-button#connexion-bt:active{
+button#register-bt:active{
     transform: scale(0.98);
 }
 
-.security-note{
+p.security-note{
     font-size: 11px;
     color: #bbb;
     display: flex;
@@ -173,4 +119,45 @@ button#connexion-bt:active{
 
 .error-message{
     color: red;
+    font-size: 13px;
+}
+
+.right-panel{
+    background-color: #1e5a9e;
+    padding: 48px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: var(--primary-bg-color);
+    gap: 20px;
+}
+
+.right-panel h2{
+    font-size: 26px;
+    line-height: 1.4;
+    font-weight: 700;
+    margin: 0;
+}
+
+.right-panel p{
+    font-size: 14px;
+    opacity: 0.8;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+}
+
+.logo i{
+    font-size: 28px;
+}
+
+.logo strong{
+    display: block;
+    font-weight: 600;
 }

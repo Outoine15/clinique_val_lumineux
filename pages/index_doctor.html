@@ -5,9 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Clinique du Val Lumineux - docteur</title>
     <link rel="stylesheet" href="../styles/theme.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
-    <h1>bonjour et bienvenu</h1>
-    <script src="../scripts/main.js"></script>
+    <header-component>
+    </header-component>
+
+    <h1>bonjour et bienvenu Dr</h1>
+
+    <div class="popup-background-window">
+      <div class="rdv-popup-window"></div>
+    </div>
+
+    <section>
+      <h2>créer un rendez-vous</h2>
+      <div id="doctor-new-rdv-info">
+        <label for="doctor-new-rdv-date-start">date et heure de début</label>
+        <input type="datetime-local" name="doctor-new-rdv-date-start" id="doctor-new-rdv-date-start">
+      </div>
+      <div id="doctor-new-rdv-info">
+        <label for="doctor-new-rdv-date-end">date et heure de fin</label>
+        <input type="datetime-local" name="doctor-new-rdv-date-end" id="doctor-new-rdv-date-end">
+      </div>
+      <button type="button" id="doctor-new-rdv-confirm">créer</button>
+
+      <div id="doctor-container"></div>
+    </section>
+
+    <div id="logout-button"></div>
+
+    <script src="../scripts/index_doctor.js" type="module"></script>
+
+    <footer-component>
+    </footer-component>
+
   </body>
 </html>
