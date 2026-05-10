@@ -1,7 +1,7 @@
 import { check_conn_general } from "./connUtils.js";
 import { LogoutButton } from "/component/logout/logout.js";
 
-check_conn_general();
+check_conn_general("ADMIN");
 
 
 async function chargerMedecins() {
@@ -129,22 +129,17 @@ async function chargerTableauRDV() {
             medecin.appointments.forEach(rdv => {
                 const tr = document.createElement('tr');
 
-                // Colonne Médecin
                 const tdMed = document.createElement('td');
                 tdMed.textContent = `Dr. ${medecin.name}`;
 
-                // Colonne Statut
                 const tdPat = document.createElement('td');
                 tdPat.textContent = rdv.reserved ? "Occupé" : "Libre"; 
 
-                // Colonne Date
                 const tdDate = document.createElement('td');
                 tdDate.textContent = rdv.start.replace('T', ' ').slice(0, 16);
 
-                // Colonne Actions (Décaler + Supprimer)
                 const tdAction = document.createElement('td');
                 
-                // 1. Ton formulaire pour décaler (on garde le bouton OK)
                 tdAction.innerHTML = `
                 <form class="form-modifier-rdv" style="display: inline-block; margin-right: 10px;">
                     <input type="hidden" name="rdv_id" value="${rdv.id}">
@@ -153,7 +148,6 @@ async function chargerTableauRDV() {
                 </form>
                 `;
 
-                // 2. Ajout du bouton Supprimer
                 const btnSuppr = document.createElement('button');
                 btnSuppr.textContent = "Supprimer";
                 btnSuppr.style.backgroundColor = "#ff4d4d";
@@ -163,7 +157,6 @@ async function chargerTableauRDV() {
                 btnSuppr.style.cursor = "pointer";
                 btnSuppr.style.borderRadius = "4px";
 
-                // Appel de la fonction de suppression au clic
                 btnSuppr.onclick = () => supprimerRDV(rdv.id);
 
                 tdAction.appendChild(btnSuppr);
@@ -173,9 +166,8 @@ async function chargerTableauRDV() {
             });
         });
 
-        // N'oublie pas de ré-attacher les écouteurs sur les formulaires "OK"
         document.querySelectorAll('.form-modifier-rdv').forEach(form => {
-            form.onsubmit = decalerRDV; // Remplace par le nom de ta fonction qui gère le décalage
+            form.onsubmit = decalerRDV; 
         });
 
     } catch (error) {
@@ -270,10 +262,8 @@ async function supprimerRDV(rdvId) {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        // ON LIT LE CONTENU DE LA REPONSE
         const result = await response.json(); 
 
-        // ON VERIFIE SI LE BACK A DIT "SUCCESS: TRUE"
         if (response.ok && result.success === true) {
             alert("Rendez-vous supprimé !");
             chargerTableauRDV();
@@ -317,7 +307,6 @@ async function ajouterMedecin(event) {
         if (response.ok && result.id) {
             alert("Médecin créé avec succès !");
             form.reset();
-            // Optionnel : recharger une liste de médecins si tu en as une à jour
             if (typeof chargerMedecins === 'function') chargerMedecins(); 
         } else {
             alert("Erreur lors de la création : " + (result.message || "Accès refusé"));
@@ -333,10 +322,10 @@ async function supprimerMedecin(doctorID) {
 
     try {
         const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
-        console.log("token :", token); // ← ajoute ça
+        console.log("token :", token); 
 
         const url = `/api/doctors/${doctorID}`;
-        console.log("URL construite :", url); // ← et ça
+        console.log("URL construite :", url); 
 
         const response = await fetch(url, {
             method: 'DELETE',
@@ -345,13 +334,12 @@ async function supprimerMedecin(doctorID) {
             }
         });
 
-        console.log("status reçu :", response.status, response.url); // ← et ça
+        console.log("status reçu :", response.status, response.url); 
 
         const result = await response.json();
 
         if (response.ok && result.success) {
             alert("Médecin supprimé.");
-            // Actualiser l'affichage
             location.reload(); 
         } else {
             alert("Erreur : Impossible de supprimer ce médecin.");

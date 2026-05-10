@@ -1,7 +1,7 @@
 import { check_conn_general } from "./connUtils.js";
 import { LogoutButton } from "/component/logout/logout.js";
 
-check_conn_general();
+check_conn_general("SECRETARY");
 
 
 async function chargerMedecins() {
@@ -39,44 +39,18 @@ async function decalerRDV(event) {
     if (!nouvelleDateStr) return;
 
     const startDate = new Date(nouvelleDateStr);
-    const endDate = new Date(startDate.getTime() + 30 * 60000); // +30 min
+    const endDate = new Date(startDate.getTime() + 30 * 60000);
 
-    // NOUVELLE FONCTION DE FORMATAGE (HEURE LOCALE)
     const formatLocalSQL = (date) => {
-        const offset = date.getTimezoneOffset();
-        const dateLocale = new Date(date.getTime() - (offset * 60 * 1000));
-        return dateLocale.toISOString().slice(0, 19).replace('T', ' ');
+    const pad = (n) => n < 10 ? '0' + n : n;
+    return date.getFullYear() + '-' +
+        pad(date.getMonth() + 1) + '-' +
+        pad(date.getDate()) + ' ' +
+        pad(date.getHours()) + ':' +
+        pad(date.getMinutes()) + ':' +
+        pad(date.getSeconds());
     };
-
-    const data = new URLSearchParams();
-    // On utilise bien les noms attendus par ton API : time_start et time_end
-    data.append('time_start', formatLocalSQL(startDate));
-    data.append('time_end', formatLocalSQL(endDate));
-
-    try {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
-
-        const response = await fetch(`/api/appointments/${rdvId}/update`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${token}`,
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: data.toString()
-        });
-
-        if (response.ok) {
-            alert("Rendez-vous déplacé !");
-            chargerTableauRDV(); 
-        } else {
-            const error = await response.json();
-            alert("Erreur : " + (error.message || "Impossible de modifier"));
-        }
-    } catch (error) {
-        console.error("Erreur modification :", error);
-    }
 }
-
 
 async function chargerTableauRDV() {
     try {
@@ -92,22 +66,17 @@ async function chargerTableauRDV() {
             medecin.appointments.forEach(rdv => {
                 const tr = document.createElement('tr');
 
-                // Colonne Médecin
                 const tdMed = document.createElement('td');
                 tdMed.textContent = `Dr. ${medecin.name}`;
 
-                // Colonne Statut
                 const tdPat = document.createElement('td');
                 tdPat.textContent = rdv.reserved ? "Occupé" : "Libre"; 
 
-                // Colonne Date
                 const tdDate = document.createElement('td');
                 tdDate.textContent = rdv.start.replace('T', ' ').slice(0, 16);
 
-                // Colonne Actions (Décaler + Supprimer)
                 const tdAction = document.createElement('td');
                 
-                // 1. Ton formulaire pour décaler (on garde le bouton OK)
                 tdAction.innerHTML = `
                 <form class="form-modifier-rdv" style="display: inline-block; margin-right: 10px;">
                     <input type="hidden" name="rdv_id" value="${rdv.id}">
@@ -116,7 +85,6 @@ async function chargerTableauRDV() {
                 </form>
                 `;
 
-                // 2. Ajout du bouton Supprimer
                 const btnSuppr = document.createElement('button');
                 btnSuppr.textContent = "Supprimer";
                 btnSuppr.style.backgroundColor = "#ff4d4d";
@@ -126,7 +94,6 @@ async function chargerTableauRDV() {
                 btnSuppr.style.cursor = "pointer";
                 btnSuppr.style.borderRadius = "4px";
 
-                // Appel de la fonction de suppression au clic
                 btnSuppr.onclick = () => supprimerRDV(rdv.id);
 
                 tdAction.appendChild(btnSuppr);
@@ -136,9 +103,8 @@ async function chargerTableauRDV() {
             });
         });
 
-        // N'oublie pas de ré-attacher les écouteurs sur les formulaires "OK"
         document.querySelectorAll('.form-modifier-rdv').forEach(form => {
-            form.onsubmit = decalerRDV; // Remplace par le nom de ta fonction qui gère le décalage
+            form.onsubmit = decalerRDV; 
         });
 
     } catch (error) {
@@ -178,7 +144,15 @@ async function ajouterCreneau(event) {
     const startDate = new Date(startValue);
     const endDate = new Date(startDate.getTime() + 30 * 60000); 
 
-    const formatSQL = (date) => date.toISOString().slice(0, 19).replace('T', ' ');
+    const formatSQL = (date) => {
+    const pad = (n) => n < 10 ? '0' + n : n;
+    return date.getFullYear() + '-' +
+        pad(date.getMonth() + 1) + '-' +
+        pad(date.getDate()) + ' ' +
+        pad(date.getHours()) + ':' +
+        pad(date.getMinutes()) + ':' +
+        pad(date.getSeconds());
+    };
     const timeStart = formatSQL(startDate);
     const timeEnd = formatSQL(endDate);
 
@@ -224,10 +198,8 @@ async function supprimerRDV(rdvId) {
             headers: { 'Authorization': `Bearer ${token}` }
         });
 
-        // ON LIT LE CONTENU DE LA REPONSE
         const result = await response.json(); 
 
-        // ON VERIFIE SI LE BACK A DIT "SUCCESS: TRUE"
         if (response.ok && result.success === true) {
             alert("Rendez-vous supprimé !");
             chargerTableauRDV();
