@@ -15,13 +15,47 @@ async function chargerMedecins() {
         const medecins = await response.json();
 
         const selectMedecin = document.querySelector('select[name="medecin_id"]');
+        if (selectMedecin) {
+            selectMedecin.innerHTML = '<option value="">Choisir un medecin</option>';
+            medecins.forEach(medecin => {
+                const option = document.createElement('option');
+                option.value = medecin.id; 
+                option.textContent = `Dr. ${medecin.name} ${medecin.firstname} (${medecin.sector.name})`;
+                selectMedecin.appendChild(option);
+            });
+        }
 
-        medecins.forEach(medecin => {
-            const option = document.createElement('option');
-            option.value = medecin.id; 
-            option.textContent = `Dr. ${medecin.name} ${medecin.firstname} (${medecin.sector.name})`;
-            selectMedecin.appendChild(option);
-        });
+        const tbodyMedecins = document.getElementById('table-corps-medecins');
+        if (tbodyMedecins) {
+            tbodyMedecins.innerHTML = '';
+
+            medecins.forEach(medecin => {
+                const tr = document.createElement('tr');
+
+                const tdId = document.createElement('td');
+                tdId.textContent = medecin.id;
+
+                const tdNom = document.createElement('td');
+                tdNom.textContent = medecin.name;
+
+                const tdPrenom = document.createElement('td');
+                tdPrenom.textContent = medecin.firstname;
+
+                const tdSecteur = document.createElement('td');
+                tdSecteur.textContent = medecin.sector.name;
+
+                const tdAction = document.createElement('td');
+                const btnSuppr = document.createElement('button');
+                btnSuppr.textContent = "Supprimer le médecin";
+                btnSuppr.onclick = () => supprimerMedecin(medecin.id);
+                
+                tdAction.appendChild(btnSuppr);
+
+                tr.append(tdId, tdNom, tdPrenom, tdSecteur, tdAction);
+                
+                tbodyMedecins.appendChild(tr);
+            });
+        }
 
     } catch (error) {
         console.error('Erreur:', error);
@@ -39,17 +73,20 @@ async function decalerRDV(event) {
     if (!nouvelleDateStr) return;
 
     const startDate = new Date(nouvelleDateStr);
-    const endDate = new Date(startDate.getTime() + 30 * 60000); // +30 min
+    const endDate = new Date(startDate.getTime() + 30 * 60000);
 
-    // NOUVELLE FONCTION DE FORMATAGE (HEURE LOCALE)
     const formatLocalSQL = (date) => {
-        const offset = date.getTimezoneOffset();
-        const dateLocale = new Date(date.getTime() - (offset * 60 * 1000));
-        return dateLocale.toISOString().slice(0, 19).replace('T', ' ');
+    const pad = (n) => n < 10 ? '0' + n : n;
+    return date.getFullYear() + '-' +
+        pad(date.getMonth() + 1) + '-' +
+        pad(date.getDate()) + ' ' +
+        pad(date.getHours()) + ':' +
+        pad(date.getMinutes()) + ':' +
+        pad(date.getSeconds());
     };
+    
 
     const data = new URLSearchParams();
-    // On utilise bien les noms attendus par ton API : time_start et time_end
     data.append('time_start', formatLocalSQL(startDate));
     data.append('time_end', formatLocalSQL(endDate));
 
@@ -163,6 +200,7 @@ window.addEventListener('DOMContentLoaded', () => {
             decalerRDV(e);
         }
     });
+    document.getElementById('form-ajout-medecin').addEventListener('submit', ajouterMedecin);
 
 });
 
@@ -178,7 +216,15 @@ async function ajouterCreneau(event) {
     const startDate = new Date(startValue);
     const endDate = new Date(startDate.getTime() + 30 * 60000); 
 
-    const formatSQL = (date) => date.toISOString().slice(0, 19).replace('T', ' ');
+    const formatSQL = (date) => {
+    const pad = (n) => n < 10 ? '0' + n : n;
+    return date.getFullYear() + '-' +
+        pad(date.getMonth() + 1) + '-' +
+        pad(date.getDate()) + ' ' +
+        pad(date.getHours()) + ':' +
+        pad(date.getMinutes()) + ':' +
+        pad(date.getSeconds());
+    };
     const timeStart = formatSQL(startDate);
     const timeEnd = formatSQL(endDate);
 
@@ -237,5 +283,80 @@ async function supprimerRDV(rdvId) {
         }
     } catch (error) {
         console.error("Erreur :", error);
+    }
+}
+
+
+async function ajouterMedecin(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const formData = new FormData(form);
+
+    const data = new URLSearchParams();
+    data.append('name', formData.get('nom'));
+    data.append('firstname', formData.get('prenom'));
+    data.append('mail', formData.get('email'));
+    data.append('sectorID', formData.get('secteur_id'));
+    data.append('password', formData.get('password'));
+
+    try {
+        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+
+        const response = await fetch('/api/doctors', {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: data.toString()
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.id) {
+            alert("Médecin créé avec succès !");
+            form.reset();
+            // Optionnel : recharger une liste de médecins si tu en as une à jour
+            if (typeof chargerMedecins === 'function') chargerMedecins(); 
+        } else {
+            alert("Erreur lors de la création : " + (result.message || "Accès refusé"));
+        }
+    } catch (error) {
+        console.error("Erreur ajout médecin:", error);
+        alert("Erreur de connexion au serveur");
+    }
+}
+
+async function supprimerMedecin(doctorID) {
+    if (!confirm("Voulez-vous vraiment supprimer ce médecin ?...")) return;
+
+    try {
+        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        console.log("token :", token); // ← ajoute ça
+
+        const url = `/api/doctors/${doctorID}`;
+        console.log("URL construite :", url); // ← et ça
+
+        const response = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        console.log("status reçu :", response.status, response.url); // ← et ça
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            alert("Médecin supprimé.");
+            // Actualiser l'affichage
+            location.reload(); 
+        } else {
+            alert("Erreur : Impossible de supprimer ce médecin.");
+        }
+    } catch (error) {
+        console.error("Erreur suppression médecin:", error);
     }
 }

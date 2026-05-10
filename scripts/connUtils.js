@@ -14,6 +14,9 @@ export function check_conn_connexion(){
             case "SECRETARY":
                 window.location.replace("../secretary");
                 break;
+            case "ADMIN":
+                window.location.replace("../admin");
+                break;
             default:
                 window.location.replace("../home");
                 break;
