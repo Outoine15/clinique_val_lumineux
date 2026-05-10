@@ -208,12 +208,60 @@ class Planning extends HTMLElement {
             cellule.addEventListener("click",(e)=>{
                 //verifier que l'utilisateur est co, si non on redirige vers connexion 
                 check_conn_general("USER");
-                const rdv_id = e.currentTarget.getAttribute("data-rdvId");
-                // const rdv_div = this.querySelector(".rdv-popup-window");
-                let rdv_div=document.querySelector(".rdv-popup-window");
-                console.log(rdv_div);
-                const popup = new RdvPopup(rdv_id,cellule);
-                rdv_div.appendChild(popup);
+
+
+                const date = new Date(cellule.getAttribute("data-creneauStart").replace(" ", "T"));
+                const docs = this.getDoctorsSlot(date, date.getHours());
+                const dispos = docs.filter(d => !d.reserved);
+
+                //Si on a que un créneau dispo, on dmd direct avec qui on veux le prendre
+                if(dispos.length == 1){
+
+                    this.ouvrirRdvPopup(dispos[0].rdv_id,cellule);
+                    
+                //Sinon on propose au user de clicker sur le docteur avec qui il veux prendre le rdv.
+                } else {
+                    this.querySelector(".choix-docteur")?.remove();
+
+                    const menu = document.createElement("div");
+                    menu.className = "choix-docteur";
+
+                    let html = `<p class="choix-titre">Choisir le médecin :</p>`;
+                    for(let dispo of dispos){
+                        html += `
+                            <button class="choix-item" data-rdv-id="${dispo.rdv_id}">
+                                Dr ${dispo.name} ${dispo.firstname} - ${dispo.sector}
+                            </button>
+                        `;
+                    }
+                    menu.innerHTML = html;
+
+                    menu.style.left = (e.clientX + 10) + "px";
+                    menu.style.top  = (e.clientY + 10) + "px";
+
+                    document.body.appendChild(menu);
+
+
+                    menu.querySelectorAll(".choix-item").forEach(bt => {
+                        bt.addEventListener("click", () => {
+                            const rdv_id = bt.getAttribute("data-rdv-id");
+                            menu.remove();
+                            this.ouvrirRdvPopup(rdv_id, cellule);
+                        });
+                    });
+
+
+                    setTimeout(() => {
+                        document.addEventListener("click", (e) => {
+                            //Si l'endroit clické n'est pas dans le menu, alors on supprime le menu actuel
+                            if (! menu.contains(e.target)) menu.remove();
+                            //paramètre de addEventListner qui permet de "réinitialiser" si on a clické ou pas a chaque fois
+                        }, { once: true });
+                     }, 0);
+                    
+                }
+
+                
             
             })
         })
@@ -261,6 +309,13 @@ class Planning extends HTMLElement {
 
 
     }
+
+    ouvrirRdvPopup(rdv_id,cellule){
+        let rdv_div=document.querySelector(".rdv-popup-window");
+        const popup = new RdvPopup(rdv_id,cellule);
+        rdv_div.appendChild(popup)
+    }
+                    
                 
 
     rightSector(doc){
@@ -320,7 +375,7 @@ class Planning extends HTMLElement {
                         && dateRdv.getDate() === date.getDate();
                         if(mmDate && dateRdv.getHours() == h ){
                             //On ajoute a notre liste chaque docteur liée au rdv actuel.
-                            res.push({name : doc.name, firstname : doc.firstname, reserved : app.reserved, sector : doc.sector.name});
+                            res.push({name : doc.name, firstname : doc.firstname, reserved : app.reserved, sector : doc.sector.name, rdv_id : app.id});
                         }
                     }                    
                 }

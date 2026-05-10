@@ -76,7 +76,7 @@
 
 .header-jour, .case-vide {
     position: sticky;
-    top: 70px;   /* ajuste selon la hauteur de .planning-control */
+    top: 70px;  
     z-index: 50;
 }
 
@@ -173,6 +173,48 @@
     font-size: 0.7rem;
     font-weight: 800;
     letter-spacing: 0.5px;
+}
+
+.choix-docteur {
+    position: fixed;
+    z-index: 9999;
+    background-color: white;
+    border: 1px solid #d0d7de;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.choix-titre {
+    margin: 0 0 8px 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #6c757d;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.choix-item {
+    background-color: transparent;
+    border: none;
+    padding: 8px 12px;
+    text-align: left;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2c3e50;
+    transition: background-color 0.15s;
+}
+
+.choix-item:hover {
+    background-color: var(--secondary-bg-color);
+    color: white;
 }
 
 planning-component {
