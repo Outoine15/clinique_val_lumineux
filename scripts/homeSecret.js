@@ -1,5 +1,9 @@
 import { check_conn_general } from "./connUtils.js";
 import { LogoutButton } from "/component/logout/logout.js";
+import "../component/header/header.js";
+import "../component/footer/footer.js";
+
+
 
 check_conn_general("SECRETARY");
 

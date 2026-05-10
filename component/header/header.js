@@ -15,7 +15,10 @@ class Header extends HTMLElement {
 
         this.innerHTML = `
             <header>
-                <a href="../home">Clinique du Val Lumineux</a> 
+                <a href="../home">
+                    <i class="fa-solid fa-house-medical"></i>
+                    Clinique du Val Lumineux
+                </a> 
                 <div class="pages">
                     <a href="../rdv_ano">Liste RDV</a>
                     <a href="${getCookie("role") ? "../"+getCookie("role").toLowerCase() : "../login"}" class="account">${getCookie("token") ? 'Compte' : 'Se connecter'}</a>
