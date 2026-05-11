@@ -17,7 +17,7 @@ export function check_conn_connexion(){
             {
                 if(!isEmptyObject(res.data.id))
                 {
-                    console.log(res.data);
+                    // console.log(res.data);
                     // connecté 
                     switch (role) {
                         case "USER":
@@ -48,10 +48,13 @@ export function check_conn_general(expected_role){
     const token = getCookie("token");
     if (!token || token === "undefined" || token === "null"){
         // non connecté
+        // console.log("token invalide");
         deleteCookie("token");
         deleteCookie("role");
         window.location.replace("../login");
+        // window.location.replace("../login");
     } else {
+        // console.log("connexion...");
         axios.get("../api/users", {
             headers: {
                 Authorization: "Bearer "+token
@@ -59,17 +62,22 @@ export function check_conn_general(expected_role){
         }).then(res => {
             if(!isEmptyObject(res.data))
             {
+                // console.log("connecté");
                 // connecté 
                 if(expected_role!=""){ //tous les roles pas autorisé
                     if(getCookie("role")==expected_role){
                         //bon type de compte
+                        // console.log("bon role");
                     } else {
+                        // console.log("mauvais role");
                         window.location.replace("../home");
+                        // window.location.replace("../home");
                     }
                 }
             } else {
-                console.log("connecté");
+                // console.log("mauvais token");
                 // mauvais token
+                // delete permet d'évier d'utiliser des cookie mal formé d'un autre site ou mis manuelement 
                 deleteCookie("token");
                 deleteCookie("role");
             }
@@ -78,22 +86,4 @@ export function check_conn_general(expected_role){
         })
         // connecté (ne rien faire)
     }
-}
-
-export function get_linked_clients(){
-    axios.get(
-        "../api/clients", 
-        new URLSearchParams({
-            "token": getCookie("token")
-        }).toString()
-    ).then(response => {
-        if(response.data.success==false){
-            // mauvait token
-        } else {
-            return response.data;
-        }
-    }).catch(err => {
-        // 404 ou 500
-    });
-    return null;
 }
