@@ -231,7 +231,9 @@ async function ajouterCreneau(event) {
         alert("Erreur de connexion au serveur");
     }
 }
+
 async function supprimerRDV(rdvId) {
+    // on met on petit spam pour confirmer la suppresion
     if (!confirm("Supprimer définitivement ce créneau ?")) return;
 
     const token = getCookie("token");
