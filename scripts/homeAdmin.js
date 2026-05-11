@@ -1,61 +1,80 @@
+//on importe la fonction qui verif la connexion avec connUtils
 import { check_conn_general } from "./connUtils.js";
+//on importe le bouton pour se deconnecter
 import { LogoutButton } from "../component/logout/logout.js";
+//on imoporte de la fonction qui recupere un cookie par son nom
 import { getCookie } from "../scripts/cookiesUtils.js";
+//import du header et footer qui est le même sur chaque pages
 import "../component/header/header.js";
 import "../component/footer/footer.js";
 
+//on verifie que le user est bien connecté a une session et on precise "ADMIN" et pas une autre
 check_conn_general("ADMIN");
 
-
+//fonction qui charge la liste des medecin depuis l'API
 async function chargerMedecins() {
     try {
+        //on fait un appel GET pour recup tous les medecins
         const response = await fetch('/api/doctors');
         
+        //si le GET ne marche pas on recoit une erreur 404 ou 500 
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des médecins');
         }
 
+        //sinon on obtient un resultat et on le convertit en tableau json
         const medecins = await response.json();
 
+        //on cherche le select de choix de medecin dans l'html
         const selectMedecin = document.querySelector('select[name="medecin_id"]');
         if (selectMedecin) {
+            //permet de remettre a zero le selecteur pour etre sur (avec l'option qui est par defaut)
             selectMedecin.innerHTML = '<option value="">Choisir un médecin</option>';
+            //pour chaque medecin on loop
             medecins.forEach(medecin => {
+                //on crée un element option ou l"on met son nom prenom et secteur du medecin 
                 const option = document.createElement('option');
                 option.value = medecin.id; 
                 option.textContent = `Dr. ${medecin.name} ${medecin.firstname} (${medecin.sector.name})`;
+                //on met le medecin dans le grand tableau ou il y a tous les medecins
                 selectMedecin.appendChild(option);
             });
         }
 
+        //on get le tbody du tableau des medecin qui est dans l'html
         const tbodyMedecins = document.getElementById('table-corps-medecins');
+
         if (tbodyMedecins) {
             tbodyMedecins.innerHTML = '';
-
+            //ppour chaque medecin on crée une ligne 
             medecins.forEach(medecin => {
                 const tr = document.createElement('tr');
 
                 const tdId = document.createElement('td');
-                tdId.textContent = medecin.id;
+                tdId.textContent = medecin.id;//id du medecin
 
                 const tdNom = document.createElement('td');
-                tdNom.textContent = medecin.name;
+                tdNom.textContent = medecin.name;//nom du medecin
 
                 const tdPrenom = document.createElement('td');
-                tdPrenom.textContent = medecin.firstname;
+                tdPrenom.textContent = medecin.firstname;//prenom du medecin
 
                 const tdSecteur = document.createElement('td');
-                tdSecteur.textContent = medecin.sector.name;
+                tdSecteur.textContent = medecin.sector.name;//nom du secteur du medecin
 
+                //colonne action avec le bouton qui supprime le medecin
                 const tdAction = document.createElement('td');
                 const btnSuppr = document.createElement('button');
                 btnSuppr.textContent = "Supprimer le médecin";
+                //quand on clique on lance la fonction pour le sup av l'id correspondant
                 btnSuppr.onclick = () => supprimerMedecin(medecin.id);
                 
                 tdAction.appendChild(btnSuppr);
 
+                //on ajoute toutes les colonnes a la ligne
                 tr.append(tdId, tdNom, tdPrenom, tdSecteur, tdAction);
                 
+                //et on ajoute la ligne au tableau
                 tbodyMedecins.appendChild(tr);
             });
         }
