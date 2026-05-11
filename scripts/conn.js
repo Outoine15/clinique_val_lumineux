@@ -12,6 +12,48 @@ const logo = document.querySelector(".logo i");
 let mail = document.getElementById("mail");
 let password = document.getElementById("password");
 
+function connexion(){
+     let token = "";
+    //recuperation mail/password
+
+    axios.post("../api/users",
+    new URLSearchParams({
+      mail: mail.value,
+      password: password.value
+    }))
+      .then(response => {
+        var res = response.data;
+        //gestion cas de reponse
+        try {
+            if(res.success==false){
+                // identifiant/mdp invalid
+                errorMessage.innerHTML = "Identifiants incorrects.";
+                forgotPassword.style.backgroundColor = "#ffebeb";
+                forgotPassword.style.borderRadius = "6px";
+                forgotPassword.style.fontSize = "15px";
+            } else {
+                var token = res.token;
+                var role = res.role;
+
+                setCookie("token",token);
+                // document.cookie = "token="+token+"; max-age=3600; path=/; Secure; SameSite=Strict";
+                // sessionStorage.setItem("token", token);
+
+                var role = res.role;
+                
+                setCookie("role",role);
+            }
+        } catch (error) {
+            // success = false
+        }
+        check_conn_connexion();
+    })
+      .catch(err => {
+        console.log("request failed");
+        console.log(err);
+      });
+}
+
 // toggle visibilite mdp
 icon.addEventListener('click', (event) => {
   if(password.type === "password") {
@@ -54,46 +96,14 @@ pwd.addEventListener('input',(event)=>{
 
 });
 
+document.addEventListener("keypress",(e)=>{
+    if(e.key == "Enter"){
+        connexion();
+    }
+})
+
 //confirmation (connexion)
 conn_bt.addEventListener("click", (event) => {
-    let token = "";
-    //recuperation mail/password
-
-    axios.post("../api/users",
-    new URLSearchParams({
-      mail: mail.value,
-      password: password.value
-    }))
-      .then(response => {
-        var res = response.data;
-        //gestion cas de reponse
-        try {
-            if(res.success==false){
-                // identifiant/mdp invalid
-                errorMessage.innerHTML = "Identifiants incorrects.";
-                forgotPassword.style.backgroundColor = "#ffebeb";
-                forgotPassword.style.borderRadius = "6px";
-                forgotPassword.style.fontSize = "15px";
-            } else {
-                var token = res.token;
-                var role = res.role;
-
-                setCookie("token",token);
-                // document.cookie = "token="+token+"; max-age=3600; path=/; Secure; SameSite=Strict";
-                // sessionStorage.setItem("token", token);
-
-                var role = res.role;
-                
-                setCookie("role",role);
-            }
-        } catch (error) {
-            // success = false
-        }
-        check_conn_connexion();
-    })
-      .catch(err => {
-        console.log("request failed");
-        console.log(err);
-      });
+   connexion();
 }
 );
