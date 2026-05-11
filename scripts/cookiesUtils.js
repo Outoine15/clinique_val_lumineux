@@ -1,5 +1,5 @@
 export function setCookie(name,data){
-    document.cookie = name+"="+data+"; max-age=604800; path=/; SameSite=Strict";
+    document.cookie = name+"="+data+"; max-age=604800; path=/; SameSite=Strict; secure=true";
 }
 
 export function getCookie(name){

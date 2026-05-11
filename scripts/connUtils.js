@@ -49,8 +49,6 @@ export function check_conn_general(expected_role){
     if (!token || token === "undefined" || token === "null"){
         // non connecté
         // console.log("token invalide");
-        deleteCookie("token");
-        deleteCookie("role");
         window.location.replace("../login");
         // window.location.replace("../login");
     } else {
@@ -76,10 +74,6 @@ export function check_conn_general(expected_role){
                 }
             } else {
                 // console.log("mauvais token");
-                // mauvais token
-                // delete permet d'évier d'utiliser des cookie mal formé d'un autre site ou mis manuelement 
-                deleteCookie("token");
-                deleteCookie("role");
             }
         }).catch(err => {
             // console.log(err);
