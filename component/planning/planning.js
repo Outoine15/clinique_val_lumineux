@@ -347,11 +347,14 @@ class Planning extends HTMLElement {
                         dateRdv.getDate() === date.getDate()
                     );                    
 
-                        if (mmDate && dateRdv.getHours() == h && app.reserved == true && this.rightSector(doc)) {
-                            res = 1;
-                        } else if (mmDate && dateRdv.getHours() == h && app.reserved == false && this.rightSector(doc)){
-                            res = 2;
+                        if(mmDate && dateRdv.getHours() == h && this.rightSector(doc)){
+                            if (app.reserved == false) {
+                                res = 2;
+                            } else if (app.reserved == true && res != 2){
+                                res = 1;
+                            }
                         }
+                        
                     }
                 }
             }
