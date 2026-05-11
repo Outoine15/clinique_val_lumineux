@@ -24,7 +24,7 @@ axios.get("../api/users/appointments", {
         let message = document.querySelector(".message");
         message.innerHTML=`Vous n'avez aucun rendez-vous pour le moment `;
         let link = document.createElement("a");
-        link.href="../rdv_ano";
+        link.href="../calendar";
         link.innerHTML="Prendre un rendez-vous";
         message.appendChild(link);
     } else {
