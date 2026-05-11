@@ -2,11 +2,11 @@
     position: fixed;
     width: 100%;
     height: 100%;
-    top:0;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(39, 111, 191,0.2);
+    background-color: rgba(39, 111, 191, 0.2);
     backdrop-filter: blur(10px);
     z-index: 999;
 }
@@ -14,38 +14,93 @@
 .rdv-popup-window-active {
     background: linear-gradient(145deg, #f4f7f9 0%, #e8eef5 100%);
     position: fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%,-50%);
-    width:20em;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 22em;
     border-radius: 12px;
-    z-index: 100;
+    z-index: 1000;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(39, 111, 191, 0.15);
 }
 
-
-
-.rdvPopup {
+.rdvClientEditPopup {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    padding: 1.5em;
+    position: relative;
+    gap: 1em;
 }
 
-.rdvPopupClientName {
-    background-color: var(--secondary-bg-color);
-    border-radius: 12px;
-    padding: 5px;
+.rdvClientEditPopupClose {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #555;
+}
+
+.rdvClientEditPopupClose:hover {
+    color: #000;
+}
+
+.rdvClientEditPopupInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
     text-align: center;
 }
 
-.rdvPopupClientName:hover {
-    transform: translateY(-3px);
-    box-shadow: 2px 5px 2px #adb5bd;
+.client-firstname,
+.client-name {
+    display: inline;
+    margin: 0 3px;
+    font-weight: 700;
+    color: var(--secondary-bg-color);
 }
 
-.rdvPopupWarnings {
-    margin:5px;
+.unsubscribe-button {
+    background-color: #e74c3c;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    transition: opacity 0.2s;
+}
+
+.unsubscribe-button:hover {
+    opacity: 0.85;
+}
+
+.rdvClientEditPopupWarnings.visible{
+    display: block;
+}
+
+.rdvClientEditPopupWarnings {
+    display: none;
+    margin: 5px;
     margin-bottom: 20px;
+    color: #c0392b;
+    font-style: italic;
+    text-align: center;
+}
+
+.rdvClientEditPopupNotice {
+    background-color: #fff8e1;
+    border-left: 3px solid #f39c12;
+    color: #7d5a00;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-style: italic;
+    margin: 0;
+    text-align: left;
 }
