@@ -52,6 +52,7 @@ export class RdvEditPopup extends HTMLElement {
                     if(res.data.success==true)
                     {
                         popup_warning_section.innerHTML="Le rendez-vous a été supprimé avec succès !";
+                        popup_warning_section.classList.add("visible");
                     } else {
                         popup_warning_section.innerHTML="Impossible de supprimer le rendez-vous...";
                     }
