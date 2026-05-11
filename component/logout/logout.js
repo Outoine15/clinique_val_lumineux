@@ -8,7 +8,7 @@ export class LogoutButton extends HTMLElement{
     }
 
     show(){
-        this.innerHTML=`<button type="button">déconnexion</button>`;
+        this.innerHTML=`<button type="button">Déconnexion</button>`;
         let exit_bt = this.querySelector("button");
         exit_bt.onclick = function(){
             deleteCookie("role");

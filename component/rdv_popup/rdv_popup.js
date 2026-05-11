@@ -17,7 +17,7 @@ export class RdvPopup extends HTMLElement {
         this.innerHTML=`
         <div class="rdvPopup">
             <button class="rdvPopupClose" aria-label="Fermer">×</button>
-            <p>Pour qui prendre le rendez-vous ?</p>
+            <p>Pour qui prenez-vous le rendez-vous ?</p>
             <section class="rdvPopupInfo">
             </section>
             <section class="rdvPopupWarnings">
@@ -71,10 +71,10 @@ export class RdvPopup extends HTMLElement {
                             }    
                         ).then(response => {
                                 if(response.data.success==true){
-                                    popup_warning_section.innerHTML="rendez-vous réservé avec succès";
+                                    popup_warning_section.innerHTML="Le rendez-vous a été réservé avec succès";
                                     // creneau reserve
                                 } else {
-                                    popup_warning_section.innerHTML="imposible de réserver le rendez vous";
+                                    popup_warning_section.innerHTML="Imposible de réserver le rendez vous";
                                     // impossible de reserver le creneau
                                 }
                             }).catch(err => {

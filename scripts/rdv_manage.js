@@ -22,10 +22,10 @@ axios.get("../api/users/appointments", {
 }).then(res => {
     if(isEmptyObject(res.data)){
         let message = document.querySelector(".message");
-        message.innerHTML=`vous n'avez aucun rendez-vous pour le moment `;
+        message.innerHTML=`Vous n'avez aucun rendez-vous pour le moment `;
         let link = document.createElement("a");
         link.href="../rdv_ano";
-        link.innerHTML="prendre un rendez-vous";
+        link.innerHTML="Prendre un rendez-vous";
         message.appendChild(link);
     } else {
         let formated_data = convertAppointmentsUserList(res.data);

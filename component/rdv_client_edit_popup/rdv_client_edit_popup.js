@@ -21,10 +21,10 @@ export class RdvClientEditPopup extends HTMLElement {
             <button class="rdvClientEditPopupClose" aria-label="Fermer">×</button>
             <section class="rdvClientEditPopupInfo">
             <div>
-                gestion du rendez-vous de:
+                Modifier le rendez-vous de
                 <p class="client-firstname"></p><p class="client-name"></p>
             </div>
-            <div class="unsubscribe-button">se désinscrire du rendez-vous</div>
+            <div class="unsubscribe-button">Annuler le rendez-vous</div>
             </section>
             <section class="rdvClientEditPopupWarnings">
             </section>
@@ -60,15 +60,15 @@ export class RdvClientEditPopup extends HTMLElement {
                 {
                     if(res.data.success==true)
                     {
-                        popup_warning_section.innerHTML="suppression réussie !";
+                        popup_warning_section.innerHTML="Rendez-vous annulé !";
                     } else {
-                        popup_warning_section.innerHTML="échec de la suppression...";
+                        popup_warning_section.innerHTML="Une erreur est survenue, veuillez réessayer plus tard...";
                     }
                 }
             }).catch(err => {
                 console.log("request failed");
                 console.log(err);
-                popup_warning_section.innerHTML="échec de la suppression...";
+                popup_warning_section.innerHTML="Une erreur est survenue, veillez réessayer plus tard...";
             })
         });
     }

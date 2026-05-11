@@ -26,7 +26,7 @@ export class DoctorCard extends HTMLElement {
         this.innerHTML = `
         <div class="doctorCard">
             <section class="doctorCardInfo">
-                <p class="doctorCardName">vos rendez-vous</p>
+                <p class="doctorCardName">Vos rendez-vous</p>
             </section>
             <section class="doctorCardAppointments fade">
                 <doctor-calendar></doctor-calendar>

@@ -18,7 +18,7 @@ async function chargerMedecins() {
 
         const selectMedecin = document.querySelector('select[name="medecin_id"]');
         if (selectMedecin) {
-            selectMedecin.innerHTML = '<option value="">Choisir un medecin</option>';
+            selectMedecin.innerHTML = '<option value="">Choisir un médecin</option>';
             medecins.forEach(medecin => {
                 const option = document.createElement('option');
                 option.value = medecin.id; 
