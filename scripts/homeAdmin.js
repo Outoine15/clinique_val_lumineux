@@ -72,10 +72,15 @@ async function decalerRDV(event) {
     const rdvId = formData.get('rdv_id');
     const nouvelleDateStr = formData.get('nouvelle_date');
 
+    const nouv_duration = formData.get('nouvelle_rdv_duration');
+
+    let[hours, mins] = nouv_duration.split(":");
+    const total_duration = (mins-0)+((hours-0)*60);
+
     if (!nouvelleDateStr) return;
 
     const startDate = new Date(nouvelleDateStr);
-    const endDate = new Date(startDate.getTime() + 30 * 60000);
+    const endDate = new Date(startDate.getTime()+total_duration*60000);
 
     const formatLocalSQL = (date) => {
     const pad = (n) => n < 10 ? '0' + n : n;
@@ -145,7 +150,10 @@ async function chargerTableauRDV() {
                 tdAction.innerHTML = `
                 <form class="form-modifier-rdv" style="display: inline-block; margin-right: 10px;">
                     <input type="hidden" name="rdv_id" value="${rdv.id}">
+                    date:
                     <input type="datetime-local" name="nouvelle_date" required>
+                    durée:
+                    <input type="time" name="nouvelle_rdv_duration" required>
                     <button type="submit">OK</button>
                 </form>
                 `;
@@ -206,9 +214,12 @@ async function ajouterCreneau(event) {
     
     const doctorId = formData.get('medecin_id');
     const startValue = formData.get('date_heure'); 
+    const duration = formData.get('rdv_duration');
 
     const startDate = new Date(startValue);
-    const endDate = new Date(startDate.getTime() + 30 * 60000); 
+    let[hours, mins] = duration.split(":");
+    const total_duration = (mins-0)+((hours-0)*60);
+    const endDate = new Date(startDate.getTime()+total_duration*60000);
 
     const formatSQL = (date) => {
     const pad = (n) => n < 10 ? '0' + n : n;

@@ -30,6 +30,20 @@
         </form>
 
         <hr>
+    <h3>Ajouter un nouveau créneau de consultation</h3>
+    <form id="form-ajout-creneau"> 
+        <label>Médecin</label>
+        <select name="medecin_id" required>
+            <option value="">Choisir un médecin</option>
+        </select>
+        <br>
+        <label>Date et heure</label>
+        <input type="datetime-local" name="date_heure" required>
+        <label for="rdv_duration">durée du rendez-vous</label>
+        <input id="rdv_duration" type="time" name="rdv_duration" required>
+        <br>
+        <button type="submit">Ouvrir ce créneau</button>
+    </form>
 
         <h2>Planning des Rendez-vous</h2>
         <table border="1">
@@ -47,25 +61,25 @@
 
         <hr>
 
-        <h2>Ajouter un nouveau médecin</h2>
-        <form id="form-ajout-medecin">
-            <label>Nom :</label>
-            <input type="text" name="nom" required>
-            <br>
-            <label>Prénom :</label>
-            <input type="text" name="prenom" required>
-            <br>
-            <label>Email :</label>
-            <input type="email" name="email" required>
-            <br>
-            <label>Mot de passe :</label>
-            <input type="password" name="password" required>
-            <br>
-            <label>ID Secteur :</label>
-            <input type="number" name="secteur_id" required>
-            <br>
-            <button type="submit">Créer le compte médecin</button>
-        </form>
+    <h2>Créer un nouveau compte médecin</h2>
+    <form id="form-ajout-medecin">
+        <label>Nom :</label>
+        <input type="text" name="nom" required>
+        <br>
+        <label>Prénom :</label>
+        <input type="text" name="prenom" required>
+        <br>
+        <label>Email :</label>
+        <input type="email" name="email" required>
+        <br>
+        <label>Mot de passe :</label>
+        <input type="password" name="password" required>
+        <br>
+        <label>ID Secteur :</label>
+        <input type="number" name="secteur_id" required>
+        <br>
+        <button type="submit">Créer le compte médecin</button>
+    </form>
 
         <hr>
 
