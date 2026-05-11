@@ -11,7 +11,7 @@ body {
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: auto;
     min-height: 100vh;
     overflow-x: hidden;
     max-width: 100%;
