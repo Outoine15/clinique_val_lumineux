@@ -187,7 +187,9 @@ async function chargerTableauRDV() {
 
 window.addEventListener('DOMContentLoaded', () => {
     const loggout_bt = new LogoutButton();
-    document.body.appendChild(loggout_bt);
+    let loggout_bt_div = document.getElementById("logout-button");
+    console.log(loggout_bt_div);
+    loggout_bt_div.appendChild(loggout_bt);
 
     chargerMedecins();
     chargerTableauRDV();
