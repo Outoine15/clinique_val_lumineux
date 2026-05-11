@@ -33,10 +33,14 @@ class AppointmentTime extends HTMLElement {
 
         if(this.userType=="DOCTOR"){
             this.innerHTML = `
-            <div class="appointmentTime ${this.data["reserved"] ? "reserved" : ""} doctor">
+            <div class="appointmentTime doctor">
                 <p>${formatTime(startTime)} - ${formatTime(endTime)}</p>
             </div>`;
             let edit_appointment = this.querySelector(".appointmentTime");
+            if(this.data["client"]!=null)
+            {
+                edit_appointment.classList.add("reserved");
+            }
             edit_appointment.addEventListener("click", (event) => {
                 let rdv_selection = new RdvEditPopup(this.data["id"],edit_appointment);
                 popup_div.appendChild(rdv_selection);

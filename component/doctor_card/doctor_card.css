@@ -139,7 +139,7 @@ body > doctor-card {
     display: none;
 }
 /*on fait pareil pour les creneaux reserves */
-.appointmentTime.reserved:hover::after {
+.appointmentTime.reserved:not(.doctor):hover::after {
     content: "File d'attente";
     color: #6c757d;
 }
