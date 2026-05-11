@@ -20,6 +20,7 @@ export class RdvClientEditPopup extends HTMLElement {
         <div class="rdvClientEditPopup">
             <button class="rdvClientEditPopupClose" aria-label="Fermer">×</button>
             <section class="rdvClientEditPopupInfo">
+            <p class="rdvClientEditPopupNotice" >Tout rendez-vous non décommandé 24 heures à l'avance sera considéré comme dû.</p>
             <div>
                 Modifier le rendez-vous de
                 <p class="client-firstname"></p><p class="client-name"></p>
