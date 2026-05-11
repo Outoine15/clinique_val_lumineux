@@ -61,6 +61,7 @@ export class RdvClientEditPopup extends HTMLElement {
                     if(res.data.success==true)
                     {
                         popup_warning_section.innerHTML="Rendez-vous annulé !";
+                        popup_warning_section.classList.add("visible")
                     } else {
                         popup_warning_section.innerHTML="Une erreur est survenue, veuillez réessayer plus tard...";
                     }
