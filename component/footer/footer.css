@@ -8,12 +8,15 @@ footer {
     gap: 40px;
     bottom: 0px;
     left: 0px;
+    position: fixed;
+    width: 100%;
 }
  
 footer section {
     display: flex;
     flex-direction: column;
     gap: 6px;
+    margin-right: 100px;
 }
  
 footer a {
