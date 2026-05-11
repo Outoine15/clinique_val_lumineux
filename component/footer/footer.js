@@ -18,8 +18,8 @@ class Footer extends HTMLElement {
 
                 <section>
                     <p>secretariat@clinique.fr</p>
-                    <p>+33X XX XX XX XX</p>
-                    <p>Adresse...</p>
+                    <p>+33 4 65 71 64 45</p>
+                    <p>3 rue d'Italie, 73000 Chambéry</p>
                 </section>
             </footer>
         `;
