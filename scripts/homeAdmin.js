@@ -14,12 +14,8 @@ check_conn_general("ADMIN");
 //fonction qui charge la liste des medecin depuis l'API
 async function chargerMedecins() {
     try {
-<<<<<<< HEAD
         //on fait un appel GET pour recup tous les medecins
         const response = await fetch('/api/doctors');
-=======
-        const response = await fetch('../api/doctors');
->>>>>>> c5faaf5e838d1f29b5c44492c112f1ad025ab828
         
         //si le GET ne marche pas on recoit une erreur 404 ou 500 
         if (!response.ok) {
