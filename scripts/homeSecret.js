@@ -1,5 +1,6 @@
 import { check_conn_general } from "./connUtils.js";
 import { LogoutButton } from "/component/logout/logout.js";
+import { getCookie } from "../scripts/cookiesUtils.js";
 import "../component/header/header.js";
 import "../component/footer/footer.js";
 
@@ -40,10 +41,15 @@ async function decalerRDV(event) {
     const rdvId = formData.get('rdv_id');
     const nouvelleDateStr = formData.get('nouvelle_date');
 
+    const nouv_duration = formData.get('nouvelle_rdv_duration');
+
+    let[hours, mins] = nouv_duration.split(":");
+    const total_duration = (mins-0)+((hours-0)*60);
+
     if (!nouvelleDateStr) return;
 
     const startDate = new Date(nouvelleDateStr);
-    const endDate = new Date(startDate.getTime() + 30 * 60000);
+    const endDate = new Date(startDate.getTime()+total_duration*60000);
 
     const formatLocalSQL = (date) => {
     const pad = (n) => n < 10 ? '0' + n : n;
@@ -54,6 +60,34 @@ async function decalerRDV(event) {
         pad(date.getMinutes()) + ':' +
         pad(date.getSeconds());
     };
+
+    const data = new URLSearchParams();
+    data.append('time_start', formatLocalSQL(startDate));
+    data.append('time_end', formatLocalSQL(endDate));
+    
+    try {
+        const token = getCookie("token");
+
+        const response = await fetch(`/api/appointments/${rdvId}/update`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: data.toString()
+        });
+
+        if (response.ok) {
+            alert("Rendez-vous déplacé !");
+            chargerTableauRDV(); 
+        } else {
+            const error = await response.json();
+            alert("Erreur : " + (error.message || "Impossible de modifier"));
+        }
+    } catch (error) {
+        console.error("Erreur modification :", error);
+    }
+    
 }
 
 async function chargerTableauRDV() {
@@ -85,6 +119,8 @@ async function chargerTableauRDV() {
                 <form class="form-modifier-rdv" style="display: inline-block; margin-right: 10px;">
                     <input type="hidden" name="rdv_id" value="${rdv.id}">
                     <input type="datetime-local" name="nouvelle_date" required>
+                    durée:
+                    <input type="time" name="nouvelle_rdv_duration" required>
                     <button type="submit">OK</button>
                 </form>
                 `;
@@ -118,7 +154,8 @@ async function chargerTableauRDV() {
 
 window.addEventListener('DOMContentLoaded', () => {
     const loggout_bt = new LogoutButton();
-    document.body.appendChild(loggout_bt);
+    let loggout_bt_div = document.getElementById("logout-button");
+    loggout_bt_div.appendChild(loggout_bt);
 
     chargerMedecins();
     chargerTableauRDV();
@@ -144,9 +181,12 @@ async function ajouterCreneau(event) {
     
     const doctorId = formData.get('medecin_id');
     const startValue = formData.get('date_heure'); 
+    const duration = formData.get('rdv_duration');
 
     const startDate = new Date(startValue);
-    const endDate = new Date(startDate.getTime() + 30 * 60000); 
+    let[hours, mins] = duration.split(":");
+    const total_duration = (mins-0)+((hours-0)*60);
+    const endDate = new Date(startDate.getTime()+total_duration*60000);
 
     const formatSQL = (date) => {
     const pad = (n) => n < 10 ? '0' + n : n;
@@ -166,7 +206,7 @@ async function ajouterCreneau(event) {
     data.append('time_end', timeEnd);
 
     try {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        const token = getCookie("token");
         
         const response = await fetch('/api/appointments', {
             method: 'PUT',
@@ -194,7 +234,7 @@ async function ajouterCreneau(event) {
 async function supprimerRDV(rdvId) {
     if (!confirm("Supprimer définitivement ce créneau ?")) return;
 
-    const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+    const token = getCookie("token");
     
     try {
         const response = await fetch(`/api/appointments/${rdvId}`, {

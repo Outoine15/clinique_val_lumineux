@@ -1,5 +1,6 @@
 import { check_conn_general } from "./connUtils.js";
 import { LogoutButton } from "../component/logout/logout.js";
+import { getCookie } from "../scripts/cookiesUtils.js";
 import "../component/header/header.js";
 import "../component/footer/footer.js";
 
@@ -98,7 +99,7 @@ async function decalerRDV(event) {
     data.append('time_end', formatLocalSQL(endDate));
 
     try {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        const token = getCookie("token");
 
         const response = await fetch(`/api/appointments/${rdvId}/update`, {
             method: 'PUT',
@@ -188,7 +189,6 @@ async function chargerTableauRDV() {
 window.addEventListener('DOMContentLoaded', () => {
     const loggout_bt = new LogoutButton();
     let loggout_bt_div = document.getElementById("logout-button");
-    console.log(loggout_bt_div);
     loggout_bt_div.appendChild(loggout_bt);
 
     chargerMedecins();
@@ -241,7 +241,7 @@ async function ajouterCreneau(event) {
     data.append('time_end', timeEnd);
 
     try {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        const token = getCookie("token");
         
         const response = await fetch('/api/appointments', {
             method: 'PUT',
@@ -269,7 +269,7 @@ async function ajouterCreneau(event) {
 async function supprimerRDV(rdvId) {
     if (!confirm("Supprimer définitivement ce créneau ?")) return;
 
-    const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+    const token = getCookie("token");
     
     try {
         const response = await fetch(`/api/appointments/${rdvId}`, {
@@ -306,7 +306,7 @@ async function ajouterMedecin(event) {
     data.append('password', formData.get('password'));
 
     try {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        const token = getCookie("token");
 
         const response = await fetch('/api/doctors', {
             method: 'PUT',
@@ -336,7 +336,7 @@ async function supprimerMedecin(doctorID) {
     if (!confirm("Voulez-vous vraiment supprimer ce médecin ?...")) return;
 
     try {
-        const token = document.cookie.split('; ').find(row => row.startsWith('token='))?.split('=')[1];
+        const token = getCookie("token");
         console.log("token :", token); 
 
         const url = `/api/doctors/${doctorID}`;
