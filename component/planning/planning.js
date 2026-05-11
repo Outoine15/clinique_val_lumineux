@@ -279,10 +279,13 @@ class Planning extends HTMLElement {
                 if(docs.length != 0){
                     let htmlToolTip = "";
                     for(let doc of docs){
+                        //On découpe uniquement l'heure et les minutes
+                        let heureDebut = doc.app.start.slice(11,16);
+                        let heureFin = doc.app.end.slice(11,16);
                         htmlToolTip += `
                             <div class="tooltip-item ${doc.reserved ? 'pris' : 'libre'}">
                                 <span class="tooltip-dot"></span>
-                                    Dr ${doc.name} ${doc.firstname} : ${doc.sector}
+                                    Dr ${doc.name} ${doc.firstname} : ${doc.sector} | ${heureDebut} - ${heureFin}
                                 <span class="tooltip-state">${doc.reserved ? 'pris' : 'libre'}</span>
                             </div>
                         `;
@@ -375,7 +378,13 @@ class Planning extends HTMLElement {
                         && dateRdv.getDate() === date.getDate();
                         if(mmDate && dateRdv.getHours() == h ){
                             //On ajoute a notre liste chaque docteur liée au rdv actuel.
-                            res.push({name : doc.name, firstname : doc.firstname, reserved : app.reserved, sector : doc.sector.name, rdv_id : app.id});
+                            res.push({name : doc.name,
+                                firstname : doc.firstname, 
+                                reserved : app.reserved, 
+                                sector : doc.sector.name,
+                                rdv_id : app.id,
+                                app : app
+                            });
                         }
                     }                    
                 }
