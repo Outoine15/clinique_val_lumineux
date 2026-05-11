@@ -84,26 +84,35 @@ async function chargerMedecins() {
     }
 }
 
-
+//fonction qui permet de decaler l'heure pour la mettre en heure francaise, sans cette fonction les heures auront un decalage de 2h
 async function decalerRDV(event) {
+    //pour empecher le regarchement de la page quand on decale 
     event.preventDefault();
     const form = event.target;
+    //on recup les datas du formulaire
     const formData = new FormData(form);
     const rdvId = formData.get('rdv_id');
+    //on recup la nouvelle date choisie
     const nouvelleDateStr = formData.get('nouvelle_date');
-
+    //pour recupere la duree souhaitee  au format hh:mm
     const nouv_duration = formData.get('nouvelle_rdv_duration');
 
+    //on decompose la duree en heure et en minute
     let[hours, mins] = nouv_duration.split(":");
+    //on calcule la duree totale en minute
     const total_duration = (mins-0)+((hours-0)*60);
 
+    //si jamais ya pas de date de base on fait rien pour pas tout casser
     if (!nouvelleDateStr) return;
 
+    //on cree l'objet du debut de date
     const startDate = new Date(nouvelleDateStr);
+    //puis la date de fin en ajoutant la duree en miliseconde 60000 pour 1h
     const endDate = new Date(startDate.getTime()+total_duration*60000);
 
+    //permet de formater une date en chaine SQL et ducoup en heure locale
     const formatLocalSQL = (date) => {
-    const pad = (n) => n < 10 ? '0' + n : n;
+    const pad = (n) => n < 10 ? '0' + n : n;//on doit ajouter un 0 avant un chiffre et pas avant un nombre
     return date.getFullYear() + '-' +
         pad(date.getMonth() + 1) + '-' +
         pad(date.getDate()) + ' ' +
@@ -112,14 +121,16 @@ async function decalerRDV(event) {
         pad(date.getSeconds());
     };
     
-
+    //on prepare les donne quon veut envoyer a l'api
     const data = new URLSearchParams();
     data.append('time_start', formatLocalSQL(startDate));
     data.append('time_end', formatLocalSQL(endDate));
 
     try {
+        //on recupere le token
         const token = getCookie("token");
 
+        //On appel pu a l'api pour mettre a jour le RDV 
         const response = await fetch(`../api/appointments/${rdvId}/update`, {
             method: 'PUT',
             headers: {
@@ -131,8 +142,10 @@ async function decalerRDV(event) {
 
         if (response.ok) {
             alert("Rendez-vous déplacé !");
+            //on recharge le tableau  des RDV pour que la modification s'affiche bien, c'est pour ca qu'on empechait que la page se recherge au debut
             chargerTableauRDV(); 
         } else {
+            //sinon si jamais on envoie un mess d'erreur pr le debug
             const error = await response.json();
             alert("Erreur : " + (error.message || "Impossible de modifier"));
         }
@@ -141,7 +154,7 @@ async function decalerRDV(event) {
     }
 }
 
-
+//fonction qui va charger le tableau des rendez vous
 async function chargerTableauRDV() {
     try {
         const response = await fetch('../api/doctors');
@@ -178,6 +191,7 @@ async function chargerTableauRDV() {
                 </form>
                 `;
 
+                //style ici temporaire juste pour tester comment ca pouvait rendre prc le fichier css n'etait pas encore cree
                 const btnSuppr = document.createElement('button');
                 btnSuppr.textContent = "Supprimer";
                 btnSuppr.style.backgroundColor = "#ff4d4d";
@@ -205,26 +219,34 @@ async function chargerTableauRDV() {
     }
 }
 
+//une fois le DOM entièrement chargé on initialise la page
 window.addEventListener('DOMContentLoaded', () => {
+    // on cree et ajoute le bouton de déconnexion dans son conteneur (grace a l'import en haut)
     const loggout_bt = new LogoutButton();
     let loggout_bt_div = document.getElementById("logout-button");
     loggout_bt_div.appendChild(loggout_bt);
-
+ 
+    //on charge la liste des medecins on select et le tableau
     chargerMedecins();
+    //o charge le tableau des rdv
     chargerTableauRDV();
     
+    //on attache le gestionnaire de soumission au formulaire d'ajout de creneau
     const form = document.getElementById('form-ajout-creneau');
     if (form) {
         form.addEventListener('submit', ajouterCreneau); 
     }
     
+    //on delegue la gestion des soumissions des formulaires de décalage au tbody
+    // on a besoin de faire ca prc on les crée dynamiquement
     document.querySelector('table tbody').addEventListener('submit', (e) => {
         if (e.target.classList.contains('form-modifier-rdv')) {
             decalerRDV(e);
         }
     });
+    //on attache le gestionnaire de soumission au formulaire d'ajout de medecin
     document.getElementById('form-ajout-medecin').addEventListener('submit', ajouterMedecin);
-
+ 
 });
 
 async function ajouterCreneau(event) {
