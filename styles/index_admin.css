@@ -41,7 +41,25 @@ form label {
 
 table {
     width: 100%;
-  max-width: 400px;
+    max-width: 400px;
+    border-collapse: collapse;
+}
+
+td, th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+tr:nth-child(even){background-color: #f2f2f2;}
+
+tr:hover {background-color: #ddd;}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: var(--secondary-bg-color);;
+  color: white;
 }
 
 button {
@@ -65,7 +83,7 @@ button:active {
     transform: scale(0.97);
 }
 
-#logout-button{
+logout-button{
   display: flex;
   justify-content: center;
 }
