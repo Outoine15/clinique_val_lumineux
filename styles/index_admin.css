@@ -3,3 +3,9 @@ body {
     background-color: var(--primary-bg-color);
     margin: 0;
 }
+
+h1 {
+    text-align: center;
+    margin: 30px 0;
+    color: var(--primary-text-color);
+}
