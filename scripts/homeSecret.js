@@ -11,7 +11,7 @@ check_conn_general("SECRETARY");
 
 async function chargerMedecins() {
     try {
-        const response = await fetch('/api/doctors');
+        const response = await fetch('../api/doctors');
         
         if (!response.ok) {
             throw new Error('Erreur lors de la récupération des médecins');
@@ -68,7 +68,7 @@ async function decalerRDV(event) {
     try {
         const token = getCookie("token");
 
-        const response = await fetch(`/api/appointments/${rdvId}/update`, {
+        const response = await fetch(`../api/appointments/${rdvId}/update`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -92,7 +92,7 @@ async function decalerRDV(event) {
 
 async function chargerTableauRDV() {
     try {
-        const response = await fetch('/api/doctors');
+        const response = await fetch('../api/doctors');
         if (!response.ok) throw new Error('Erreur API');
         
         const medecins = await response.json();
@@ -208,7 +208,7 @@ async function ajouterCreneau(event) {
     try {
         const token = getCookie("token");
         
-        const response = await fetch('/api/appointments', {
+        const response = await fetch('../api/appointments', {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -237,7 +237,7 @@ async function supprimerRDV(rdvId) {
     const token = getCookie("token");
     
     try {
-        const response = await fetch(`/api/appointments/${rdvId}`, {
+        const response = await fetch(`../api/appointments/${rdvId}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });

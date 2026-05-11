@@ -14,8 +14,12 @@ check_conn_general("ADMIN");
 //fonction qui charge la liste des medecin depuis l'API
 async function chargerMedecins() {
     try {
+<<<<<<< HEAD
         //on fait un appel GET pour recup tous les medecins
         const response = await fetch('/api/doctors');
+=======
+        const response = await fetch('../api/doctors');
+>>>>>>> c5faaf5e838d1f29b5c44492c112f1ad025ab828
         
         //si le GET ne marche pas on recoit une erreur 404 ou 500 
         if (!response.ok) {
@@ -120,7 +124,7 @@ async function decalerRDV(event) {
     try {
         const token = getCookie("token");
 
-        const response = await fetch(`/api/appointments/${rdvId}/update`, {
+        const response = await fetch(`../api/appointments/${rdvId}/update`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -144,7 +148,7 @@ async function decalerRDV(event) {
 
 async function chargerTableauRDV() {
     try {
-        const response = await fetch('/api/doctors');
+        const response = await fetch('../api/doctors');
         if (!response.ok) throw new Error('Erreur API');
         
         const medecins = await response.json();
@@ -262,7 +266,7 @@ async function ajouterCreneau(event) {
     try {
         const token = getCookie("token");
         
-        const response = await fetch('/api/appointments', {
+        const response = await fetch('../api/appointments', {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -291,7 +295,7 @@ async function supprimerRDV(rdvId) {
     const token = getCookie("token");
     
     try {
-        const response = await fetch(`/api/appointments/${rdvId}`, {
+        const response = await fetch(`../api/appointments/${rdvId}`, {
             method: 'DELETE',
             headers: { 'Authorization': `Bearer ${token}` }
         });
@@ -327,7 +331,7 @@ async function ajouterMedecin(event) {
     try {
         const token = getCookie("token");
 
-        const response = await fetch('/api/doctors', {
+        const response = await fetch('../api/doctors', {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -358,7 +362,7 @@ async function supprimerMedecin(doctorID) {
         const token = getCookie("token");
         console.log("token :", token); 
 
-        const url = `/api/doctors/${doctorID}`;
+        const url = `../api/doctors/${doctorID}`;
         console.log("URL construite :", url); 
 
         const response = await fetch(url, {
