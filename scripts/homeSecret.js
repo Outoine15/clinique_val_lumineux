@@ -1,5 +1,5 @@
-import { check_conn_general } from "./connUtils.js";
-import { LogoutButton } from "/component/logout/logout.js";
+import { check_conn_general } from "../scripts/connUtils.js";
+import { LogoutButton } from "../component/logout/logout.js";
 import { getCookie } from "../scripts/cookiesUtils.js";
 import "../component/header/header.js";
 import "../component/footer/footer.js";
