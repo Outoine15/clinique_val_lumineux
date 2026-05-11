@@ -9,3 +9,63 @@ h1 {
     margin: 30px 0;
     color: var(--primary-text-color);
 }
+
+.gestion-admin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 60%;
+    max-width: 700px;
+    margin: auto;
+    padding: 30px 40px;
+    border-radius: 14px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+form {
+  display: grid;
+  row-gap: 5px;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  max-width: 400px;
+}
+
+form label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--secondary-text-color);
+}
+
+table {
+    width: 100%;
+  max-width: 400px;
+}
+
+button {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    padding: 10px 24px;
+    background-color: var(--secondary-bg-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+}
+button:hover {
+    opacity: 0.85;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+#logout-button{
+  display: flex;
+  justify-content: center;
+}
